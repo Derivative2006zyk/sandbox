@@ -1,0 +1,5 @@
+.container { padding: 40rpx; background: #fff; min-height: 100vh; }
+.form-item { margin-bottom: 30rpx; }
+.label { display: block; margin-bottom: 10rpx; color: #333; font-size: 28rpx; }
+.input { border-bottom: 1rpx solid #ddd; padding: 15rpx 0; font-size: 30rpx; }
+.submit-btn { margin-top: 60rpx; width: 100%; background: #4A90E2; color: #fff; border-radius: 8rpx; }

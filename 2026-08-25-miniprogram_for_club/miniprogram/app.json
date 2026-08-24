@@ -1,28 +1,33 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/example/index"
+    "pages/user/index/index",
+    "pages/user/edit-profile/index"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#F6F6F6",
+    "navigationBarBackgroundColor": "#4A90E2",
     "navigationBarTitleText": "社团活动",
-    "navigationBarTextStyle": "black"
+    "navigationBarTextStyle": "white"
   },
-  "usingComponents": {
-    "van-button": "@vant/weapp/button/index",
-    "van-cell": "@vant/weapp/cell/index",
-    "van-cell-group": "@vant/weapp/cell-group/index",
-    "van-field": "@vant/weapp/field/index",
-    "van-icon": "@vant/weapp/icon/index",
-    "van-toast": "@vant/weapp/toast/index",
-    "van-dialog": "@vant/weapp/dialog/index",
-    "van-empty": "@vant/weapp/empty/index",
-    "van-tag": "@vant/weapp/tag/index",
-    "van-uploader": "@vant/weapp/uploader/index"
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#4A90E2",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/user/index/index",
+        "text": "我的"
+      }
+    ]
   },
-  "sitemapLocation": "sitemap.json",
   "style": "v2",
+  "sitemapLocation": "sitemap.json",
   "lazyCodeLoading": "requiredComponents"
 }

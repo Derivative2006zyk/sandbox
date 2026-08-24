@@ -1,0 +1,7 @@
+<view class="container">
+  <view class="user-card" wx:if="{{userInfo}}">
+    <text class="name">{{userInfo.name || '未填写姓名'}}</text>
+    <text class="student-id">{{userInfo.studentId || '未填写学号'}}</text>
+  </view>
+  <button class="edit-btn" bindtap="goEditProfile">编辑资料</button>
+</view>
