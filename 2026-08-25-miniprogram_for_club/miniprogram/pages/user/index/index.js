@@ -7,5 +7,10 @@ Page({
   },
   goEditProfile() {
     wx.navigateTo({ url: '/pages/user/edit-profile/index' })
+  },
+  goMySignups() {
+    wx.navigateTo({
+      url: '/pages/user/signups/index'
+    })
   }
 })

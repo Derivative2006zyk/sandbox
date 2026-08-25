@@ -2,7 +2,10 @@
   "pages": [
     "pages/index/index",
     "pages/user/index/index",
-    "pages/user/edit-profile/index"
+    "pages/user/edit-profile/index",
+    "pages/activity/detail/index",
+    "pages/activity/signup/index",
+    "pages/user/signups/index"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",

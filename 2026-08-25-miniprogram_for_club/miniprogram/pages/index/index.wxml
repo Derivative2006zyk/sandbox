@@ -1,4 +1,27 @@
 <view class="container">
-  <view class="welcome">欢迎使用社团活动小程序</view>
-  <view class="placeholder">活动列表即将上线</view>
+  <!-- 活动列表区域 -->
+  <block wx:if="{{activityList.length > 0}}">
+    <view class="activity-card"
+      wx:for="{{activityList}}"
+      wx:key="_id"
+      bindtap="goDetail"
+      data-id="{{item._id}}">
+      <view class="activity-title">{{item.title}}</view>
+      <view class="activity-info">
+        <text class="info-item">时间：{{item.startTime}}</text>
+        <text class="info-item">地点：{{item.location}}</text>
+        <text class="info-item">报名：{{item.currentParticipants}}/{{item.maxParticipants}}</text>
+      </view>
+    </view>
+
+    <!-- 加载中提示 -->
+    <view class="loading-tip" wx:if="{{listLoading}}">加载中...</view>
+    <!-- 没有更多数据提示 -->
+    <view class="no-more" wx:if="{{!hasMore && activityList.length > 0}}">没有更多活动了</view>
+  </block>
+
+  <!-- 空状态 -->
+  <view class="empty" wx:if="{{activityList.length === 0 && !listLoading}}">
+    <text>暂无活动，敬请期待</text>
+  </view>
 </view>

@@ -1,3 +1,44 @@
-.container { padding: 40rpx; text-align: center; }
-.welcome { font-size: 36rpx; color: #333; margin-bottom: 20rpx; }
-.placeholder { color: #999; }
+.container {
+  padding: 20rpx;
+}
+
+.activity-card {
+  background: #ffffff;
+  border-radius: 12rpx;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
+}
+
+.activity-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  margin-bottom: 15rpx;
+  color: #333333;
+}
+
+.activity-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+  color: #666666;
+  font-size: 28rpx;
+}
+
+.info-item {
+  display: block;
+}
+
+.loading-tip,
+.no-more {
+  text-align: center;
+  color: #999999;
+  padding: 20rpx 0;
+  font-size: 26rpx;
+}
+
+.empty {
+  text-align: center;
+  padding: 100rpx 0;
+  color: #999999;
+}

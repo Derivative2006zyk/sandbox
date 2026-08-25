@@ -1,0 +1,26 @@
+<view class="container">
+  <!-- 加载中 -->
+  <view wx:if="{{loading}}" class="loading">加载中...</view>
+
+  <!-- 空状态 -->
+  <view wx:if="{{!loading && list.length === 0}}" class="empty">
+    <text>暂无报名记录</text>
+  </view>
+
+  <!-- 报名列表 -->
+  <view wx:if="{{!loading && list.length > 0}}">
+    <view class="signup-card" wx:for="{{list}}" wx:key="signupId">
+      <view class="activity-title" wx:if="{{item.activity}}">{{item.activity.title}}</view>
+      <view class="activity-title" wx:else>活动已删除</view>
+      <view class="signup-info">
+        <text>报名时间：{{item.createTime}}</text>
+        <text>姓名：{{item.formData.name}} | 学号：{{item.formData.studentId}}</text>
+      </view>
+      <button class="cancel-btn" 
+              size="mini" 
+              bindtap="cancelSignup" 
+              data-id="{{item.activityId}}" 
+              data-signupid="{{item.signupId}}">取消报名</button>
+    </view>
+  </view>
+</view>

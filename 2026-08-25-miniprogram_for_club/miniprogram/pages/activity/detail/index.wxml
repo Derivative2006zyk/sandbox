@@ -1,0 +1,25 @@
+<view class="container" wx:if="{{activity}}">
+  <view class="activity-header">
+    <view class="title">{{activity.title}}</view>
+    <view class="info-list">
+      <text class="info-item">时间：{{activity.startTime}}</text>
+      <text class="info-item">地点：{{activity.location}}</text>
+      <text class="info-item">报名截止：{{activity.signupDeadline}}</text>
+      <text class="info-item">人数：{{activity.currentParticipants}}/{{activity.maxParticipants}}</text>
+    </view>
+  </view>
+
+  <view class="activity-description">
+    <text class="desc-title">活动介绍</text>
+    <text class="desc-content">{{activity.description}}</text>
+  </view>
+
+  <!-- 报名/取消按钮 -->
+  <view class="action-area">
+    <button wx:if="{{!isSignedUp}}" class="primary-btn" bindtap="goSignup">立即报名</button>
+    <button wx:else class="cancel-btn" bindtap="cancelSignup" disabled="{{submitting}}">取消报名</button>
+  </view>
+</view>
+
+<!-- 加载中 -->
+<view wx:if="{{loading}}" class="loading">加载中...</view>
