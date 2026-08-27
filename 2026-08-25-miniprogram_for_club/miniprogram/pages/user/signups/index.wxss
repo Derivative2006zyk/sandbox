@@ -1,8 +1,25 @@
 .container {
-  padding: 20rpx;
+  position: relative;
+  min-height: 100vh;
+  padding: 40rpx 32rpx;
+  box-sizing: border-box;
+  background: transparent;
 }
 
-.loading, .empty {
+/* 全局背景图 */
+.page-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.loading,
+.empty {
+  position: relative;
+  z-index: 1;
   text-align: center;
   padding: 100rpx 0;
   color: #999;
@@ -10,18 +27,22 @@
 }
 
 .signup-card {
-  background: #fff;
-  border-radius: 12rpx;
-  padding: 25rpx;
+  position: relative;
+  z-index: 1;
   margin-bottom: 20rpx;
-  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.05);
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 24rpx;
+  padding: 25rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.05);
 }
 
 .activity-title {
   font-size: 32rpx;
   font-weight: bold;
   margin-bottom: 15rpx;
-  color: #333;
+  color: #17498C;
 }
 
 .signup-info {

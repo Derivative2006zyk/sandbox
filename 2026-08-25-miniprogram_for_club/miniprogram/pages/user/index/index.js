@@ -12,5 +12,13 @@ Page({
     wx.navigateTo({
       url: '/pages/user/signups/index'
     })
+  },
+  goFund() {
+    wx.navigateTo({
+      url: '/pages/fund/index/index'
+    })
+  },
+  goAdmin() {
+    wx.navigateTo({ url: '/pages/admin/index/index' })
   }
 })

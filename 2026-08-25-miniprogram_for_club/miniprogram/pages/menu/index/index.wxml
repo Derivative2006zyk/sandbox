@@ -1,0 +1,82 @@
+<view class="menu-page">
+  <!-- 全局背景图 -->
+  <image class="page-bg" src="/images/background.jpg" mode="aspectFill"></image>
+
+  <!-- 背景装饰斜线 -->
+  <view class="bg-diagonal"></view>
+
+  <!-- 顶部空心 NEWS 标题 -->
+  <view class="news-outline">NEWS</view>
+
+  <!-- 轮播图区域（居中） -->
+  <view class="banner-area">
+    <swiper 
+      class="banner-swiper" 
+      current="{{current}}"
+      indicator-dots="{{false}}" 
+      autoplay="{{true}}" 
+      interval="{{5000}}" 
+      duration="{{500}}"
+      bindchange="onSwiperChange"
+    >
+      <swiper-item wx:for="{{banners}}" wx:key="id">
+        <image class="banner-img" src="{{item.src}}" mode="aspectFill"></image>
+        <view class="banner-info">
+          <text class="banner-title">{{item.title}}</text>
+          <text class="banner-subtitle">{{item.subtitle}}</text>
+        </view>
+      </swiper-item>
+    </swiper>
+
+    <view class="arrow left" bindtap="prevBanner">‹</view>
+    <view class="arrow right" bindtap="nextBanner">›</view>
+
+    <view class="custom-dots">
+      <view wx:for="{{banners}}" wx:key="id" class="dot {{current === index ? 'active' : ''}}"></view>
+    </view>
+  </view>
+
+  <!-- 分类标签导航（居中） -->
+  <view class="tabs">
+    <text class="tab {{currentTab === 'latest' ? 'active' : ''}}" data-tab="latest" bindtap="switchTab">最新</text>
+    <text class="dot-sep">·</text>
+    <text class="tab {{currentTab === 'news' ? 'active' : ''}}" data-tab="news" bindtap="switchTab">新闻</text>
+    <text class="dot-sep">·</text>
+    <text class="tab {{currentTab === 'announcement' ? 'active' : ''}}" data-tab="announcement" bindtap="switchTab">公告</text>
+    <text class="dot-sep">·</text>
+    <text class="tab {{currentTab === 'activity' ? 'active' : ''}}" data-tab="activity" bindtap="switchTab">活动</text>
+  </view>
+  <view class="tabs-divider"></view>
+
+  <!-- 新闻列表 -->
+  <view class="news-list">
+    <view 
+      class="news-item" 
+      wx:for="{{filteredNews}}" 
+      wx:key="_id"
+      bindtap="onItemTap"
+      data-id="{{item.activityId || item._id}}"
+      data-type="{{item.activityId ? 'activity' : 'news'}}"
+    >
+      <view class="news-tag {{item.tagClass}}">{{item.tag}}</view>
+      <text class="news-title">{{item.title}}</text>
+      <text class="news-date">{{item.date}}</text>
+    </view>
+
+    <view wx:if="{{!newsLoading && filteredNews.length === 0}}" class="empty-tip">暂无相关新闻</view>
+    <view wx:if="{{newsLoading}}" class="loading-tip">加载中...</view>
+    <view wx:if="{{!hasMore && filteredNews.length > 0}}" class="no-more">没有更多了</view>
+  </view>
+
+  <!-- 底部操作区 -->
+  <view class="footer-area">
+    <view class="scroll-hint">
+      <text class="scroll-text">SCROLL</text>
+      <view class="arrow-down"></view>
+    </view>
+    <view class="more-btn" bindtap="goHome">
+      <text>更多</text>
+      <view class="dot"></view>
+    </view>
+  </view>
+</view>

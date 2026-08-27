@@ -1,0 +1,293 @@
+/* 页面整体 */
+.menu-page {
+  position: relative;
+  min-height: 120vh;
+  background: transparent;   /* 透明显示背景 */
+  overflow-x: hidden;
+  font-family: 'HarmonyOS Sans', 'PingFang SC', sans-serif;
+  padding: 0 32rpx;
+  box-sizing: border-box;
+}
+
+/* 全局背景图 */
+.page-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+/* 背景装饰斜线 */
+.bg-diagonal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(0, 0, 0, 0.02) 0,
+    rgba(0, 0, 0, 0.02) 2rpx,
+    transparent 2rpx,
+    transparent 20rpx
+  );
+  z-index: 1;   /* 在背景之上 */
+  pointer-events: none;
+}
+
+/* 空心标题 NEWS */
+.news-outline {
+  position: relative;
+  z-index: 1;
+  font-size: 120rpx;
+  font-weight: 900;
+  color: transparent;
+  -webkit-text-stroke: 2rpx #D1E9F9;
+  letter-spacing: 8rpx;
+  margin-top: 40rpx;
+  margin-bottom: -60rpx;
+  text-align: left;
+}
+
+/* 轮播图区域（居中） */
+.banner-area {
+  position: relative;
+  z-index: 1;
+  width: 630rpx;
+  margin: 20rpx auto 0;
+}
+
+.banner-swiper {
+  width: 100%;
+  height: 380rpx;
+  border-radius: 12rpx;
+  overflow: hidden;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.1);
+}
+
+.banner-img {
+  width: 100%;
+  height: 100%;
+}
+
+.banner-info {
+  position: absolute;
+  left: 32rpx;
+  bottom: 32rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+}
+
+.banner-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #FF9F1C;
+  text-shadow: 0 0 10rpx rgba(0, 0, 0, 0.7);
+}
+
+.banner-subtitle {
+  font-size: 24rpx;
+  color: #FFFFFF;
+}
+
+/* 左右箭头 */
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 64rpx;
+  height: 64rpx;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36rpx;
+  color: #666;
+  z-index: 10;
+}
+
+.arrow.left { left: -10rpx; }
+.arrow.right { right: -10rpx; }
+
+/* 自定义圆点指示器 */
+.custom-dots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20rpx;
+  gap: 12rpx;
+}
+
+.dot {
+  width: 8rpx;
+  height: 8rpx;
+  border-radius: 50%;
+  background: #CCCCCC;
+}
+
+.dot.active {
+  background: #2F8DFF;
+}
+
+/* 分类标签导航（居中） */
+.tabs {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40rpx;
+  margin-top: 64rpx;
+}
+
+.tab {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #333333;
+  opacity: 0.8;
+}
+
+.tab.active {
+  color: #17498C;
+  opacity: 1;
+}
+
+.dot-sep {
+  color: #CCCCCC;
+  font-size: 28rpx;
+}
+
+/* 斑马纹分割线 */
+.tabs-divider {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 2rpx;
+  margin-top: 16rpx;
+  background-image: repeating-linear-gradient(
+    135deg,
+    #DDDDDD 0,
+    #DDDDDD 4rpx,
+    transparent 4rpx,
+    transparent 12rpx
+  );
+}
+
+/* 新闻列表 */
+.news-list {
+  position: relative;
+  z-index: 1;
+  margin-top: 40rpx;
+}
+
+.news-item {
+  display: flex;
+  align-items: center;
+  height: 120rpx;
+  border-bottom: 1rpx solid #EEEEEE;
+  padding: 0 32rpx;
+}
+
+.news-tag {
+  flex-shrink: 0;
+  height: 40rpx;
+  padding: 0 16rpx;
+  border-radius: 20rpx;
+  display: flex;
+  align-items: center;
+  font-size: 24rpx;
+  color: #FFFFFF;
+  margin-right: 16rpx;
+}
+
+.news-tag.news { background: #2F8DFF; }
+.news-tag.activity { background: #FF9F1C; }
+
+.news-title {
+  flex: 1;
+  font-size: 30rpx;
+  color: #333333;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.news-date {
+  flex-shrink: 0;
+  font-size: 24rpx;
+  color: #8899AA;
+  margin-left: 16rpx;
+}
+
+/* 空状态、加载状态 */
+.empty-tip,
+.loading-tip,
+.no-more {
+  text-align: center;
+  color: #999;
+  padding: 40rpx 0;
+  font-size: 28rpx;
+}
+
+/* 底部区域 */
+.footer-area {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 48rpx;
+  padding-bottom: 40rpx;
+}
+
+/* SCROLL 提示 */
+.scroll-hint {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.scroll-text {
+  font-size: 24rpx;
+  font-weight: bold;
+  color: #17498C;
+}
+
+.arrow-down {
+  width: 16rpx;
+  height: 16rpx;
+  border-right: 2rpx solid #17498C;
+  border-bottom: 2rpx solid #17498C;
+  transform: rotate(45deg);
+  margin-top: 8rpx;
+  animation: float 1.5s infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: rotate(45deg) translateY(0); }
+  50% { transform: rotate(45deg) translateY(8rpx); }
+}
+
+/* 更多按钮 */
+.more-btn {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  padding: 20rpx 32rpx;
+  border-radius: 36rpx;
+  background: #FFFFFF;
+  border: 1rpx solid #2F8DFF;
+  color: #2F8DFF;
+  font-size: 26rpx;
+}
+
+.more-btn .dot {
+  width: 6rpx;
+  height: 6rpx;
+  border-radius: 50%;
+  background: #2F8DFF;
+}

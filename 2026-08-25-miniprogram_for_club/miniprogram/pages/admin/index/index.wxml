@@ -1,0 +1,10 @@
+<view class="container">
+  <!-- 全局背景图 -->
+  <image class="page-bg" src="/images/background.jpg" mode="aspectFill"></image>
+
+  <view class="admin-title">管理后台</view>
+
+  <view class="menu-item glass-card" bindtap="goActivityManage">活动管理</view>
+  <view class="menu-item glass-card" bindtap="goFundManage">社费管理</view>
+  <view class="menu-item glass-card" bindtap="goNewsManage">新闻管理</view>
+</view>

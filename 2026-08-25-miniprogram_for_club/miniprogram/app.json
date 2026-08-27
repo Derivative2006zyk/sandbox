@@ -1,12 +1,71 @@
 {
   "pages": [
+    "pages/welcome/index/index",
     "pages/index/index",
     "pages/user/index/index",
     "pages/user/edit-profile/index",
     "pages/activity/detail/index",
     "pages/activity/signup/index",
-    "pages/user/signups/index"
+    "pages/user/signups/index",
+    "pages/fund/index/index",
+    "pages/admin/index/index",
+    "pages/admin/activity-list/index",
+    "pages/admin/activity-edit/index",
+    "pages/admin/signup-list/index",
+    "pages/menu/index/index",
+    "pages/news/detail/index",
+    "pages/admin/news-list/index",
+    "pages/admin/news-edit/index"
   ],
+  "subpackages": [
+    {
+      "root": "subpackages/anim1",
+      "name": "anim1",
+      "pages": [
+        "index"
+      ]
+    },
+    {
+      "root": "subpackages/anim2",
+      "name": "anim2",
+      "pages": [
+        "index"
+      ]
+    },
+    {
+      "root": "subpackages/anim3",
+      "name": "anim3",
+      "pages": [
+        "index"
+      ]
+    },
+    {
+      "root": "subpackages/anim4",
+      "name": "anim4",
+      "pages": [
+        "index"
+      ]
+    },
+    {
+      "root": "subpackages/anim5",
+      "name": "anim5",
+      "pages": [
+        "index"
+      ]
+    }
+  ],
+  "preloadRule": {
+    "pages/welcome/index/index": {
+      "network": "all",
+      "packages": [
+        "anim1",
+        "anim2",
+        "anim3",
+        "anim4",
+        "anim5"
+      ]
+    }
+  },
   "window": {
     "backgroundColor": "#F6F6F6",
     "backgroundTextStyle": "light",
@@ -16,9 +75,9 @@
   },
   "tabBar": {
     "color": "#999999",
-    "selectedColor": "#4A90E2",
+    "selectedColor": "#00A3FF",
     "backgroundColor": "#ffffff",
-    "borderStyle": "black",
+    "borderStyle": "white",
     "list": [
       {
         "pagePath": "pages/index/index",

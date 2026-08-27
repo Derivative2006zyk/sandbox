@@ -1,0 +1,41 @@
+<view class="container">
+  <!-- 全局背景图 -->
+  <image class="page-bg" src="/images/background.jpg" mode="aspectFill"></image>
+
+  <!-- 余额卡片 -->
+  <view class="balance-card">
+    <text class="balance-label">当前社费余额</text>
+    <text class="balance-value">¥{{currentBalance}}</text>
+  </view>
+
+  <!-- 管理员修改按钮 -->
+  <button wx:if="{{isAdmin}}" class="toggle-btn" bindtap="toggleForm">
+    {{showForm ? '收起修改' : '修改余额'}}
+  </button>
+
+  <!-- 修改表单 -->
+  <view wx:if="{{showForm}}" class="update-form glass-card">
+    <input class="input" type="digit" placeholder="变动金额（正数收入，负数支出）" value="{{amount}}" bindinput="onAmountInput" />
+    <input class="input" placeholder="备注（如收取社费、活动支出）" value="{{note}}" bindinput="onNoteInput" />
+    <button class="submit-btn" bindtap="submitUpdate" disabled="{{submitting}}">
+      {{submitting ? '提交中...' : '确认修改'}}
+    </button>
+  </view>
+
+  <!-- 变更记录列表 -->
+  <view class="section-title">变更记录</view>
+  <view wx:if="{{records.length === 0 && !loading}}" class="empty">暂无记录</view>
+  <view wx:for="{{records}}" wx:key="_id" class="record-item glass-card">
+    <view class="record-main">
+      <text class="record-note">{{item.note}}</text>
+      <text class="record-amount {{item.amount >= 0 ? 'positive' : 'negative'}}">
+        {{item.amount >= 0 ? '+' : ''}}{{item.amount}}
+      </text>
+    </view>
+    <view class="record-sub">
+      <text>余额：{{item.afterBalance}}</text>
+      <text>操作人：{{item.operatorName}}</text>
+      <text>时间：{{item.createTime}}</text>
+    </view>
+  </view>
+</view>

@@ -1,23 +1,27 @@
 <view class="container" wx:if="{{activity}}">
-  <view class="activity-header">
-    <view class="title">{{activity.title}}</view>
+  <!-- 全局背景图 -->
+  <image class="page-bg" src="/images/background.jpg" mode="aspectFill"></image>
+
+  <!-- 原有内容 -->
+  <view class="glass-card">
+    <view class="skew-tag">{{activity.type || '活动'}}</view>
+    <view class="title title-skew">{{activity.title}}</view>
     <view class="info-list">
       <text class="info-item">时间：{{activity.startTime}}</text>
       <text class="info-item">地点：{{activity.location}}</text>
       <text class="info-item">报名截止：{{activity.signupDeadline}}</text>
-      <text class="info-item">人数：{{activity.currentParticipants}}/{{activity.maxParticipants}}</text>
+      <text class="info-item">人数：<text class="data-highlight">{{activity.currentParticipants}}/{{activity.maxParticipants}}</text></text>
     </view>
   </view>
 
-  <view class="activity-description">
+  <view class="glass-card activity-description">
     <text class="desc-title">活动介绍</text>
     <text class="desc-content">{{activity.description}}</text>
   </view>
 
-  <!-- 报名/取消按钮 -->
   <view class="action-area">
-    <button wx:if="{{!isSignedUp}}" class="primary-btn" bindtap="goSignup">立即报名</button>
-    <button wx:else class="cancel-btn" bindtap="cancelSignup" disabled="{{submitting}}">取消报名</button>
+    <button wx:if="{{!isSignedUp}}" class="angle-btn" bindtap="goSignup">立即报名</button>
+    <button wx:else class="angle-btn" bindtap="cancelSignup" disabled="{{submitting}}">取消报名</button>
   </view>
 </view>
 

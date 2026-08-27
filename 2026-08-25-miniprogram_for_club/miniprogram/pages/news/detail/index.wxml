@@ -1,0 +1,15 @@
+<view class="container">
+  <!-- 全局背景图 -->
+  <image class="page-bg" src="/images/background.jpg" mode="aspectFill"></image>
+
+  <view wx:if="{{loading}}" class="loading">加载中...</view>
+
+  <view wx:if="{{news}}" class="news-detail glass-card">
+    <view class="header">
+      <view class="tag {{news.category === 'activity' ? 'activity' : 'news'}}">{{news.tag}}</view>
+      <text class="date">{{news.date}}</text>
+    </view>
+    <view class="title">{{news.title}}</view>
+    <view class="content">{{news.content}}</view>
+  </view>
+</view>

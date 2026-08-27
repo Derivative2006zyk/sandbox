@@ -1,0 +1,49 @@
+<view class="container">
+  <!-- 全局背景图 -->
+  <image class="page-bg" src="/images/background.jpg" mode="aspectFill"></image>
+
+  <view class="form-card glass-card">
+    <view class="form-item">
+      <text>标题</text>
+      <input value="{{title}}" data-field="title" bindinput="onInput" placeholder="请输入活动标题" />
+    </view>
+    <view class="form-item">
+      <text>地点</text>
+      <input value="{{location}}" data-field="location" bindinput="onInput" placeholder="请输入活动地点" />
+    </view>
+    <view class="form-item">
+      <text>开始时间</text>
+      <input value="{{startTime}}" data-field="startTime" bindinput="onInput" placeholder="例如：2026-09-01 19:00" />
+    </view>
+    <view class="form-item">
+      <text>结束时间</text>
+      <input value="{{endTime}}" data-field="endTime" bindinput="onInput" placeholder="例如：2026-09-01 21:00" />
+    </view>
+    <view class="form-item">
+      <text>报名截止</text>
+      <input value="{{signupDeadline}}" data-field="signupDeadline" bindinput="onInput" placeholder="例如：2026-08-31 23:59" />
+    </view>
+    <view class="form-item">
+      <text>人数上限</text>
+      <input type="number" value="{{maxParticipants}}" data-field="maxParticipants" bindinput="onInput" placeholder="请输入最大报名人数" />
+    </view>
+    <view class="form-item">
+      <text>类型</text>
+      <input value="{{type}}" data-field="type" bindinput="onInput" placeholder="如：讲座、聚会、比赛" />
+    </view>
+    <view class="form-item">
+      <text>活动介绍</text>
+      <textarea value="{{description}}" data-field="description" bindinput="onInput" placeholder="请输入活动详细介绍" auto-height />
+    </view>
+    <view class="form-item">
+      <text>状态</text>
+      <radio-group data-field="status" bindchange="onStatusChange">
+        <label><radio value="1" checked="{{status === 1}}" />发布</label>
+        <label><radio value="0" checked="{{status === 0}}" />草稿</label>
+      </radio-group>
+    </view>
+    <button class="submit-btn" bindtap="submit" disabled="{{submitting}}">
+      {{submitting ? '保存中...' : '保存'}}
+    </button>
+  </view>
+</view>

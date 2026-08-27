@@ -1,10 +1,23 @@
 <view class="container">
-  <view class="user-card" wx:if="{{userInfo}}">
+  <!-- 全局背景图 -->
+  <image class="page-bg" src="/images/background.jpg" mode="aspectFill"></image>
+
+  <!-- 用户信息卡片 -->
+  <view class="user-card glass-card" wx:if="{{userInfo}}">
     <text class="name">{{userInfo.name || '未填写姓名'}}</text>
     <text class="student-id">{{userInfo.studentId || '未填写学号'}}</text>
   </view>
-  <view class="menu-item" bindtap="goMySignups">
+
+  <!-- 菜单列表 -->
+  <view class="menu-item glass-card" bindtap="goMySignups">
     <text>我的报名</text>
   </view>
-  <button class="edit-btn" bindtap="goEditProfile">编辑资料</button>
+  <view class="menu-item glass-card" bindtap="goFund">
+    <text>社费公示</text>
+  </view>
+  <view wx:if="{{userInfo.role === 1}}" class="menu-item glass-card" bindtap="goAdmin">
+    <text>管理后台</text>
+  </view>
+
+  <button class="edit-btn glass-card" bindtap="goEditProfile">编辑资料</button>
 </view>

@@ -1,0 +1,53 @@
+<view 
+  class="splash-container"
+  bindtouchstart="onTouchStart" 
+  bindtouchend="onTouchEnd"
+>
+  <!-- 背景图片 -->
+  <image class="bg-image" src="/images/bg.jpg" mode="aspectFill"></image>
+
+  <!-- 角色动画 -->
+  <view class="hero">
+    <view class="character-sprite" style="{{spriteBg}}"></view>
+  </view>
+
+  <!-- 文案区 -->
+  <view class="typography">
+    <view class="title-group">
+      <text class="main-title">欢迎来到 樱花日语社</text>
+      <text class="sub-title">WELCOME TO Sakura Japanese Club</text>
+    </view>
+    <view class="cta-area">
+      <button class="btn primary" bindtap="enterApp">
+        <text>进入社团</text>
+        <text class="plus">+</text>
+      </button>
+      <button class="btn secondary" bindtap="enterApp">
+        <text>了解更多</text>
+      </button>
+    </view>
+  </view>
+
+  <!-- 合规提示 -->
+  <view class="compliance">
+    <text>为了维护未成年人的健康上网环境，本平台暂不支持18岁以下的用户使用</text>
+  </view>
+
+  <!-- 上滑进入提示（带动画） -->
+  <view class="scroll-hint {{isLeaving ? 'hint-leaving' : ''}}">
+    <text class="scroll-text">上滑进入</text>
+  </view>
+
+  <!-- 底部版权 -->
+  <view class="footer">
+    <text>© 2026 樱花日语社</text>
+  </view>
+
+  <!-- 梯形导航盒子 -->
+  <view class="trapezoid-nav">
+    <view class="nav-logo">
+      <text class="logo-main">樱花日语社</text>
+      <text class="logo-sub">Sakura Japanese Club</text>
+    </view>
+  </view>
+</view>

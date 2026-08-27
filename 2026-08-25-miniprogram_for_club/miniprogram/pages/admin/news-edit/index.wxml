@@ -1,0 +1,31 @@
+<view class="container">
+  <!-- 全局背景图 -->
+  <image class="page-bg" src="/images/background.jpg" mode="aspectFill"></image>
+
+  <view class="form-card glass-card">
+    <view class="form-item">
+      <text>标题</text>
+      <input value="{{title}}" data-field="title" bindinput="onInput" placeholder="请输入新闻标题" />
+    </view>
+
+    <view class="form-item">
+      <text>分类</text>
+      <radio-group bindchange="onCategoryChange">
+        <label><radio value="news" checked="{{category === 'news'}}" />新闻</label>
+        <label><radio value="announcement" checked="{{category === 'announcement'}}" />公告</label>
+      </radio-group>
+    </view>
+
+    <view class="form-item">
+      <text>日期（可选）</text>
+      <input value="{{date}}" data-field="date" bindinput="onInput" placeholder="格式：2026-08-26" />
+    </view>
+
+    <view class="form-item">
+      <text>内容</text>
+      <textarea value="{{content}}" data-field="content" bindinput="onInput" placeholder="请输入新闻正文" auto-height />
+    </view>
+
+    <button class="submit-btn" bindtap="submit" disabled="{{submitting}}">{{submitting ? '保存中...' : '保存'}}</button>
+  </view>
+</view>

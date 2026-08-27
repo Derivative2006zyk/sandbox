@@ -1,0 +1,66 @@
+.container {
+  position: relative;
+  min-height: 100vh;
+  padding: 40rpx 32rpx;
+  box-sizing: border-box;
+  background: transparent;
+}
+
+/* 全局背景图 */
+.page-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.form-card {
+  position: relative;
+  z-index: 1;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 24rpx;
+  padding: 30rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.05);
+}
+
+.form-item {
+  margin-bottom: 20rpx;
+}
+
+.form-item text {
+  display: block;
+  margin-bottom: 10rpx;
+  font-size: 28rpx;
+  color: #333;
+}
+
+.form-item input,
+.form-item textarea {
+  width: 100%;
+  border: 1rpx solid #ddd;
+  border-radius: 8rpx;
+  padding: 15rpx;
+  font-size: 28rpx;
+  background: transparent;
+  box-sizing: border-box;
+}
+
+.form-item textarea {
+  min-height: 150rpx;
+}
+
+.submit-btn {
+  margin-top: 30rpx;
+  width: 100%;
+  background: #2F8DFF;
+  color: #fff;
+  border-radius: 8rpx;
+}
+
+radio-group label {
+  margin-right: 20rpx;
+}

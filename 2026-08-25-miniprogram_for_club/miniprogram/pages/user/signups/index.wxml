@@ -1,4 +1,7 @@
 <view class="container">
+  <!-- 全局背景图 -->
+  <image class="page-bg" src="/images/background.jpg" mode="aspectFill"></image>
+
   <!-- 加载中 -->
   <view wx:if="{{loading}}" class="loading">加载中...</view>
 
@@ -9,7 +12,7 @@
 
   <!-- 报名列表 -->
   <view wx:if="{{!loading && list.length > 0}}">
-    <view class="signup-card" wx:for="{{list}}" wx:key="signupId">
+    <view class="signup-card glass-card" wx:for="{{list}}" wx:key="signupId">
       <view class="activity-title" wx:if="{{item.activity}}">{{item.activity.title}}</view>
       <view class="activity-title" wx:else>活动已删除</view>
       <view class="signup-info">

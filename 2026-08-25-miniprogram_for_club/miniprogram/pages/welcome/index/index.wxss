@@ -1,0 +1,213 @@
+page {
+  background-color: #FFFFFF;
+}
+
+/* 页面整体容器 */
+.splash-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background-color: #FFFFFF;
+  overflow: hidden;
+  font-family: 'HarmonyOS Sans', 'PingFang SC', sans-serif;
+}
+
+/* 背景图片（最底层） */
+.bg-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+/* 顶部安全区占位 */
+.splash-container::before {
+  content: '';
+  display: block;
+  height: 44rpx;
+}
+
+/* 主视觉角色区 */
+.hero {
+  position: absolute;
+  top: 60rpx;                  /* 角色垂直位置，可调整 */
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  z-index: 2;
+}
+
+/* 角色精灵图容器（放大1.2倍） */
+.character-sprite {
+  width: 672rpx;               /* 560 * 1.2 = 672 */
+  height: 1193rpx;             /* 994 * 1.2 ≈ 1193 */
+  background-repeat: no-repeat;
+  background-size: 500% 400%;  /* 保持精灵图行列比例 */
+  z-index: 1;
+}
+
+/* 文案区（恢复原位置） */
+.typography {
+  position: relative;
+  margin-top: 1180rpx;         /* 恢复为原值 */
+  margin-right: 40rpx;
+  margin-left: auto;
+  z-index: 20;
+  padding: 0 32rpx;
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.title-group {
+  display: block;
+  margin-left: 0;
+}
+
+.main-title {
+  display: block;
+  font-size: 56rpx;
+  font-weight: 700;
+  line-height: 72rpx;
+  color: #17498C;
+}
+
+.sub-title {
+  display: block;
+  font-size: 24rpx;
+  line-height: 36rpx;
+  color: #7BA2C4;
+  letter-spacing: 2rpx;
+  margin-top: 24rpx;
+}
+
+/* 操作按钮区 */
+.cta-area {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 400rpx;
+  height: 36rpx;
+  margin-top: 20rpx;
+  z-index: 20;
+}
+
+/* 按钮通用样式 */
+.btn {
+  flex: 1;
+  height: 36rpx;
+  border-radius: 8rpx;
+  font-size: 16rpx;
+  font-weight: bold;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  padding: 0;
+  box-sizing: border-box;
+  margin: 0 6rpx;
+}
+
+.btn:first-child {
+  margin-left: 0;
+}
+.btn:last-child {
+  margin-right: 0;
+}
+
+.btn.primary {
+  background-color: #2F8DFF;
+}
+
+.btn.primary .plus {
+  margin-left: 4rpx;
+  font-size: 16rpx;
+}
+
+.btn.secondary {
+  background-color: #000000;
+}
+
+/* 合规提示 */
+.compliance {
+  position: relative;
+  margin-top: 30rpx;
+  margin-right: 70rpx;
+  margin-left: auto;
+  text-align: right;
+  font-size: 20rpx;
+  line-height: 32rpx;
+  color: #999999;
+  z-index: 20;
+  width: 400rpx;
+}
+
+/* SCROLL 滚动提示 */
+.scroll-hint {
+  position: absolute;
+  bottom: 80rpx;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  color: #17498C;
+  font-size: 24rpx;
+  font-weight: bold;
+  z-index: 20;
+}
+
+/* 底部版权 */
+.footer {
+  position: absolute;
+  bottom: 20rpx;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 16rpx;
+  color: #666666;
+  z-index: 20;
+}
+
+/* 右下角梯形导航盒子 */
+.trapezoid-nav {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 844rpx;
+  height: 844rpx;
+  background: rgba(255, 255, 255, 0.65);
+  clip-path: polygon(0% 64%, 100% 42%, 100% 100%, 0% 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 15;
+  padding: 80rpx;
+}
+
+.nav-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 0;
+}
+
+.logo-main {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #FFFFFF;
+  line-height: 1;
+}
+
+.logo-sub {
+  font-size: 14rpx;
+  color: #A0D8EF;
+  letter-spacing: 1rpx;
+  margin-top: 4rpx;
+}

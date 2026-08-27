@@ -1,0 +1,18 @@
+<view class="container">
+  <!-- 全局背景图 -->
+  <image class="page-bg" src="/images/background.jpg" mode="aspectFill"></image>
+
+  <button class="create-btn" bindtap="createActivity">新建活动</button>
+
+  <view wx:if="{{list.length === 0 && !loading}}" class="empty">暂无活动</view>
+
+  <view class="activity-item glass-card" wx:for="{{list}}" wx:key="_id">
+    <view class="title">{{item.title}}</view>
+    <view class="status">状态：{{item.status === 1 ? '已发布' : '已下架'}}</view>
+    <view class="actions">
+      <button size="mini" bindtap="editActivity" data-id="{{item._id}}">编辑</button>
+      <button size="mini" type="warn" bindtap="deleteActivity" data-id="{{item._id}}">删除</button>
+      <button size="mini" bindtap="viewSignups" data-id="{{item._id}}">报名名单</button>
+    </view>
+  </view>
+</view>

@@ -1,22 +1,38 @@
 <view class="container">
+  <!-- 背景图片（全局背景） -->
+  <image class="page-bg" src="/images/background.jpg" mode="aspectFill"></image>
+
+  <!-- 返回按钮（固定定位） -->
+  <view class="back-btn" bindtap="goBackToMenu">
+    <text class="back-icon">‹</text>
+    <text class="back-text">返回</text>
+  </view>
+
+  <!-- 背景装饰斜线 -->
+  <view class="bg-diagonal"></view>
+
   <!-- 活动列表区域 -->
   <block wx:if="{{activityList.length > 0}}">
-    <view class="activity-card"
-      wx:for="{{activityList}}"
+    <view 
+      class="activity-card glass-card" 
+      wx:for="{{activityList}}" 
       wx:key="_id"
       bindtap="goDetail"
       data-id="{{item._id}}">
+      
+      <view class="skew-tag">{{item.type || '活动'}}</view>
       <view class="activity-title">{{item.title}}</view>
       <view class="activity-info">
         <text class="info-item">时间：{{item.startTime}}</text>
         <text class="info-item">地点：{{item.location}}</text>
-        <text class="info-item">报名：{{item.currentParticipants}}/{{item.maxParticipants}}</text>
+      </view>
+      <view class="data-block">
+        <text class="data-highlight">{{item.currentParticipants}}/{{item.maxParticipants}}</text>
+        <text class="data-label">已报名</text>
       </view>
     </view>
 
-    <!-- 加载中提示 -->
     <view class="loading-tip" wx:if="{{listLoading}}">加载中...</view>
-    <!-- 没有更多数据提示 -->
     <view class="no-more" wx:if="{{!hasMore && activityList.length > 0}}">没有更多活动了</view>
   </block>
 

@@ -1,17 +1,22 @@
 <view class="container">
-  <view class="form-item">
-    <text class="label">姓名</text>
-    <input class="input" placeholder="请输入姓名" value="{{name}}" data-field="name" bindinput="onInput" />
+  <!-- 全局背景图 -->
+  <image class="page-bg" src="/images/background.jpg" mode="aspectFill"></image>
+
+  <view class="form-card glass-card">
+    <view class="form-item">
+      <text class="label">姓名</text>
+      <input class="input" placeholder="请输入姓名" value="{{name}}" data-field="name" bindinput="onInput" />
+    </view>
+    <view class="form-item">
+      <text class="label">学号</text>
+      <input class="input" placeholder="请输入学号" value="{{studentId}}" data-field="studentId" bindinput="onInput" />
+    </view>
+    <view class="form-item">
+      <text class="label">手机号</text>
+      <input class="input" type="number" maxlength="11" placeholder="请输入手机号" value="{{phone}}" data-field="phone" bindinput="onInput" />
+    </view>
+    <button class="submit-btn" bindtap="submit" disabled="{{submitting}}">
+      {{submitting ? '提交中...' : '确认报名'}}
+    </button>
   </view>
-  <view class="form-item">
-    <text class="label">学号</text>
-    <input class="input" placeholder="请输入学号" value="{{studentId}}" data-field="studentId" bindinput="onInput" />
-  </view>
-  <view class="form-item">
-    <text class="label">手机号</text>
-    <input class="input" type="number" maxlength="11" placeholder="请输入手机号" value="{{phone}}" data-field="phone" bindinput="onInput" />
-  </view>
-  <button class="submit-btn" bindtap="submit" disabled="{{submitting}}">
-    {{submitting ? '提交中...' : '确认报名'}}
-  </button>
 </view>
