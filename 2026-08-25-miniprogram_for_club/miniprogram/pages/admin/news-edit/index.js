@@ -2,9 +2,10 @@ Page({
   data: {
     newsId: '',
     title: '',
-    category: 'news',   // 默认新闻
+    category: 'news',
     content: '',
     date: '',
+    image: '',             // 新增图片字段
     submitting: false
   },
 
@@ -27,7 +28,8 @@ Page({
           title: news.title,
           category: news.category,
           content: news.content,
-          date: news.date
+          date: news.date,
+          image: news.image || ''      // 加载已有图片
         });
       } else {
         wx.showToast({ title: res.result.msg || '加载失败', icon: 'none' });
@@ -46,8 +48,39 @@ Page({
     this.setData({ category: e.detail.value });
   },
 
+  // 上传新闻配图
+  uploadImage() {
+    wx.chooseMedia({
+      count: 1,
+      mediaType: ['image'],
+      sourceType: ['album', 'camera'],
+      success: (res) => {
+        const tempFilePath = res.tempFiles[0].tempFilePath;
+        wx.showLoading({ title: '上传中...' });
+        const cloudPath = `news-images/${Date.now()}-${Math.floor(Math.random() * 1000)}.jpg`;
+        wx.cloud.uploadFile({
+          cloudPath,
+          filePath: tempFilePath,
+          success: (uploadRes) => {
+            this.setData({ image: uploadRes.fileID });
+            wx.hideLoading();
+            wx.showToast({ title: '上传成功', icon: 'success' });
+          },
+          fail: (err) => {
+            wx.hideLoading();
+            console.error('上传失败', err);
+            wx.showToast({ title: '上传失败', icon: 'none' });
+          }
+        });
+      },
+      fail: (err) => {
+        console.error('选择图片失败', err);
+      }
+    });
+  },
+
   async submit() {
-    const { newsId, title, category, content, date } = this.data;
+    const { newsId, title, category, content, date, image } = this.data;
     if (!title.trim() || !content.trim()) {
       wx.showToast({ title: '请填写标题和内容', icon: 'none' });
       return;
@@ -59,14 +92,14 @@ Page({
         // 编辑
         const res = await wx.cloud.callFunction({
           name: 'updateNews',
-          data: { newsId, title: title.trim(), category, content: content.trim(), date }
+          data: { newsId, title: title.trim(), category, content: content.trim(), date, image }
         });
         this.handleResult(res);
       } else {
         // 新建
         const res = await wx.cloud.callFunction({
           name: 'createNews',
-          data: { title: title.trim(), category, content: content.trim(), date }
+          data: { title: title.trim(), category, content: content.trim(), date, image }
         });
         this.handleResult(res);
       }

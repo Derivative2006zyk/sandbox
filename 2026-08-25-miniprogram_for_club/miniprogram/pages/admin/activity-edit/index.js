@@ -12,6 +12,7 @@ Page({
     maxParticipants: '',
     type: '',
     status: 1,
+    cover: '',             // 新增图片字段
     submitting: false
   },
 
@@ -40,7 +41,8 @@ Page({
           signupDeadline: act.signupDeadline || '',
           maxParticipants: act.maxParticipants ? String(act.maxParticipants) : '',
           type: act.type || '',
-          status: act.status !== undefined ? act.status : 1
+          status: act.status !== undefined ? act.status : 1,
+          cover: act.cover || ''      // 加载已有封面
         })
       } else {
         wx.showToast({ title: res.result.msg || '加载失败', icon: 'none' })
@@ -62,11 +64,43 @@ Page({
     this.setData({ status: Number(e.detail.value) })
   },
 
+  // 上传封面图片
+  uploadCover() {
+    wx.chooseMedia({
+      count: 1,
+      mediaType: ['image'],
+      sourceType: ['album', 'camera'],
+      success: (res) => {
+        const tempFilePath = res.tempFiles[0].tempFilePath
+        wx.showLoading({ title: '上传中...' })
+        // 生成唯一云端路径
+        const cloudPath = `activity-covers/${Date.now()}-${Math.floor(Math.random() * 1000)}.jpg`
+        wx.cloud.uploadFile({
+          cloudPath,
+          filePath: tempFilePath,
+          success: (uploadRes) => {
+            this.setData({ cover: uploadRes.fileID })
+            wx.hideLoading()
+            wx.showToast({ title: '上传成功', icon: 'success' })
+          },
+          fail: (err) => {
+            wx.hideLoading()
+            console.error('上传失败', err)
+            wx.showToast({ title: '上传失败', icon: 'none' })
+          }
+        })
+      },
+      fail: (err) => {
+        console.error('选择图片失败', err)
+      }
+    })
+  },
+
   // 提交保存（新建或更新）
   async submit() {
     const {
       activityId, title, description, location,
-      startTime, endTime, signupDeadline, maxParticipants, type, status
+      startTime, endTime, signupDeadline, maxParticipants, type, status, cover
     } = this.data
 
     // 基础校验
@@ -96,7 +130,8 @@ Page({
             signupDeadline: signupDeadline.trim(),
             maxParticipants: maxNum,
             type: type.trim(),
-            status: Number(status)
+            status: Number(status),
+            cover: cover        // 传递封面
           }
         })
         this.handleResult(res)
@@ -113,7 +148,8 @@ Page({
             signupDeadline: signupDeadline.trim(),
             maxParticipants: maxNum,
             type: type.trim(),
-            status: Number(status)
+            status: Number(status),
+            cover: cover        // 传递封面
           }
         })
         this.handleResult(res)

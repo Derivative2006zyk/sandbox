@@ -16,8 +16,11 @@ exports.main = async (event, context) => {
       return { code: 403, msg: '无权限操作' }
     }
 
-    // 只允许更新部分字段
-    const allowedFields = ['title', 'description', 'location', 'startTime', 'endTime', 'signupDeadline', 'maxParticipants', 'type', 'status']
+    // 允许更新的字段列表，添加 cover
+    const allowedFields = [
+      'title', 'description', 'location', 'startTime', 'endTime',
+      'signupDeadline', 'maxParticipants', 'type', 'status', 'cover'
+    ];
     const data = {}
     for (const key of allowedFields) {
       if (updateFields[key] !== undefined) {
@@ -27,6 +30,8 @@ exports.main = async (event, context) => {
           data[key] = Number(updateFields[key])
         } else if (key === 'status') {
           data[key] = Number(updateFields[key])
+        } else if (key === 'cover') {
+          data[key] = String(updateFields[key])   // 确保字符串
         } else {
           data[key] = String(updateFields[key]).trim()
         }

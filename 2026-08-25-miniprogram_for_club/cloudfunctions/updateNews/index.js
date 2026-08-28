@@ -6,7 +6,7 @@ exports.main = async (event, context) => {
   const { OPENID } = cloud.getWXContext()
   if (!OPENID) return { code: 401, msg: '无法获取用户身份' }
 
-  const { newsId, title, category, content, date } = event
+  const { newsId, title, category, content, date, image } = event
   if (!newsId) return { code: 400, msg: '缺少新闻ID' }
 
   try {
@@ -26,6 +26,7 @@ exports.main = async (event, context) => {
     }
     if (content !== undefined) updateData.content = content.trim()
     if (date !== undefined) updateData.date = date
+    if (image !== undefined) updateData.image = image   // 新增图片字段
     updateData.updateTime = db.serverDate()
 
     await db.collection('news').doc(newsId).update({ data: updateData })

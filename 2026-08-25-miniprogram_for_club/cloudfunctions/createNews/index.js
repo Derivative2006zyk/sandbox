@@ -6,12 +6,10 @@ exports.main = async (event, context) => {
   const { OPENID } = cloud.getWXContext()
   if (!OPENID) return { code: 401, msg: '无法获取用户身份' }
 
-  const { title, category, content, date } = event
+  const { title, category, content, date, image } = event
   if (!title || !category || !content) {
     return { code: 400, msg: '请填写标题、分类和内容' }
   }
-
-  // 分类只允许 news 和 announcement
   if (!['news', 'announcement'].includes(category)) {
     return { code: 400, msg: '分类无效' }
   }
@@ -29,6 +27,7 @@ exports.main = async (event, context) => {
         content: content.trim(),
         date: date || new Date().toISOString().slice(0, 10),
         tag: category === 'news' ? '新闻' : '公告',
+        image: image || '',          // 保存图片 fileID
         isTop: false,
         createTime: db.serverDate(),
         updateTime: db.serverDate()

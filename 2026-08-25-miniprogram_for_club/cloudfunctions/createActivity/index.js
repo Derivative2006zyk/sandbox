@@ -15,7 +15,8 @@ exports.main = async (event, context) => {
     signupDeadline,
     maxParticipants,
     type,
-    status
+    status,
+    cover          // 新增封面字段
   } = event
 
   // 基本校验
@@ -34,7 +35,7 @@ exports.main = async (event, context) => {
     const addRes = await db.collection('activities').add({
       data: {
         title: title.trim(),
-        description: description ? description.trim() : '',   // 确保保存介绍
+        description: description ? description.trim() : '',
         location: location.trim(),
         startTime: new Date(startTime),
         endTime: new Date(endTime),
@@ -43,6 +44,7 @@ exports.main = async (event, context) => {
         currentParticipants: 0,
         type: type ? type.trim() : '',
         status: status !== undefined ? Number(status) : 1,
+        cover: cover || '',   // 保存图片 fileID
         createBy: OPENID,
         createTime: db.serverDate(),
         updateTime: db.serverDate()

@@ -2,22 +2,34 @@
   <!-- 全局背景图 -->
   <image class="page-bg" src="/images/background.jpg" mode="aspectFill"></image>
 
-  <!-- 用户信息卡片 -->
+  <!-- 背景装饰斜线 -->
+  <view class="bg-diagonal"></view>
+
+  <!-- 用户信息卡片（毛玻璃） -->
   <view class="user-card glass-card" wx:if="{{userInfo}}">
-    <text class="name">{{userInfo.name || '未填写姓名'}}</text>
-    <text class="student-id">{{userInfo.studentId || '未填写学号'}}</text>
+    <view class="user-avatar">
+      <text class="avatar-text">{{userInfo.name ? userInfo.name[0] : '?'}}</text>
+    </view>
+    <view class="user-info">
+      <text class="name">{{userInfo.name || '未填写姓名'}}</text>
+      <text class="student-id">{{userInfo.studentId || '未填写学号'}}</text>
+    </view>
   </view>
 
-  <!-- 菜单列表 -->
+  <!-- 功能菜单列表（毛玻璃卡片） -->
   <view class="menu-item glass-card" bindtap="goMySignups">
-    <text>我的报名</text>
+    <text class="menu-text">我的报名</text>
+    <text class="menu-arrow">›</text>
   </view>
   <view class="menu-item glass-card" bindtap="goFund">
-    <text>社费公示</text>
+    <text class="menu-text">社费公示</text>
+    <text class="menu-arrow">›</text>
   </view>
   <view wx:if="{{userInfo.role === 1}}" class="menu-item glass-card" bindtap="goAdmin">
-    <text>管理后台</text>
+    <text class="menu-text">管理后台</text>
+    <text class="menu-arrow">›</text>
   </view>
 
-  <button class="edit-btn glass-card" bindtap="goEditProfile">编辑资料</button>
+  <!-- 编辑资料按钮（切角按钮） -->
+  <button class="edit-btn angle-btn" bindtap="goEditProfile">编辑资料</button>
 </view>

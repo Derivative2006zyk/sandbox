@@ -3,7 +3,7 @@
   min-height: 100vh;
   padding: 140rpx 20rpx 20rpx;
   box-sizing: border-box;
-  background: transparent;   /* 透明以显示背景图 */
+  background: transparent;
 }
 
 /* 全局背景图 */
@@ -16,7 +16,7 @@
   z-index: 0;
 }
 
-/* 背景装饰斜线（在背景之上，但在内容之下） */
+/* 背景装饰斜线（在背景之上，内容之下） */
 .bg-diagonal {
   position: fixed;
   top: 0;
@@ -34,7 +34,7 @@
   pointer-events: none;
 }
 
-/* 返回按钮（固定定位，最高层） */
+/* 返回按钮（毛玻璃胶囊） */
 .back-btn {
   position: fixed;
   top: 20rpx;
@@ -44,9 +44,12 @@
   align-items: center;
   gap: 6rpx;
   padding: 12rpx 20rpx;
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
   border-radius: 30rpx;
-  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.08);
   font-size: 26rpx;
   color: #17498C;
 }
@@ -56,14 +59,34 @@
   line-height: 1;
 }
 
-/* 活动卡片等内容（在背景之上） */
+/* 活动卡片（毛玻璃 + 大圆角 + 阴影） */
 .activity-card {
   position: relative;
   z-index: 1;
   margin-bottom: 20rpx;
   overflow: hidden;
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 24rpx;
+  box-shadow: 0 8rpx 24rpx rgba(0, 0, 0, 0.06), inset 0 0 0 1px rgba(255,255,255,0.5);
+  padding: 30rpx;
 }
 
+/* 左上角标签（切角平行四边形） */
+.skew-tag {
+  display: inline-block;
+  background: #FF6100;
+  color: #fff;
+  padding: 6rpx 20rpx;
+  transform: skewX(-10deg);
+  font-size: 24rpx;
+  font-weight: bold;
+  border-radius: 0 8rpx 0 8rpx; /* 小圆角修饰 */
+}
+
+/* 活动标题（倾斜 BA 风格） */
 .activity-title {
   font-family: 'Oswald', 'PingFang SC', sans-serif;
   font-size: 40rpx;
@@ -73,21 +96,30 @@
   transform: rotate(-1deg);
 }
 
+/* 活动信息 */
 .activity-info {
   display: flex;
   flex-direction: column;
   gap: 8rpx;
-  color: #666;
+  color: #555;
   font-size: 28rpx;
 }
 
+/* 报名数据块 */
 .data-block {
   display: flex;
   align-items: center;
   gap: 10rpx;
   margin-top: 15rpx;
   padding-top: 15rpx;
-  border-top: 1px solid rgba(0,0,0,0.05);
+  border-top: 1px solid rgba(0,0,0,0.08);
+}
+
+.data-highlight {
+  color: #FF6100;
+  font-weight: bold;
+  font-family: 'Oswald', monospace;
+  font-size: 32rpx;
 }
 
 .data-label {
@@ -95,6 +127,7 @@
   color: #999;
 }
 
+/* 加载与空状态 */
 .loading-tip,
 .no-more {
   position: relative;
