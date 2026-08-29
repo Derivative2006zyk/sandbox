@@ -2,9 +2,9 @@ const app = getApp()
 
 Page({
   data: {
-    list: [],            // 报名列表
+    list: [],
     loading: false,
-    hasLoaded: false     // 是否已加载过
+    hasLoaded: false
   },
 
   onLoad() {
@@ -12,14 +12,19 @@ Page({
   },
 
   onShow() {
-    // 从详情页返回或取消报名后，可能需要刷新，这里简单处理：每次显示都重新加载
-    // 但避免首次 onLoad 重复加载，可通过 hasLoaded 判断
     if (this.data.hasLoaded) {
       this.loadMySignups()
     }
   },
 
-  // 加载我的报名列表
+  goBack() {
+    wx.navigateBack({
+      fail: () => {
+        wx.reLaunch({ url: '/pages/user/index/index' })
+      }
+    })
+  },
+
   async loadMySignups() {
     if (this.data.loading) return
     this.setData({ loading: true })
@@ -46,10 +51,8 @@ Page({
     }
   },
 
-  // 点击取消报名
   cancelSignup(e) {
     const activityId = e.currentTarget.dataset.id
-    const signupId = e.currentTarget.dataset.signupid
     if (!activityId) return
 
     wx.showModal({
@@ -66,7 +69,6 @@ Page({
             wx.hideLoading()
             if (result.result && result.result.code === 0) {
               wx.showToast({ title: '已取消', icon: 'success' })
-              // 从列表中移除该条记录（或重新加载）
               this.loadMySignups()
             } else {
               wx.showToast({ title: result.result.msg || '取消失败', icon: 'none' })

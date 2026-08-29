@@ -2,10 +2,25 @@
   <!-- 全局背景图 -->
   <image class="page-bg" src="/images/background.jpg" mode="aspectFill"></image>
 
-  <!-- 原有内容 -->
-  <view class="glass-card">
+  <!-- 自定义返回按钮 -->
+  <view class="custom-back" bindtap="goBack">
+    <text class="back-icon">‹</text>
+    <text class="back-text">返回</text>
+  </view>
+
+  <!-- 标题卡片（含标签和标题） -->
+  <view class="glass-card title-card">
     <view class="skew-tag">{{activity.type || '活动'}}</view>
     <view class="title title-skew">{{activity.title}}</view>
+  </view>
+
+  <!-- 宣传图片（若有） -->
+  <view class="detail-cover" wx:if="{{activity.coverThumb || activity.cover}}">
+    <image class="detail-cover-img" src="{{activity.coverThumb || activity.cover}}" mode="aspectFill"></image>
+  </view>
+
+  <!-- 活动信息卡片 -->
+  <view class="glass-card info-card">
     <view class="info-list">
       <text class="info-item">时间：{{activity.startTime}}</text>
       <text class="info-item">地点：{{activity.location}}</text>
@@ -14,11 +29,13 @@
     </view>
   </view>
 
-  <view class="glass-card activity-description">
+  <!-- 活动介绍内容 -->
+  <view class="glass-card content-card">
     <text class="desc-title">活动介绍</text>
     <text class="desc-content">{{activity.description}}</text>
   </view>
 
+  <!-- 报名/取消按钮 -->
   <view class="action-area">
     <button wx:if="{{!isSignedUp}}" class="angle-btn" bindtap="goSignup">立即报名</button>
     <button wx:else class="angle-btn" bindtap="cancelSignup" disabled="{{submitting}}">取消报名</button>

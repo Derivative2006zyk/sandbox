@@ -2,6 +2,12 @@
   <!-- 全局背景图 -->
   <image class="page-bg" src="/images/background.jpg" mode="aspectFill"></image>
 
+  <!-- 自定义返回按钮 -->
+  <view class="custom-back" bindtap="goBack">
+    <text class="back-icon">‹</text>
+    <text class="back-text">返回</text>
+  </view>
+
   <!-- 余额卡片 -->
   <view class="balance-card">
     <text class="balance-label">当前社费余额</text>

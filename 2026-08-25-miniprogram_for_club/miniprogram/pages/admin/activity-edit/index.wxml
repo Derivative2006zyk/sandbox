@@ -1,6 +1,5 @@
 <view class="container">
-  <!-- 全局背景图（如果有的话，可选） -->
-  <!-- 为保持原有背景，此处保留容器背景透明，可添加背景图 -->
+  <!-- 全局背景图（如需全局背景可保留，这里省略背景图结构，保持原有设计） -->
   <view class="form-card glass-card">
     <view class="form-item">
       <text>标题</text>
@@ -35,7 +34,7 @@
     <view class="form-item">
       <text>活动封面</text>
       <view class="upload-area" bindtap="uploadCover">
-        <image wx:if="{{cover}}" class="cover-preview" src="{{cover}}" mode="aspectFill"></image>
+        <image wx:if="{{coverThumb || cover}}" class="cover-preview" src="{{coverThumb || cover}}" mode="aspectFill"></image>
         <view wx:else class="upload-placeholder">
           <text class="upload-icon">＋</text>
           <text class="upload-text">点击上传图片</text>
@@ -58,4 +57,7 @@
       {{submitting ? '保存中...' : '保存'}}
     </button>
   </view>
+
+  <!-- 隐藏的压缩画布（用于图片处理） -->
+  <canvas canvas-id="compressCanvas" style="width: 300px; height: 300px; position: fixed; left: 9999px; top: 9999px;"></canvas>
 </view>

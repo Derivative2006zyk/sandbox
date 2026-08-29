@@ -1,3 +1,4 @@
 {
-  "navigationBarTitleText": "社费公示"
+  "navigationStyle": "custom",
+  "backgroundColor": "#FFFFFF"
 }

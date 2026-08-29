@@ -1,1 +1,4 @@
-{ "navigationBarTitleText": "管理后台" }
+{
+  "navigationStyle": "custom",
+  "backgroundColor": "#FFFFFF"
+}

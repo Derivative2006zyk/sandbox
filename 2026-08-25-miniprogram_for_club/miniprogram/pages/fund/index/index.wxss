@@ -1,12 +1,11 @@
 .container {
   position: relative;
   min-height: 100vh;
-  padding: 40rpx 32rpx;
-  box-sizing: border-box;
+  padding: 120rpx 20rpx 20rpx;
   background: transparent;
+  box-sizing: border-box;
 }
 
-/* 全局背景图 */
 .page-bg {
   position: absolute;
   top: 0;
@@ -16,7 +15,30 @@
   z-index: 0;
 }
 
-/* 余额卡片 */
+.custom-back {
+  position: fixed;
+  top: 20rpx;
+  left: 20rpx;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 6rpx;
+  padding: 12rpx 20rpx;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border-radius: 30rpx;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.08);
+  font-size: 26rpx;
+  color: #17498C;
+}
+
+.back-icon {
+  font-size: 36rpx;
+  line-height: 1;
+}
+
 .balance-card {
   position: relative;
   z-index: 1;
@@ -40,7 +62,6 @@
   font-weight: bold;
 }
 
-/* 管理员按钮 */
 .toggle-btn {
   position: relative;
   z-index: 1;
@@ -52,7 +73,6 @@
   border-radius: 8rpx;
 }
 
-/* 修改表单 */
 .update-form {
   position: relative;
   z-index: 1;
@@ -73,7 +93,6 @@
   border-radius: 8rpx;
 }
 
-/* 变更记录标题 */
 .section-title {
   position: relative;
   z-index: 1;
@@ -91,7 +110,6 @@
   padding: 30rpx 0;
 }
 
-/* 记录项 */
 .record-item {
   position: relative;
   z-index: 1;

@@ -8,32 +8,48 @@
   <!-- 顶部空心 NEWS 标题 -->
   <view class="news-outline">NEWS</view>
 
-  <!-- 轮播图区域（居中） -->
-  <view class="banner-area">
-    <swiper 
-      class="banner-swiper" 
-      current="{{current}}"
-      indicator-dots="{{false}}" 
-      autoplay="{{true}}" 
-      interval="{{5000}}" 
-      duration="{{500}}"
-      bindchange="onSwiperChange"
-    >
-      <swiper-item wx:for="{{banners}}" wx:key="id">
-        <image class="banner-img" src="{{item.src}}" mode="aspectFill"></image>
-        <view class="banner-info">
-          <text class="banner-title">{{item.title}}</text>
-          <text class="banner-subtitle">{{item.subtitle}}</text>
-        </view>
-      </swiper-item>
-    </swiper>
+  <!-- 轮播图区域（平行四边形样式，动态活动数据） -->
+  <view class="banner-area" wx:if="{{banners.length > 0}}">
+    <view class="banner-outer">
+      <view class="banner-clip">
+        <swiper 
+          class="banner-swiper" 
+          current="{{current}}"
+          indicator-dots="{{false}}" 
+          autoplay="{{true}}" 
+          interval="{{5000}}" 
+          duration="{{500}}"
+          bindchange="onSwiperChange"
+        >
+          <swiper-item wx:for="{{banners}}" wx:key="id">
+            <view class="banner-item">
+              <image wx:if="{{item.src}}" class="banner-img" src="{{item.src}}" mode="aspectFill"></image>
+              <view wx:else class="banner-no-img">
+                <text>暂无图片</text>
+              </view>
+              <view class="banner-info">
+                <text class="banner-title">{{item.title}}</text>
+                <text class="banner-subtitle">{{item.subtitle}}</text>
+              </view>
+            </view>
+          </swiper-item>
+        </swiper>
+      </view>
 
-    <view class="arrow left" bindtap="prevBanner">‹</view>
-    <view class="arrow right" bindtap="nextBanner">›</view>
+      <!-- 左右切换箭头 -->
+      <view class="arrow left" bindtap="prevBanner">‹</view>
+      <view class="arrow right" bindtap="nextBanner">›</view>
+    </view>
 
+    <!-- 自定义指示器 -->
     <view class="custom-dots">
       <view wx:for="{{banners}}" wx:key="id" class="dot {{current === index ? 'active' : ''}}"></view>
     </view>
+  </view>
+
+  <!-- 轮播图占位（无数据） -->
+  <view class="banner-placeholder" wx:if="{{banners.length === 0}}">
+    <text>暂无活动</text>
   </view>
 
   <!-- 分类标签导航（居中） -->
@@ -58,6 +74,10 @@
       data-id="{{item.activityId || item._id}}"
       data-type="{{item.activityId ? 'activity' : 'news'}}"
     >
+      <view class="news-cover" wx:if="{{item.imageThumb}}">
+        <image class="news-cover-img" src="{{item.imageThumb}}" mode="aspectFill"></image>
+      </view>
+
       <view class="news-tag {{item.tagClass}}">{{item.tag}}</view>
       <text class="news-title">{{item.title}}</text>
       <text class="news-date">{{item.date}}</text>

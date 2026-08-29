@@ -1,12 +1,11 @@
 .container {
   position: relative;
   min-height: 100vh;
-  padding: 40rpx 32rpx;
-  box-sizing: border-box;
+  padding: 120rpx 20rpx 20rpx;
   background: transparent;
+  box-sizing: border-box;
 }
 
-/* 全局背景图 */
 .page-bg {
   position: absolute;
   top: 0;
@@ -16,6 +15,30 @@
   z-index: 0;
 }
 
+.custom-back {
+  position: fixed;
+  top: 20rpx;
+  left: 20rpx;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 6rpx;
+  padding: 12rpx 20rpx;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border-radius: 30rpx;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.08);
+  font-size: 26rpx;
+  color: #17498C;
+}
+
+.back-icon {
+  font-size: 36rpx;
+  line-height: 1;
+}
+
 .admin-title {
   position: relative;
   z-index: 1;
@@ -23,19 +46,20 @@
   font-weight: bold;
   color: #17498C;
   margin-bottom: 30rpx;
+  text-align: center;
 }
 
 .menu-item {
   position: relative;
   z-index: 1;
   margin-bottom: 20rpx;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 24rpx;
+  box-shadow: 0 8rpx 24rpx rgba(0, 0, 0, 0.06);
   padding: 25rpx 30rpx;
   font-size: 30rpx;
   color: #333;
-  background: rgba(255, 255, 255, 0.7);
-  border-radius: 24rpx;
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.03);
 }

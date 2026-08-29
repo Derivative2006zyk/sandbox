@@ -2,6 +2,12 @@
   <!-- 全局背景图 -->
   <image class="page-bg" src="/images/background.jpg" mode="aspectFill"></image>
 
+  <!-- 自定义返回按钮 -->
+  <view class="custom-back" bindtap="goBack">
+    <text class="back-icon">‹</text>
+    <text class="back-text">返回</text>
+  </view>
+
   <view class="admin-title">管理后台</view>
 
   <view class="menu-item glass-card" bindtap="goActivityManage">活动管理</view>

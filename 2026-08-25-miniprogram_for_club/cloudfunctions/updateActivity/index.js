@@ -10,16 +10,15 @@ exports.main = async (event, context) => {
   if (!activityId) return { code: 400, msg: '缺少活动 ID' }
 
   try {
-    // 校验管理员权限
     const userRes = await db.collection('users').where({ _openid: OPENID }).get()
     if (userRes.data.length === 0 || userRes.data[0].role !== 1) {
       return { code: 403, msg: '无权限操作' }
     }
 
-    // 允许更新的字段列表，添加 cover
     const allowedFields = [
       'title', 'description', 'location', 'startTime', 'endTime',
-      'signupDeadline', 'maxParticipants', 'type', 'status', 'cover'
+      'signupDeadline', 'maxParticipants', 'type', 'status',
+      'cover', 'coverThumb'      // 添加缩略图字段
     ];
     const data = {}
     for (const key of allowedFields) {
@@ -30,10 +29,8 @@ exports.main = async (event, context) => {
           data[key] = Number(updateFields[key])
         } else if (key === 'status') {
           data[key] = Number(updateFields[key])
-        } else if (key === 'cover') {
-          data[key] = String(updateFields[key])   // 确保字符串
         } else {
-          data[key] = String(updateFields[key]).trim()
+          data[key] = String(updateFields[key]).trim()  // 字符串处理
         }
       }
     }

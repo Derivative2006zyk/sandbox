@@ -1,10 +1,6 @@
 Page({
   data: {
-    banners: [
-      { id: 1, src: '/images/banner1.jpg', title: '第2章更新 Part 1', subtitle: '新剧情开启' },
-      { id: 2, src: '/images/banner2.jpg', title: '夏日活动', subtitle: '限定角色登场' },
-      { id: 3, src: '/images/banner3.jpg', title: '新学期开始', subtitle: '欢迎新同学' }
-    ],
+    banners: [],          // 动态轮播图数据，初始为空
     current: 0,
 
     currentTab: 'latest',
@@ -23,7 +19,25 @@ Page({
   },
 
   onLoad() {
+    this.loadBanners();
     this.loadData('latest', true);
+  },
+
+  // 加载轮播图数据（活动优先有图）
+  async loadBanners() {
+    try {
+      const res = await wx.cloud.callFunction({ name: 'getBanners' });
+      console.log('getBanners 返回:', res);
+      if (res.result && res.result.code === 0) {
+        this.setData({ banners: res.result.data || [] });
+      } else {
+        console.error('获取轮播图失败：', res.result);
+        this.setData({ banners: [] });
+      }
+    } catch (err) {
+      console.error('调用 getBanners 异常:', err);
+      this.setData({ banners: [] });
+    }
   },
 
   // 切换分类标签
@@ -31,8 +45,6 @@ Page({
     const tab = e.currentTarget.dataset.tab;
     if (tab === this.data.currentTab) return;
     this.setData({ currentTab: tab });
-    // 切换分类时先清空旧数据，并显示加载中
-    this.setData({ filteredNews: [], hasMore: true, page: 1 });
     this.loadData(tab, true);
   },
 
@@ -58,7 +70,8 @@ Page({
             date: this.formatDate(item.startTime),
             tag: '活动',
             tagClass: 'activity',
-            activityId: item._id
+            activityId: item._id,
+            imageThumb: item.coverThumb || item.cover || ''
           }));
           this.updateList(processedList, res.result.data.hasMore, reset);
         } else {
@@ -78,7 +91,8 @@ Page({
             title: item.title,
             date: item.date || this.formatDate(item.createTime),
             tag: item.tag || item.category,
-            tagClass: item.category === 'activity' ? 'activity' : 'news'
+            tagClass: item.category === 'activity' ? 'activity' : 'news',
+            imageThumb: item.imageThumb || item.image || ''
           }));
           this.updateList(processedList, res.result.data.hasMore, reset);
         } else {
@@ -95,7 +109,6 @@ Page({
     }
   },
 
-  // 更新列表数据
   updateList(newList, hasMore, reset) {
     this.setData({
       filteredNews: reset ? newList : this.data.filteredNews.concat(newList),
@@ -109,7 +122,6 @@ Page({
     wx.showToast({ title: msg, icon: 'none' });
   },
 
-  // 日期格式化
   formatDate(dateObj) {
     if (!dateObj) return '';
     const d = new Date(dateObj);
@@ -120,7 +132,6 @@ Page({
     return `${year}.${month}.${day}`;
   },
 
-  // 列表项点击
   onItemTap(e) {
     const { id, type } = e.currentTarget.dataset;
     if (type === 'activity' && id) {

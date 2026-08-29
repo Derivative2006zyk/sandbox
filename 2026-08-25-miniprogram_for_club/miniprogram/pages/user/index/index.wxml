@@ -2,10 +2,7 @@
   <!-- 全局背景图 -->
   <image class="page-bg" src="/images/background.jpg" mode="aspectFill"></image>
 
-  <!-- 背景装饰斜线 -->
-  <view class="bg-diagonal"></view>
-
-  <!-- 用户信息卡片（毛玻璃） -->
+  <!-- 用户信息卡片 -->
   <view class="user-card glass-card" wx:if="{{userInfo}}">
     <view class="user-avatar">
       <text class="avatar-text">{{userInfo.name ? userInfo.name[0] : '?'}}</text>
@@ -16,7 +13,7 @@
     </view>
   </view>
 
-  <!-- 功能菜单列表（毛玻璃卡片） -->
+  <!-- 菜单列表 -->
   <view class="menu-item glass-card" bindtap="goMySignups">
     <text class="menu-text">我的报名</text>
     <text class="menu-arrow">›</text>
@@ -30,6 +27,5 @@
     <text class="menu-arrow">›</text>
   </view>
 
-  <!-- 编辑资料按钮（切角按钮） -->
   <button class="edit-btn angle-btn" bindtap="goEditProfile">编辑资料</button>
 </view>

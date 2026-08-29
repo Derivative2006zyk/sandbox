@@ -20,6 +20,11 @@
       bindtap="goDetail"
       data-id="{{item._id}}">
       
+      <!-- 活动封面缩略图（如果有） -->
+      <view class="activity-cover" wx:if="{{item.coverThumb || item.cover}}">
+        <image class="cover-img" src="{{item.coverThumb || item.cover}}" mode="aspectFill"></image>
+      </view>
+
       <!-- 左上角标签（切角风格） -->
       <view class="skew-tag">{{item.type || '活动'}}</view>
 

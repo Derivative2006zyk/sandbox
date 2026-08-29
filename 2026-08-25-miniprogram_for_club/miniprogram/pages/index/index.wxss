@@ -145,3 +145,17 @@
   padding: 100rpx 0;
   color: #999;
 }
+
+/* 活动封面缩略图 */
+.activity-cover {
+  width: 100%;
+  height: 300rpx;             /* 可调整高度 */
+  border-radius: 16rpx;
+  overflow: hidden;
+  margin-bottom: 20rpx;
+}
+
+.cover-img {
+  width: 100%;
+  height: 100%;
+}

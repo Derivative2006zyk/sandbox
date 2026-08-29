@@ -19,7 +19,6 @@ Page({
     this.loadDetail()
   },
 
-  // 加载活动详情
   async loadDetail() {
     this.setData({ loading: true })
     try {
@@ -44,9 +43,15 @@ Page({
     }
   },
 
-  // 点击报名按钮，跳转到报名页
+  goBack() {
+    wx.navigateBack({
+      fail: () => {
+        wx.reLaunch({ url: '/pages/index/index' })
+      }
+    })
+  },
+
   goSignup() {
-    // 检查用户是否完善资料
     const userInfo = app.globalData.userInfo
     if (!userInfo || !userInfo.name || !userInfo.studentId || !userInfo.phone) {
       wx.showModal({
@@ -66,7 +71,6 @@ Page({
     })
   },
 
-  // 点击取消报名
   cancelSignup() {
     wx.showModal({
       title: '确认取消',
@@ -81,7 +85,6 @@ Page({
             })
             if (result.result && result.result.code === 0) {
               wx.showToast({ title: '已取消', icon: 'success' })
-              // 刷新详情
               this.loadDetail()
             } else {
               wx.showToast({ title: result.result.msg || '取消失败', icon: 'none' })

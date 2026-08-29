@@ -16,17 +16,16 @@ exports.main = async (event, context) => {
     maxParticipants,
     type,
     status,
-    cover          // 新增封面字段
+    cover,
+    coverThumb            // 新增缩略图字段
   } = event
 
-  // 基本校验
   if (!title || !location || !startTime || !endTime || !signupDeadline || !maxParticipants) {
     return { code: 400, msg: '请填写完整活动信息' }
   }
   if (maxParticipants <= 0) return { code: 400, msg: '人数上限必须大于0' }
 
   try {
-    // 校验管理员权限
     const userRes = await db.collection('users').where({ _openid: OPENID }).get()
     if (userRes.data.length === 0 || userRes.data[0].role !== 1) {
       return { code: 403, msg: '无权限操作' }
@@ -44,7 +43,8 @@ exports.main = async (event, context) => {
         currentParticipants: 0,
         type: type ? type.trim() : '',
         status: status !== undefined ? Number(status) : 1,
-        cover: cover || '',   // 保存图片 fileID
+        cover: cover || '',
+        coverThumb: coverThumb || '',   // 新增
         createBy: OPENID,
         createTime: db.serverDate(),
         updateTime: db.serverDate()

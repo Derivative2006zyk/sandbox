@@ -5,28 +5,33 @@ Page({
     currentBalance: 0,
     records: [],
     loading: false,
-    isAdmin: false,        // 是否为管理员
-    showForm: false,       // 是否显示修改表单
-    amount: '',            // 修改金额（字符串）
-    note: '',              // 备注
+    isAdmin: false,
+    showForm: false,
+    amount: '',
+    note: '',
     submitting: false
   },
 
   onLoad() {
-    // 判断管理员
     const userInfo = app.globalData.userInfo
     this.setData({ isAdmin: userInfo && userInfo.role === 1 })
     this.loadFundInfo()
   },
 
   onShow() {
-    // 如果已加载过，从其他页面返回时刷新
     if (this.data._loaded) {
       this.loadFundInfo()
     }
   },
 
-  // 加载社费信息
+  goBack() {
+    wx.navigateBack({
+      fail: () => {
+        wx.reLaunch({ url: '/pages/index/index' })
+      }
+    })
+  },
+
   async loadFundInfo() {
     if (this.data.loading) return
     this.setData({ loading: true })
@@ -52,22 +57,18 @@ Page({
     }
   },
 
-  // 切换显示修改表单
   toggleForm() {
     this.setData({ showForm: !this.data.showForm })
   },
 
-  // 输入金额
   onAmountInput(e) {
     this.setData({ amount: e.detail.value })
   },
 
-  // 输入备注
   onNoteInput(e) {
     this.setData({ note: e.detail.value })
   },
 
-  // 提交修改
   async submitUpdate() {
     const amount = parseFloat(this.data.amount)
     const note = this.data.note.trim()
@@ -85,15 +86,12 @@ Page({
     try {
       const res = await wx.cloud.callFunction({
         name: 'updateFund',
-        data: {
-          amount,
-          note
-        }
+        data: { amount, note }
       })
       if (res.result && res.result.code === 0) {
         wx.showToast({ title: '更新成功', icon: 'success' })
         this.setData({ showForm: false, amount: '', note: '' })
-        this.loadFundInfo()  // 刷新
+        this.loadFundInfo()
       } else {
         wx.showToast({ title: res.result.msg || '更新失败', icon: 'none' })
       }
