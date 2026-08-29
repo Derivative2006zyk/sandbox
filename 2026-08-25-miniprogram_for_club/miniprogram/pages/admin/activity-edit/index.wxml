@@ -1,5 +1,13 @@
 <view class="container">
-  <!-- 全局背景图（如需全局背景可保留，这里省略背景图结构，保持原有设计） -->
+  <!-- 全局背景图 -->
+  <image class="page-bg" src="{{bgUrl}}" mode="aspectFill"></image>
+
+  <!-- 自定义返回按钮 -->
+  <view class="custom-back" bindtap="goBack">
+    <text class="back-icon">‹</text>
+    <text class="back-text">返回</text>
+  </view>
+
   <view class="form-card glass-card">
     <view class="form-item">
       <text>标题</text>
@@ -30,7 +38,7 @@
       <input value="{{type}}" data-field="type" bindinput="onInput" placeholder="如：讲座、聚会、比赛" />
     </view>
 
-    <!-- 封面图片上传区域 -->
+    <!-- 封面图片上传 -->
     <view class="form-item">
       <text>活动封面</text>
       <view class="upload-area" bindtap="uploadCover">
@@ -53,11 +61,9 @@
         <label><radio value="0" checked="{{status === 0}}" />草稿</label>
       </radio-group>
     </view>
-    <button class="submit-btn" bindtap="submit" disabled="{{submitting}}">
-      {{submitting ? '保存中...' : '保存'}}
-    </button>
+    <button class="submit-btn" bindtap="submit" disabled="{{submitting}}">{{submitting ? '保存中...' : '保存'}}</button>
   </view>
 
-  <!-- 隐藏的压缩画布（用于图片处理） -->
+  <!-- 隐藏的压缩画布 -->
   <canvas canvas-id="compressCanvas" style="width: 300px; height: 300px; position: fixed; left: 9999px; top: 9999px;"></canvas>
 </view>

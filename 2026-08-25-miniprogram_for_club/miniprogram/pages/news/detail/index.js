@@ -1,11 +1,15 @@
+const app = getApp()
+
 Page({
   data: {
+    bgUrl: '',            // 背景图临时链接
     newsId: '',
     news: null,
     loading: true
   },
 
   onLoad(options) {
+    this.fetchBgUrl();
     const newsId = options.id;
     if (!newsId) {
       wx.showToast({ title: '缺少新闻ID', icon: 'none' });
@@ -13,6 +17,25 @@ Page({
     }
     this.setData({ newsId });
     this.loadDetail();
+  },
+
+  // 获取背景图临时链接
+  fetchBgUrl() {
+    const fileID = app.globalData.assets.background;
+    app.getBgUrl(fileID).then(url => {
+      this.setData({ bgUrl: url });
+    }).catch(err => {
+      console.error('获取背景图失败', err);
+      this.setData({ bgUrl: '/images/background.jpg' });
+    });
+  },
+
+  goBack() {
+    wx.navigateBack({
+      fail: () => {
+        wx.reLaunch({ url: '/pages/index/index' });
+      }
+    });
   },
 
   async loadDetail() {
@@ -36,13 +59,5 @@ Page({
     } finally {
       this.setData({ loading: false });
     }
-  },
-
-  goBack() {
-    wx.navigateBack({
-      fail: () => {
-        wx.reLaunch({ url: '/pages/index/index' });
-      }
-    });
   }
 });

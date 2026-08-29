@@ -1,10 +1,14 @@
+const app = getApp()
+
 Page({
   data: {
+    bgUrl: '',            // 背景图临时链接
     newsList: [],
     loading: false
   },
 
   onLoad() {
+    this.fetchBgUrl();
     this.loadNews();
   },
 
@@ -14,13 +18,30 @@ Page({
     }
   },
 
+  // 获取背景图临时链接
+  fetchBgUrl() {
+    const fileID = app.globalData.assets.background;
+    app.getBgUrl(fileID).then(url => {
+      this.setData({ bgUrl: url });
+    }).catch(err => {
+      console.error('获取背景图失败', err);
+      this.setData({ bgUrl: '/images/background.jpg' });
+    });
+  },
+
+  goBack() {
+    wx.navigateBack({
+      fail: () => {
+        wx.reLaunch({ url: '/pages/admin/index/index' });
+      }
+    });
+  },
+
   async loadNews() {
     if (this.data.loading) return;
     this.setData({ loading: true });
     try {
-      const res = await wx.cloud.callFunction({
-        name: 'getAllNews'
-      });
+      const res = await wx.cloud.callFunction({ name: 'getAllNews' });
       if (res.result && res.result.code === 0) {
         this.setData({
           newsList: res.result.data,
@@ -38,18 +59,15 @@ Page({
     }
   },
 
-  // 新建新闻
   createNews() {
     wx.navigateTo({ url: '/pages/admin/news-edit/index' });
   },
 
-  // 编辑新闻
   editNews(e) {
     const id = e.currentTarget.dataset.id;
     wx.navigateTo({ url: `/pages/admin/news-edit/index?id=${id}` });
   },
 
-  // 删除新闻
   deleteNews(e) {
     const id = e.currentTarget.dataset.id;
     wx.showModal({
@@ -69,6 +87,7 @@ Page({
               wx.showToast({ title: result.result.msg || '删除失败', icon: 'none' });
             }
           } catch (err) {
+            console.error('删除新闻失败', err);
             wx.showToast({ title: '网络异常', icon: 'none' });
           }
         }

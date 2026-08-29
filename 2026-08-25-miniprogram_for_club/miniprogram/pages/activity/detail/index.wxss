@@ -6,7 +6,6 @@
   box-sizing: border-box;
 }
 
-/* 全局背景图 */
 .page-bg {
   position: absolute;
   top: 0;
@@ -16,7 +15,6 @@
   z-index: 0;
 }
 
-/* 自定义返回按钮 */
 .custom-back {
   position: fixed;
   top: 20rpx;
@@ -41,7 +39,6 @@
   line-height: 1;
 }
 
-/* 毛玻璃卡片 */
 .glass-card {
   position: relative;
   z-index: 1;
@@ -95,6 +92,10 @@
   height: 100%;
 }
 
+.info-card {
+  padding: 25rpx 30rpx;
+}
+
 .info-list {
   display: flex;
   flex-direction: column;
@@ -107,6 +108,10 @@
   color: #FF6100;
   font-weight: bold;
   font-family: 'Oswald', monospace;
+}
+
+.content-card {
+  padding: 30rpx;
 }
 
 .desc-title {
@@ -137,4 +142,210 @@
   transform: translate(-50%, -50%);
   z-index: 100;
   color: #999;
+}
+
+/* ========== 评论区样式 ========== */
+.comment-area {
+  margin-top: 20rpx;
+  padding: 30rpx;
+}
+
+.comment-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.comment-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #17498C;
+}
+
+.editing-hint {
+  font-size: 24rpx;
+  color: #FF9F1C;
+  margin-left: 20rpx;
+}
+
+.comment-list {
+  margin-bottom: 30rpx;
+}
+
+.comment-item {
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 16rpx;
+  padding: 20rpx;
+  margin-bottom: 16rpx;
+}
+
+.comment-content {
+  font-size: 28rpx;
+  color: #333;
+  white-space: pre-wrap;
+}
+
+.comment-media {
+  margin-top: 10rpx;
+}
+
+.comment-image {
+  width: 100%;
+  height: 300rpx;
+  border-radius: 12rpx;
+}
+
+.comment-video {
+  width: 100%;
+  height: 300rpx;
+  border-radius: 12rpx;
+}
+
+.comment-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10rpx;
+}
+
+.comment-time {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.comment-actions {
+  display: flex;
+  gap: 20rpx;
+}
+
+.comment-edit {
+  font-size: 24rpx;
+  color: #2F8DFF;
+}
+
+.comment-delete {
+  font-size: 24rpx;
+  color: #ff4d4f;
+}
+
+.comment-empty {
+  text-align: center;
+  color: #999;
+  padding: 20rpx 0;
+}
+
+.comment-form {
+  margin-top: 20rpx;
+}
+
+.comment-input {
+  width: 100%;
+  min-height: 100rpx;
+  border-radius: 12rpx;
+  padding: 20rpx;
+  background: rgba(255, 255, 255, 0.7);
+  font-size: 28rpx;
+  box-sizing: border-box;
+  margin-bottom: 20rpx;
+}
+
+.comment-uploads {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  margin-bottom: 20rpx;
+}
+
+.small-btn {
+  padding: 10rpx 20rpx;
+  font-size: 24rpx;
+}
+
+.origin-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  font-size: 24rpx;
+  color: #333;
+}
+
+.comment-attachments {
+  display: flex;
+  gap: 16rpx;
+  margin-bottom: 20rpx;
+}
+
+.attach-item {
+  position: relative;
+  margin-right: 16rpx;
+}
+
+.attach-preview {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 8rpx;
+}
+
+.remove-attach {
+  position: absolute;
+  top: -10rpx;
+  right: -10rpx;
+  width: 36rpx;
+  height: 36rpx;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28rpx;
+}
+
+.submit-comment {
+  width: 100%;
+}
+
+.cancel-edit-btn {
+  margin-top: 16rpx;
+  width: 100%;
+  background: #fff;
+  color: #333;
+  border: 1rpx solid #ccc;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+}
+
+/* 上传进度遮罩 */
+.upload-progress-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.progress-box {
+  width: 400rpx;
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 40rpx;
+  text-align: center;
+}
+
+.progress-title {
+  font-size: 28rpx;
+  color: #333;
+  display: block;
+  margin-bottom: 20rpx;
+}
+
+.progress-text {
+  font-size: 24rpx;
+  color: #666;
+  margin-top: 10rpx;
 }

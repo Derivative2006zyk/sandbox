@@ -1,20 +1,43 @@
+const app = getApp()
+
 Page({
   data: {
+    bgUrl: '',            // 背景图临时链接
     newsId: '',
     title: '',
     category: 'news',
     content: '',
     date: '',
-    image: '',           // 压缩后原图 fileID
-    imageThumb: '',      // 缩略图 fileID
+    image: '',
+    imageThumb: '',
     submitting: false
   },
 
   onLoad(options) {
+    this.fetchBgUrl();
     if (options.id) {
       this.setData({ newsId: options.id });
       this.loadNews();
     }
+  },
+
+  // 获取背景图临时链接
+  fetchBgUrl() {
+    const fileID = app.globalData.assets.background;
+    app.getBgUrl(fileID).then(url => {
+      this.setData({ bgUrl: url });
+    }).catch(err => {
+      console.error('获取背景图失败', err);
+      this.setData({ bgUrl: '/images/background.jpg' });
+    });
+  },
+
+  goBack() {
+    wx.navigateBack({
+      fail: () => {
+        wx.reLaunch({ url: '/pages/admin/news-list/index' });
+      }
+    });
   },
 
   async loadNews() {
@@ -50,105 +73,75 @@ Page({
     this.setData({ category: e.detail.value });
   },
 
-  // 检查网络状态
-  checkNetwork() {
-    return new Promise((resolve) => {
-      wx.getNetworkType({
-        success: (res) => {
-          resolve(res.networkType !== 'none')
-        },
-        fail: () => {
-          resolve(false)
-        }
-      })
-    });
-  },
-
-  // 压缩图片（使用 canvas 调整尺寸和品质）
-  compressImage(src, maxWidth, quality) {
-    return new Promise((resolve, reject) => {
-      wx.getImageInfo({
-        src,
-        success: (info) => {
-          let { width, height } = info
-          if (width > maxWidth) {
-            const ratio = maxWidth / width
-            width = maxWidth
-            height = Math.round(height * ratio)
-          }
-          const ctx = wx.createCanvasContext('compressCanvasNews', this)
-          ctx.clearRect(0, 0, width, height)
-          ctx.drawImage(src, 0, 0, width, height)
-          ctx.draw(false, () => {
-            wx.canvasToTempFilePath({
-              canvasId: 'compressCanvasNews',
-              x: 0,
-              y: 0,
-              width: width,
-              height: height,
-              destWidth: width,
-              destHeight: height,
-              fileType: 'jpg',
-              quality: quality,
-              success: (res) => {
-                resolve(res.tempFilePath)
-              },
-              fail: reject
-            }, this)
-          })
-        },
-        fail: reject
-      })
-    })
-  },
-
-  // 上传新闻配图（优化版：网络检查 + 压缩 + 缩略图）
-  async uploadImage() {
-    const hasNetwork = await this.checkNetwork()
-    if (!hasNetwork) {
-      wx.showToast({ title: '网络不可用，请联网后重试', icon: 'none' })
-      return
-    }
-
+  uploadImage() {
     wx.chooseMedia({
       count: 1,
       mediaType: ['image'],
       sourceType: ['album', 'camera'],
       success: async (res) => {
-        const tempFilePath = res.tempFiles[0].tempFilePath
-        wx.showLoading({ title: '处理中...' })
-
+        const tempFilePath = res.tempFiles[0].tempFilePath;
+        wx.showLoading({ title: '处理中...' });
         try {
-          const compressedPath = await this.compressImage(tempFilePath, 1280, 0.8)
-          const thumbPath = await this.compressImage(tempFilePath, 300, 0.6)
+          const compressedPath = await this.compressImage(tempFilePath, 1280, 0.8);
+          const thumbPath = await this.compressImage(tempFilePath, 300, 0.6);
 
-          wx.showLoading({ title: '上传中...' })
+          wx.showLoading({ title: '上传中...' });
           const imageUpload = await wx.cloud.uploadFile({
             cloudPath: `news-images/${Date.now()}-${Math.floor(Math.random() * 1000)}.jpg`,
             filePath: compressedPath
-          })
+          });
           const thumbUpload = await wx.cloud.uploadFile({
             cloudPath: `news-images/thumb/${Date.now()}-${Math.floor(Math.random() * 1000)}.jpg`,
             filePath: thumbPath
-          })
+          });
 
           this.setData({
             image: imageUpload.fileID,
             imageThumb: thumbUpload.fileID
-          })
+          });
 
-          wx.hideLoading()
-          wx.showToast({ title: '上传成功', icon: 'success' })
+          wx.hideLoading();
+          wx.showToast({ title: '上传成功', icon: 'success' });
         } catch (err) {
-          wx.hideLoading()
-          console.error('图片处理或上传失败', err)
-          wx.showToast({ title: '上传失败，请重试', icon: 'none' })
+          wx.hideLoading();
+          console.error('图片处理或上传失败', err);
+          wx.showToast({ title: '上传失败，请重试', icon: 'none' });
         }
       },
       fail: (err) => {
-        console.error('选择图片失败', err)
+        console.error('选择图片失败', err);
       }
-    })
+    });
+  },
+
+  async compressImage(src, maxWidth, quality) {
+    return new Promise((resolve, reject) => {
+      wx.getImageInfo({
+        src,
+        success: (info) => {
+          let { width, height } = info;
+          if (width > maxWidth) {
+            const ratio = maxWidth / width;
+            width = maxWidth;
+            height = Math.round(height * ratio);
+          }
+          const ctx = wx.createCanvasContext('compressCanvasNews', this);
+          ctx.clearRect(0, 0, width, height);
+          ctx.drawImage(src, 0, 0, width, height);
+          ctx.draw(false, () => {
+            wx.canvasToTempFilePath({
+              canvasId: 'compressCanvasNews',
+              x: 0, y: 0, width, height,
+              destWidth: width, destHeight: height,
+              fileType: 'jpg', quality,
+              success: (res) => resolve(res.tempFilePath),
+              fail: reject
+            }, this);
+          });
+        },
+        fail: reject
+      });
+    });
   },
 
   async submit() {

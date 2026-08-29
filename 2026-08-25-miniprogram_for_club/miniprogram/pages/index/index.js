@@ -2,6 +2,7 @@ const app = getApp()
 
 Page({
   data: {
+    bgUrl: '',            // 背景图临时链接
     userInfo: null,
     loading: false,
     listLoading: false,
@@ -13,20 +14,26 @@ Page({
   },
 
   onLoad() {
+    this.fetchBgUrl();
     this.checkLogin();
     this.loadActivities(true);
   },
 
-  onShow() {
-    // 确保从其他页面返回时页面正常
+  // 获取背景图临时链接
+  fetchBgUrl() {
+    const fileID = app.globalData.assets.background;
+    app.getBgUrl(fileID).then(url => {
+      this.setData({ bgUrl: url });
+    }).catch(err => {
+      console.error('获取背景图失败', err);
+      this.setData({ bgUrl: '/images/background.jpg' });
+    });
   },
 
   goDetail(e) {
     const id = e.currentTarget.dataset.id;
     if (id) {
-      wx.navigateTo({
-        url: `/pages/activity/detail/index?id=${id}`
-      });
+      wx.navigateTo({ url: `/pages/activity/detail/index?id=${id}` });
     }
   },
 
@@ -40,8 +47,8 @@ Page({
       }
     } catch (err) {
       console.error('登录检查失败', err);
-      this.setData({ loading: false });
       wx.showToast({ title: '登录失败，请重试', icon: 'none' });
+      this.setData({ loading: false });
     }
   },
 
@@ -87,12 +94,8 @@ Page({
       this.loadActivities(false);
     }
   },
+
   goBackToMenu() {
-    wx.navigateTo({
-      url: '/pages/menu/index/index',
-      fail: () => {
-        wx.showToast({ title: '菜单页打开失败', icon: 'none' });
-      }
-    });
+    wx.navigateTo({ url: '/pages/menu/index/index' });
   }
 });

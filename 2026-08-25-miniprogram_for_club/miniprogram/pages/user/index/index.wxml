@@ -1,6 +1,6 @@
 <view class="container">
   <!-- 全局背景图 -->
-  <image class="page-bg" src="/images/background.jpg" mode="aspectFill"></image>
+  <image class="page-bg" src="{{bgUrl}}" mode="aspectFill"></image>
 
   <!-- 用户信息卡片 -->
   <view class="user-card glass-card" wx:if="{{userInfo}}">
@@ -27,5 +27,6 @@
     <text class="menu-arrow">›</text>
   </view>
 
+  <!-- 编辑资料按钮 -->
   <button class="edit-btn angle-btn" bindtap="goEditProfile">编辑资料</button>
 </view>

@@ -1,6 +1,6 @@
 <view class="container" wx:if="{{activity}}">
   <!-- 全局背景图 -->
-  <image class="page-bg" src="/images/background.jpg" mode="aspectFill"></image>
+  <image class="page-bg" src="{{bgUrl}}" mode="aspectFill"></image>
 
   <!-- 自定义返回按钮 -->
   <view class="custom-back" bindtap="goBack">
@@ -8,13 +8,13 @@
     <text class="back-text">返回</text>
   </view>
 
-  <!-- 标题卡片（含标签和标题） -->
+  <!-- 标题卡片 -->
   <view class="glass-card title-card">
     <view class="skew-tag">{{activity.type || '活动'}}</view>
     <view class="title title-skew">{{activity.title}}</view>
   </view>
 
-  <!-- 宣传图片（若有） -->
+  <!-- 宣传图片 -->
   <view class="detail-cover" wx:if="{{activity.coverThumb || activity.cover}}">
     <image class="detail-cover-img" src="{{activity.coverThumb || activity.cover}}" mode="aspectFill"></image>
   </view>
@@ -29,7 +29,7 @@
     </view>
   </view>
 
-  <!-- 活动介绍内容 -->
+  <!-- 活动介绍 -->
   <view class="glass-card content-card">
     <text class="desc-title">活动介绍</text>
     <text class="desc-content">{{activity.description}}</text>
@@ -40,7 +40,85 @@
     <button wx:if="{{!isSignedUp}}" class="angle-btn" bindtap="goSignup">立即报名</button>
     <button wx:else class="angle-btn" bindtap="cancelSignup" disabled="{{submitting}}">取消报名</button>
   </view>
+
+  <!-- ==================== 评论区 ==================== -->
+  <view class="comment-area glass-card">
+    <view class="comment-header">
+      <text class="comment-title">活动评论区</text>
+      <text wx:if="{{editingCommentId}}" class="editing-hint">正在编辑评论，点击“保存修改”生效</text>
+    </view>
+
+    <!-- 评论列表 -->
+    <view class="comment-list">
+      <view class="comment-item" wx:for="{{comments}}" wx:key="_id">
+        <view class="comment-main">
+          <view class="comment-content" wx:if="{{item.content}}">{{item.content}}</view>
+
+          <!-- 图片附件：使用 imageUrl 临时链接 -->
+          <view class="comment-media" wx:if="{{item.imageUrl}}">
+            <image class="comment-image" src="{{item.imageUrl}}" mode="aspectFill" bindtap="previewCommentImage" data-url="{{item.imageUrl}}"></image>
+          </view>
+
+          <!-- 视频附件：使用 videoUrl 临时链接 -->
+          <view class="comment-media" wx:if="{{item.videoUrl}}">
+            <video class="comment-video" src="{{item.videoUrl}}" controls></video>
+          </view>
+
+          <view class="comment-meta">
+            <text class="comment-time">{{item.createTime}}</text>
+            <view wx:if="{{item.openid === myOpenid}}" class="comment-actions">
+              <text class="comment-edit" bindtap="editComment" data-id="{{item._id}}">修改</text>
+              <text class="comment-delete" bindtap="deleteComment" data-id="{{item._id}}">删除</text>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view wx:if="{{!comments.length}}" class="comment-empty">暂无评论，来抢沙发~</view>
+    </view>
+
+    <!-- 发布/编辑评论表单 -->
+    <view class="comment-form">
+      <textarea class="comment-input" placeholder="写下你的评论..." value="{{commentText}}" bindinput="onCommentInput"></textarea>
+
+      <view class="comment-uploads">
+        <button class="angle-btn small-btn" bindtap="chooseCommentImage">图片</button>
+        <button class="angle-btn small-btn" bindtap="chooseCommentVideo">视频</button>
+        <label class="origin-toggle">
+          <switch checked="{{uploadOrigin}}" bindchange="toggleOrigin" color="#2F8DFF"></switch>
+          <text>原图上传</text>
+        </label>
+      </view>
+
+      <view class="comment-attachments" wx:if="{{commentImage || commentVideo}}">
+        <view class="attach-item" wx:if="{{commentImage}}">
+          <image class="attach-preview" src="{{commentImage}}" mode="aspectFill"></image>
+          <view class="remove-attach" bindtap="removeCommentImage">×</view>
+        </view>
+        <view class="attach-item" wx:if="{{commentVideo}}">
+          <video class="attach-preview" src="{{commentVideo}}" controls></video>
+          <view class="remove-attach" bindtap="removeCommentVideo">×</view>
+        </view>
+      </view>
+
+      <button class="angle-btn submit-comment" bindtap="submitComment">
+        {{editingCommentId ? '保存修改' : '发布评论'}}
+      </button>
+      <button wx:if="{{editingCommentId}}" class="cancel-edit-btn" bindtap="cancelEdit">取消编辑</button>
+    </view>
+  </view>
 </view>
 
 <!-- 加载中 -->
 <view wx:if="{{loading}}" class="loading">加载中...</view>
+
+<!-- 上传进度遮罩 -->
+<view class="upload-progress-mask" wx:if="{{uploadVisible}}">
+  <view class="progress-box">
+    <text class="progress-title">正在上传...</text>
+    <progress percent="{{uploadProgress}}" stroke-width="4" activeColor="#2F8DFF" backgroundColor="#e0e0e0"></progress>
+    <text class="progress-text">{{uploadProgress}}%</text>
+  </view>
+</view>
+
+<!-- 隐藏的压缩画布 -->
+<canvas canvas-id="compressCanvas" style="width: 300px; height: 300px; position: fixed; left: 9999px; top: 9999px;"></canvas>

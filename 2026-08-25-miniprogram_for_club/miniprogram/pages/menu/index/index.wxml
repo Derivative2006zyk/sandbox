@@ -1,6 +1,6 @@
 <view class="menu-page">
   <!-- 全局背景图 -->
-  <image class="page-bg" src="/images/background.jpg" mode="aspectFill"></image>
+  <image class="page-bg" src="{{bgUrl}}" mode="aspectFill"></image>
 
   <!-- 背景装饰斜线 -->
   <view class="bg-diagonal"></view>

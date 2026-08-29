@@ -1,6 +1,12 @@
 <view class="container">
   <!-- 全局背景图 -->
-  <image class="page-bg" src="/images/background.jpg" mode="aspectFill"></image>
+  <image class="page-bg" src="{{bgUrl}}" mode="aspectFill"></image>
+
+  <!-- 自定义返回按钮 -->
+  <view class="custom-back" bindtap="goBack">
+    <text class="back-icon">‹</text>
+    <text class="back-text">返回</text>
+  </view>
 
   <button class="create-btn" bindtap="createActivity">新建活动</button>
 

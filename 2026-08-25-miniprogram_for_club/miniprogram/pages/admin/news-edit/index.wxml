@@ -1,4 +1,13 @@
 <view class="container">
+  <!-- 全局背景图 -->
+  <image class="page-bg" src="{{bgUrl}}" mode="aspectFill"></image>
+
+  <!-- 自定义返回按钮 -->
+  <view class="custom-back" bindtap="goBack">
+    <text class="back-icon">‹</text>
+    <text class="back-text">返回</text>
+  </view>
+
   <view class="form-card glass-card">
     <view class="form-item">
       <text>标题</text>
@@ -38,6 +47,6 @@
     <button class="submit-btn" bindtap="submit" disabled="{{submitting}}">{{submitting ? '保存中...' : '保存'}}</button>
   </view>
 
-  <!-- 隐藏的压缩画布（用于图片处理） -->
+  <!-- 隐藏的压缩画布 -->
   <canvas canvas-id="compressCanvasNews" style="width: 300px; height: 300px; position: fixed; left: 9999px; top: 9999px;"></canvas>
 </view>

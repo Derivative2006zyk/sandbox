@@ -1,11 +1,11 @@
 <view class="container">
-  <!-- 全局背景图 -->
-  <image class="page-bg" src="/images/background.jpg" mode="aspectFill"></image>
+  <!-- 全局背景图（动态链接） -->
+  <image class="page-bg" src="{{bgUrl}}" mode="aspectFill"></image>
 
   <!-- 背景装饰斜线 -->
   <view class="bg-diagonal"></view>
 
-  <!-- 返回按钮（毛玻璃胶囊） -->
+  <!-- 返回按钮 -->
   <view class="back-btn" bindtap="goBackToMenu">
     <text class="back-icon">‹</text>
     <text class="back-text">返回</text>
@@ -20,31 +20,28 @@
       bindtap="goDetail"
       data-id="{{item._id}}">
       
-      <!-- 活动封面缩略图（如果有） -->
       <view class="activity-cover" wx:if="{{item.coverThumb || item.cover}}">
         <image class="cover-img" src="{{item.coverThumb || item.cover}}" mode="aspectFill"></image>
       </view>
 
-      <!-- 左上角标签（切角风格） -->
       <view class="skew-tag">{{item.type || '活动'}}</view>
-
-      <!-- 活动标题（轻微倾斜） -->
       <view class="activity-title">{{item.title}}</view>
-
-      <!-- 时间地点信息 -->
       <view class="activity-info">
         <text class="info-item">时间：{{item.startTime}}</text>
         <text class="info-item">地点：{{item.location}}</text>
       </view>
-
-      <!-- 报名人数数据块（终端风格） -->
       <view class="data-block">
         <text class="data-highlight">{{item.currentParticipants}}/{{item.maxParticipants}}</text>
         <text class="data-label">已报名</text>
       </view>
     </view>
 
-    <view class="loading-tip" wx:if="{{listLoading}}">加载中...</view>
+    <view class="loading-dots" wx:if="{{listLoading}}">
+      <view class="dot"></view>
+      <view class="dot"></view>
+      <view class="dot"></view>
+    </view>
+
     <view class="no-more" wx:if="{{!hasMore && activityList.length > 0}}">没有更多活动了</view>
   </block>
 

@@ -1,8 +1,10 @@
+const app = getApp()
+
 Page({
   data: {
-    banners: [],          // 动态轮播图数据，初始为空
+    bgUrl: '',            // 背景图临时链接
+    banners: [],          // 轮播图数据
     current: 0,
-
     currentTab: 'latest',
     tabs: [
       { key: 'latest', name: '最新' },
@@ -10,7 +12,6 @@ Page({
       { key: 'announcement', name: '公告' },
       { key: 'activity', name: '活动' }
     ],
-
     filteredNews: [],
     newsLoading: false,
     hasMore: true,
@@ -19,23 +20,31 @@ Page({
   },
 
   onLoad() {
+    this.fetchBgUrl();
     this.loadBanners();
     this.loadData('latest', true);
   },
 
-  // 加载轮播图数据（活动优先有图）
+  // 获取背景图临时链接
+  fetchBgUrl() {
+    const fileID = app.globalData.assets.background;   // 使用 app.js 中定义的背景图 fileID
+    app.getBgUrl(fileID)
+      .then(url => this.setData({ bgUrl: url }))
+      .catch(err => {
+        console.error('获取背景图失败', err);
+        this.setData({ bgUrl: '/images/background.jpg' });   // 本地占位
+      });
+  },
+
+  // 加载轮播图
   async loadBanners() {
     try {
       const res = await wx.cloud.callFunction({ name: 'getBanners' });
-      console.log('getBanners 返回:', res);
       if (res.result && res.result.code === 0) {
-        this.setData({ banners: res.result.data || [] });
-      } else {
-        console.error('获取轮播图失败：', res.result);
-        this.setData({ banners: [] });
+        this.setData({ banners: res.result.data });
       }
     } catch (err) {
-      console.error('调用 getBanners 异常:', err);
+      console.error('获取轮播图失败', err);
       this.setData({ banners: [] });
     }
   },
@@ -159,6 +168,7 @@ Page({
     this.setData({ current: index });
   },
 
+  // 更多按钮：跳转首页
   goHome() {
     wx.switchTab({
       url: '/pages/index/index',
@@ -169,6 +179,7 @@ Page({
     });
   },
 
+  // 下拉刷新：返回欢迎页
   onPullDownRefresh() {
     wx.stopPullDownRefresh();
     wx.reLaunch({
