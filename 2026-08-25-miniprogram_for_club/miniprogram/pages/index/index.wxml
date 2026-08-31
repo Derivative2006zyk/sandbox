@@ -1,5 +1,5 @@
 <view class="container">
-  <!-- 全局背景图（动态链接） -->
+  <!-- 全局背景图 -->
   <image class="page-bg" src="{{bgUrl}}" mode="aspectFill"></image>
 
   <!-- 背景装饰斜线 -->
@@ -11,11 +11,22 @@
     <text class="back-text">返回</text>
   </view>
 
+  <!-- 搜索框 -->
+  <view class="search-bar">
+    <input 
+      class="search-input" 
+      placeholder="搜索活动标题或地点" 
+      value="{{keyword}}" 
+      bindinput="onSearchInput"
+      confirm-type="search"
+    />
+  </view>
+
   <!-- 活动列表区域 -->
-  <block wx:if="{{activityList.length > 0}}">
+  <block wx:if="{{filteredList.length > 0}}">
     <view 
       class="activity-card glass-card" 
-      wx:for="{{activityList}}" 
+      wx:for="{{filteredList}}" 
       wx:key="_id"
       bindtap="goDetail"
       data-id="{{item._id}}">
@@ -42,11 +53,11 @@
       <view class="dot"></view>
     </view>
 
-    <view class="no-more" wx:if="{{!hasMore && activityList.length > 0}}">没有更多活动了</view>
+    <view class="no-more" wx:if="{{!hasMore && filteredList.length > 0}}">没有更多活动了</view>
   </block>
 
   <!-- 空状态 -->
-  <view class="empty" wx:if="{{activityList.length === 0 && !listLoading}}">
-    <text>暂无活动，敬请期待</text>
+  <view class="empty" wx:if="{{filteredList.length === 0 && !listLoading}}">
+    <text>{{keyword ? '没有找到匹配的活动' : '暂无活动，敬请期待'}}</text>
   </view>
 </view>

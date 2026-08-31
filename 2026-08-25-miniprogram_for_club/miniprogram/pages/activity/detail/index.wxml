@@ -52,20 +52,22 @@
     <view class="comment-list">
       <view class="comment-item" wx:for="{{comments}}" wx:key="_id">
         <view class="comment-main">
+          <!-- 文字内容 -->
           <view class="comment-content" wx:if="{{item.content}}">{{item.content}}</view>
 
-          <!-- 图片附件：使用 imageUrl 临时链接 -->
+          <!-- 图片附件：使用临时链接 imageUrl -->
           <view class="comment-media" wx:if="{{item.imageUrl}}">
             <image class="comment-image" src="{{item.imageUrl}}" mode="aspectFill" bindtap="previewCommentImage" data-url="{{item.imageUrl}}"></image>
           </view>
 
-          <!-- 视频附件：使用 videoUrl 临时链接 -->
+          <!-- 视频附件：使用临时链接 videoUrl -->
           <view class="comment-media" wx:if="{{item.videoUrl}}">
             <video class="comment-video" src="{{item.videoUrl}}" controls></video>
           </view>
 
+          <!-- 时间与操作 -->
           <view class="comment-meta">
-            <text class="comment-time">{{item.createTime}}</text>
+            <text class="comment-time">{{item.timeText}}</text>
             <view wx:if="{{item.openid === myOpenid}}" class="comment-actions">
               <text class="comment-edit" bindtap="editComment" data-id="{{item._id}}">修改</text>
               <text class="comment-delete" bindtap="deleteComment" data-id="{{item._id}}">删除</text>
@@ -89,6 +91,7 @@
         </label>
       </view>
 
+      <!-- 已选附件预览 -->
       <view class="comment-attachments" wx:if="{{commentImage || commentVideo}}">
         <view class="attach-item" wx:if="{{commentImage}}">
           <image class="attach-preview" src="{{commentImage}}" mode="aspectFill"></image>

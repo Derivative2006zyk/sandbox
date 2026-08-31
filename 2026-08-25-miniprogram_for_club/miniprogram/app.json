@@ -15,7 +15,8 @@
     "pages/menu/index/index",
     "pages/news/detail/index",
     "pages/admin/news-list/index",
-    "pages/admin/news-edit/index"
+    "pages/admin/news-edit/index",
+    "pages/feedback/index/index"
   ],
   "subpackages": [
     {

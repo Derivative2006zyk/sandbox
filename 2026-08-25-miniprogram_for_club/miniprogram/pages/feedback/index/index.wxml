@@ -1,0 +1,30 @@
+<view class="container">
+  <!-- 全局背景图 -->
+  <image class="page-bg" src="{{bgUrl}}" mode="aspectFill"></image>
+
+  <!-- 自定义返回按钮 -->
+  <view class="custom-back" bindtap="goBack">
+    <text class="back-icon">‹</text>
+    <text class="back-text">返回</text>
+  </view>
+
+  <view class="feedback-card glass-card">
+    <view class="feedback-title">意见反馈</view>
+    <textarea 
+      class="feedback-input" 
+      placeholder="请输入您的意见或建议..." 
+      value="{{content}}" 
+      bindinput="onContentInput"
+      maxlength="500"
+    ></textarea>
+    <input 
+      class="contact-input" 
+      placeholder="联系方式（可选）" 
+      value="{{contact}}" 
+      bindinput="onContactInput"
+    />
+    <button class="submit-btn" bindtap="submitFeedback" disabled="{{submitting}}">
+      {{submitting ? '提交中...' : '提交反馈'}}
+    </button>
+  </view>
+</view>

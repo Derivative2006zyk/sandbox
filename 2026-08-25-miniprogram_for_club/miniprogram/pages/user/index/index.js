@@ -39,5 +39,8 @@ Page({
 
   goEditProfile() {
     wx.navigateTo({ url: '/pages/user/edit-profile/index' });
+  },
+  goFeedback() {
+    wx.navigateTo({ url: '/pages/feedback/index' });
   }
 });

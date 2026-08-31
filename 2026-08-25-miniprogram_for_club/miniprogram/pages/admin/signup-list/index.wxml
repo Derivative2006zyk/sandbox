@@ -8,6 +8,8 @@
     <text class="back-text">返回</text>
   </view>
 
+  <button class="export-btn" bindtap="exportCSV">导出名单</button>
+
   <view wx:if="{{list.length === 0 && !loading}}" class="empty">暂无报名</view>
 
   <view class="signup-item glass-card" wx:for="{{list}}" wx:key="_id">

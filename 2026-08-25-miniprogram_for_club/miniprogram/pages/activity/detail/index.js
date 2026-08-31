@@ -77,6 +77,7 @@ Page({
     }
   },
 
+  // 加载评论列表，并格式化时间
   async loadComments() {
     try {
       const res = await wx.cloud.callFunction({
@@ -84,7 +85,11 @@ Page({
         data: { activityId: this.data.activityId }
       })
       if (res.result && res.result.code === 0) {
-        this.setData({ comments: res.result.data })
+        const comments = res.result.data.map(comment => ({
+          ...comment,
+          timeText: this.formatCommentTime(comment.createTime)
+        }))
+        this.setData({ comments })
       } else {
         console.error('加载评论失败', res.result)
         wx.showToast({ title: '评论加载失败', icon: 'none' })
@@ -92,6 +97,33 @@ Page({
     } catch (err) {
       console.error('加载评论异常', err)
     }
+  },
+
+  // 格式化评论时间（相对时间）
+  formatCommentTime(dateStr) {
+    if (!dateStr) return ''
+    const date = new Date(dateStr)
+    if (isNaN(date.getTime())) return String(dateStr)
+    const now = new Date()
+    const diff = now.getTime() - date.getTime()
+    const minute = 60 * 1000
+    const hour = 60 * minute
+    const day = 24 * hour
+
+    if (diff < minute) return '刚刚'
+    if (diff < hour) return Math.floor(diff / minute) + '分钟前'
+    if (diff < day) return Math.floor(diff / hour) + '小时前'
+    if (diff < 7 * day) return Math.floor(diff / day) + '天前'
+
+    const year = date.getFullYear()
+    const month = String(date.getMonth() + 1).padStart(2, '0')
+    const dayNum = String(date.getDate()).padStart(2, '0')
+    const hourNum = String(date.getHours()).padStart(2, '0')
+    const minuteNum = String(date.getMinutes()).padStart(2, '0')
+    if (year === now.getFullYear()) {
+      return `${month}-${dayNum} ${hourNum}:${minuteNum}`
+    }
+    return `${year}-${month}-${dayNum} ${hourNum}:${minuteNum}`
   },
 
   goBack() {
@@ -155,25 +187,21 @@ Page({
   removeCommentImage() { this.setData({ commentImage: '' }) },
   removeCommentVideo() { this.setData({ commentVideo: '' }) },
 
-  // 压缩图片：使用 wx.compressImage，保持宽高比，不会裁剪
   async compressImage(src, maxWidth, quality) {
     return new Promise((resolve, reject) => {
       wx.compressImage({
         src: src,
         quality: quality || 80,
-        compressedWidth: maxWidth,   // 只指定宽度，高度自动等比缩放
-        success: (res) => {
-          resolve(res.tempFilePath);
-        },
+        compressedWidth: maxWidth,
+        success: (res) => resolve(res.tempFilePath),
         fail: (err) => {
-          console.warn('wx.compressImage 失败，尝试原图上传', err);
-          resolve(src);   // 压缩失败时返回原图，保证流程不中断
+          console.warn('wx.compressImage 失败，尝试原图上传', err)
+          resolve(src)
         }
-      });
-    });
+      })
+    })
   },
 
-  // 上传文件（去掉 onProgressUpdate，避免兼容性问题）
   async uploadFileWithProgress(cloudPath, filePath) {
     this.setData({ uploadVisible: true, uploadProgress: 0 })
     try {
@@ -204,9 +232,7 @@ Page({
           imageFileID = commentImage
         } else {
           let uploadPath = commentImage
-          if (!uploadOrigin) {
-            uploadPath = await this.compressImage(commentImage, 1280, 80)
-          }
+          if (!uploadOrigin) uploadPath = await this.compressImage(commentImage, 1280, 80)
           const cloudPath = `activity-comments/${this.data.activityId}/${Date.now()}-${Math.floor(Math.random() * 1000)}.jpg`
           imageFileID = await this.uploadFileWithProgress(cloudPath, uploadPath)
         }

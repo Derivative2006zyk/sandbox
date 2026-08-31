@@ -49,3 +49,11 @@
   font-size: 26rpx;
   color: #666;
 }
+
+.export-btn {
+  width: 100%;
+  margin-bottom: 20rpx;
+  background: #2F8DFF;
+  color: #fff;
+  border-radius: 8rpx;
+}

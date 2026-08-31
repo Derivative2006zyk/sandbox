@@ -2,11 +2,13 @@ const app = getApp()
 
 Page({
   data: {
-    bgUrl: '',            // 背景图临时链接
+    bgUrl: '',
     userInfo: null,
     loading: false,
     listLoading: false,
-    activityList: [],
+    activityList: [],        // 原始列表
+    filteredList: [],        // 过滤后的列表
+    keyword: '',             // 搜索关键词
     page: 1,
     pageSize: 10,
     hasMore: true,
@@ -19,12 +21,9 @@ Page({
     this.loadActivities(true);
   },
 
-  // 获取背景图临时链接
   fetchBgUrl() {
     const fileID = app.globalData.assets.background;
-    app.getBgUrl(fileID).then(url => {
-      this.setData({ bgUrl: url });
-    }).catch(err => {
+    app.getBgUrl(fileID).then(url => this.setData({ bgUrl: url })).catch(err => {
       console.error('获取背景图失败', err);
       this.setData({ bgUrl: '/images/background.jpg' });
     });
@@ -52,6 +51,24 @@ Page({
     }
   },
 
+  // 搜索输入事件
+  onSearchInput(e) {
+    const keyword = e.detail.value.trim();
+    this.setData({ keyword });
+    this.filterActivities();
+  },
+
+  // 根据关键词过滤活动
+  filterActivities() {
+    const keyword = this.data.keyword.toLowerCase();
+    const filteredList = this.data.activityList.filter(item => {
+      const title = (item.title || '').toLowerCase();
+      const location = (item.location || '').toLowerCase();
+      return title.includes(keyword) || location.includes(keyword);
+    });
+    this.setData({ filteredList });
+  },
+
   async loadActivities(reset = false) {
     if (this.data.listLoading) return;
     this.setData({ listLoading: true });
@@ -65,13 +82,15 @@ Page({
 
       if (res.result && res.result.code === 0) {
         const { list, hasMore } = res.result.data;
+        const newList = reset ? list : this.data.activityList.concat(list);
         this.setData({
-          activityList: reset ? list : this.data.activityList.concat(list),
+          activityList: newList,
           page: page + 1,
           hasMore,
           listLoading: false,
           refreshing: false
         });
+        this.filterActivities(); // 应用过滤
       } else {
         wx.showToast({ title: res.result.msg || '加载失败', icon: 'none' });
       }

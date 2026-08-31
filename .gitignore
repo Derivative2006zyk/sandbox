@@ -2,4 +2,4 @@ echo "node_modules/" >> .gitignore
 echo "miniprogram_npm/" >> .gitignore
 echo ".DS_Store" >> .gitignore
 echo "*.log" >> .gitignore
-echo "project.private.config.json" >> .gitignore
+echo "project.private.config.json" >> .gitignore*.bak
