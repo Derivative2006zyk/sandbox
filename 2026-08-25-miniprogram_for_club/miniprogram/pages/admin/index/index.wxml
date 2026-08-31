@@ -13,4 +13,5 @@
   <view class="menu-item glass-card" bindtap="goActivityManage">活动管理</view>
   <view class="menu-item glass-card" bindtap="goFundManage">社费管理</view>
   <view class="menu-item glass-card" bindtap="goNewsManage">新闻管理</view>
+  <view class="menu-item glass-card" bindtap="goAudit">草案审核</view>
 </view>

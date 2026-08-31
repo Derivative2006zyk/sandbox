@@ -2,8 +2,8 @@ const app = getApp()
 
 Page({
   data: {
-    bgUrl: '',            // 背景图临时链接
-    banners: [],          // 轮播图数据
+    bgUrl: '',
+    banners: [],
     current: 0,
     currentTab: 'latest',
     tabs: [
@@ -14,9 +14,9 @@ Page({
     ],
     filteredNews: [],
     newsLoading: false,
-    hasMore: true,
+    hasMore: false,      // 菜单页不提供加载更多
     page: 1,
-    pageSize: 20
+    pageSize: 10         // 每个分类最多10条
   },
 
   onLoad() {
@@ -25,18 +25,14 @@ Page({
     this.loadData('latest', true);
   },
 
-  // 获取背景图临时链接
   fetchBgUrl() {
-    const fileID = app.globalData.assets.background;   // 使用 app.js 中定义的背景图 fileID
-    app.getBgUrl(fileID)
-      .then(url => this.setData({ bgUrl: url }))
-      .catch(err => {
-        console.error('获取背景图失败', err);
-        this.setData({ bgUrl: '/images/background.jpg' });   // 本地占位
-      });
+    const fileID = app.globalData.assets.background;
+    app.getBgUrl(fileID).then(url => this.setData({ bgUrl: url })).catch(err => {
+      console.error('获取背景图失败', err);
+      this.setData({ bgUrl: '/images/background.jpg' });
+    });
   },
 
-  // 加载轮播图
   async loadBanners() {
     try {
       const res = await wx.cloud.callFunction({ name: 'getBanners' });
@@ -49,7 +45,6 @@ Page({
     }
   },
 
-  // 切换分类标签
   switchTab(e) {
     const tab = e.currentTarget.dataset.tab;
     if (tab === this.data.currentTab) return;
@@ -57,13 +52,11 @@ Page({
     this.loadData(tab, true);
   },
 
-  // 统一数据加载入口
   async loadData(category, reset = false) {
     if (this.data.newsLoading) return;
     this.setData({ newsLoading: true });
 
     const page = reset ? 1 : this.data.page;
-
     try {
       if (category === 'activity') {
         const res = await wx.cloud.callFunction({
@@ -82,7 +75,12 @@ Page({
             activityId: item._id,
             imageThumb: item.coverThumb || item.cover || ''
           }));
-          this.updateList(processedList, res.result.data.hasMore, reset);
+          this.setData({
+            filteredNews: processedList,
+            hasMore: false,   // 菜单页不提供加载更多
+            newsLoading: false,
+            page: page + 1
+          });
         } else {
           this.showError(res.result.msg || '加载失败');
           this.setData({ filteredNews: [] });
@@ -100,10 +98,16 @@ Page({
             title: item.title,
             date: item.date || this.formatDate(item.createTime),
             tag: item.tag || item.category,
-            tagClass: item.category === 'activity' ? 'activity' : 'news',
-            imageThumb: item.imageThumb || item.image || ''
+            tagClass: item.category === 'announcement' ? 'announcement' : 'news',
+            imageThumb: item.imageThumb || item.image || '',
+            isDraftProposal: item.isDraftProposal || false
           }));
-          this.updateList(processedList, res.result.data.hasMore, reset);
+          this.setData({
+            filteredNews: processedList,
+            hasMore: false,
+            newsLoading: false,
+            page: page + 1
+          });
         } else {
           this.showError(res.result.msg || '加载失败');
           this.setData({ filteredNews: [] });
@@ -116,15 +120,6 @@ Page({
     } finally {
       this.setData({ newsLoading: false });
     }
-  },
-
-  updateList(newList, hasMore, reset) {
-    this.setData({
-      filteredNews: reset ? newList : this.data.filteredNews.concat(newList),
-      page: this.data.page + 1,
-      hasMore,
-      newsLoading: false
-    });
   },
 
   showError(msg) {
@@ -168,7 +163,6 @@ Page({
     this.setData({ current: index });
   },
 
-  // 更多按钮：跳转首页
   goHome() {
     wx.switchTab({
       url: '/pages/index/index',
@@ -179,7 +173,6 @@ Page({
     });
   },
 
-  // 下拉刷新：返回欢迎页
   onPullDownRefresh() {
     wx.stopPullDownRefresh();
     wx.reLaunch({

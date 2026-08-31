@@ -1,5 +1,5 @@
 {
-  "name": "createNews",
+  "name": "getDraftDetail",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,7 +9,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "sharp": "^0.35.4",
     "wx-server-sdk": "latest"
   }
 }

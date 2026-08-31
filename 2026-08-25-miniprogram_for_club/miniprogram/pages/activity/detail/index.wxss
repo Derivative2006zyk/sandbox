@@ -189,15 +189,10 @@
   margin-top: 10rpx;
 }
 
+/* 评论图片完整显示 */
 .comment-image {
   width: 100%;
-  height: 300rpx;
-  border-radius: 12rpx;
-}
-
-.comment-video {
-  width: 100%;
-  height: 300rpx;
+  height: auto;
   border-radius: 12rpx;
 }
 
@@ -249,6 +244,7 @@
   margin-bottom: 20rpx;
 }
 
+/* 按钮行：图片按钮:表情按钮 = 3:1 */
 .comment-uploads {
   display: flex;
   align-items: center;
@@ -256,17 +252,81 @@
   margin-bottom: 20rpx;
 }
 
-.small-btn {
-  padding: 10rpx 20rpx;
-  font-size: 24rpx;
+.upload-btn {
+  flex: none;
+  padding: 16rpx 0;
+  text-align: center;
+}
+
+.image-btn {
+  flex: 3;
+}
+
+.emoji-btn {
+  flex: 1;
 }
 
 .origin-toggle {
+  flex: none;
   display: flex;
   align-items: center;
   gap: 8rpx;
   font-size: 24rpx;
   color: #333;
+}
+
+/* 表情面板 */
+.emoji-panel {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 12rpx;
+  padding: 20rpx;
+  margin-bottom: 20rpx;
+}
+
+.emoji-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15rpx;
+}
+
+.emoji-title {
+  font-size: 26rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.emoji-upload {
+  font-size: 24rpx;
+  color: #2F8DFF;
+}
+
+.emoji-empty {
+  text-align: center;
+  color: #999;
+  font-size: 26rpx;
+  padding: 30rpx 0;
+}
+
+.emoji-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20rpx;
+}
+
+.emoji-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 120rpx;
+  background: #f5f5f5;
+  border-radius: 12rpx;
+  overflow: hidden;
+}
+
+.emoji-img {
+  width: 100%;
+  height: 100%;
 }
 
 .comment-attachments {

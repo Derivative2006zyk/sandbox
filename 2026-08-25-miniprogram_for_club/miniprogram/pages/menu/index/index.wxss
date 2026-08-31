@@ -348,3 +348,13 @@
   border-radius: 50%;
   background: #2F8DFF;
 }
+
+/* 草案公告红点 */
+.draft-dot {
+  width: 16rpx;
+  height: 16rpx;
+  border-radius: 50%;
+  background: #ff0000;
+  margin-left: 8rpx;
+  flex-shrink: 0;
+}

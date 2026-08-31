@@ -27,10 +27,13 @@
     <text class="menu-arrow">›</text>
   </view>
   <view class="menu-item glass-card" bindtap="goFeedback">
-  <text class="menu-text">意见反馈</text>
-  <text class="menu-arrow">›</text>
+    <text class="menu-text">意见反馈</text>
+    <text class="menu-arrow">›</text>
+  </view>
+  <view class="menu-item glass-card" bindtap="goProposalSubmit">
+    <text class="menu-text">提交草案</text>
+    <text class="menu-arrow">›</text>
   </view>
 
-  <!-- 编辑资料按钮 -->
   <button class="edit-btn angle-btn" bindtap="goEditProfile">编辑资料</button>
 </view>

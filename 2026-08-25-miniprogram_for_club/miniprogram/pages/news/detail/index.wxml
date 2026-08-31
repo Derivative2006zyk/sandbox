@@ -1,1 +1,34 @@
-<image class="bg-image" src="{{bgUrl}}" mode="aspectFill"></image>
+<view class="container">
+  <!-- 全局背景图 -->
+  <image class="page-bg" src="{{bgUrl}}" mode="aspectFill"></image>
+
+  <!-- 自定义返回按钮 -->
+  <view class="custom-back" bindtap="goBack">
+    <text class="back-icon">‹</text>
+    <text class="back-text">返回</text>
+  </view>
+
+  <!-- 加载中 -->
+  <view wx:if="{{loading}}" class="loading">加载中...</view>
+
+  <!-- 新闻详情 -->
+  <view wx:if="{{news}}" class="news-detail glass-card">
+    <!-- 草案公告大字提示 -->
+    <view wx:if="{{news.isDraftProposal}}" class="draft-notice">
+      非官方文件，为草案信息，社团成员可进行投票表决对此草案的态度，票数达到一定数量，我们（管理员）会考虑申请作为正式文件或活动
+    </view>
+
+    <view class="header">
+      <view class="tag {{news.category === 'activity' ? 'activity' : 'news'}}">{{news.tag}}</view>
+      <text class="date">{{news.date}}</text>
+    </view>
+    <view class="title">{{news.title}}</view>
+
+    <!-- 新闻配图 -->
+    <view class="news-image" wx:if="{{news.imageThumb || news.image}}">
+      <image class="news-image-img" src="{{news.imageThumb || news.image}}" mode="aspectFill"></image>
+    </view>
+
+    <view class="content">{{news.content}}</view>
+  </view>
+</view>

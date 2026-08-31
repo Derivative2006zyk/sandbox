@@ -52,20 +52,13 @@
     <view class="comment-list">
       <view class="comment-item" wx:for="{{comments}}" wx:key="_id">
         <view class="comment-main">
-          <!-- 文字内容 -->
           <view class="comment-content" wx:if="{{item.content}}">{{item.content}}</view>
 
-          <!-- 图片附件：使用临时链接 imageUrl -->
+          <!-- 图片附件：使用 widthFix 完整显示 -->
           <view class="comment-media" wx:if="{{item.imageUrl}}">
-            <image class="comment-image" src="{{item.imageUrl}}" mode="aspectFill" bindtap="previewCommentImage" data-url="{{item.imageUrl}}"></image>
+            <image class="comment-image" src="{{item.imageUrl}}" mode="widthFix" bindtap="previewCommentImage" data-url="{{item.imageUrl}}"></image>
           </view>
 
-          <!-- 视频附件：使用临时链接 videoUrl -->
-          <view class="comment-media" wx:if="{{item.videoUrl}}">
-            <video class="comment-video" src="{{item.videoUrl}}" controls></video>
-          </view>
-
-          <!-- 时间与操作 -->
           <view class="comment-meta">
             <text class="comment-time">{{item.timeText}}</text>
             <view wx:if="{{item.openid === myOpenid}}" class="comment-actions">
@@ -82,24 +75,35 @@
     <view class="comment-form">
       <textarea class="comment-input" placeholder="写下你的评论..." value="{{commentText}}" bindinput="onCommentInput"></textarea>
 
+      <!-- 按钮行：图片按钮和表情按钮比例为 3:1 -->
       <view class="comment-uploads">
-        <button class="angle-btn small-btn" bindtap="chooseCommentImage">图片</button>
-        <button class="angle-btn small-btn" bindtap="chooseCommentVideo">视频</button>
+        <button class="angle-btn upload-btn image-btn" bindtap="chooseCommentImage">图片</button>
+        <button class="angle-btn upload-btn emoji-btn" bindtap="toggleEmojiPanel">表情</button>
         <label class="origin-toggle">
           <switch checked="{{uploadOrigin}}" bindchange="toggleOrigin" color="#2F8DFF"></switch>
           <text>原图上传</text>
         </label>
       </view>
 
-      <!-- 已选附件预览 -->
-      <view class="comment-attachments" wx:if="{{commentImage || commentVideo}}">
-        <view class="attach-item" wx:if="{{commentImage}}">
-          <image class="attach-preview" src="{{commentImage}}" mode="aspectFill"></image>
-          <view class="remove-attach" bindtap="removeCommentImage">×</view>
+      <!-- 表情面板 -->
+      <view class="emoji-panel" wx:if="{{showEmojiPanel}}">
+        <view class="emoji-header">
+          <text class="emoji-title">表情包</text>
+          <text class="emoji-upload" bindtap="uploadEmoji">上传表情</text>
         </view>
-        <view class="attach-item" wx:if="{{commentVideo}}">
-          <video class="attach-preview" src="{{commentVideo}}" controls></video>
-          <view class="remove-attach" bindtap="removeCommentVideo">×</view>
+        <view wx:if="{{emojiList.length === 0}}" class="emoji-empty">暂无默认表情包</view>
+        <view class="emoji-grid" wx:else>
+          <view class="emoji-item" wx:for="{{emojiList}}" wx:key="_id" bindtap="selectEmoji" data-fileid="{{item.fileID}}" data-url="{{item.imageUrl}}">
+            <image class="emoji-img" src="{{item.imageUrl}}" mode="aspectFit"></image>
+          </view>
+        </view>
+      </view>
+
+      <!-- 已选图片预览（图片或表情） -->
+      <view class="comment-attachments" wx:if="{{commentImage || commentImagePreview}}">
+        <view class="attach-item">
+          <image class="attach-preview" src="{{commentImagePreview || commentImage}}" mode="aspectFit"></image>
+          <view class="remove-attach" bindtap="removeCommentImage">×</view>
         </view>
       </view>
 

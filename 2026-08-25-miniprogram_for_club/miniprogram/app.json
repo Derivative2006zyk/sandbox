@@ -12,59 +12,45 @@
     "pages/admin/activity-list/index",
     "pages/admin/activity-edit/index",
     "pages/admin/signup-list/index",
-    "pages/menu/index/index",
-    "pages/news/detail/index",
     "pages/admin/news-list/index",
     "pages/admin/news-edit/index",
-    "pages/feedback/index/index"
+    "pages/menu/index/index",
+    "pages/news/detail/index",
+    "pages/feedback/index/index",
+    "pages/admin/audit/index",
+    "pages/proposal/submit/index"
   ],
   "subpackages": [
     {
       "root": "subpackages/anim1",
       "name": "anim1",
-      "pages": [
-        "index"
-      ]
+      "pages": ["index"]
     },
     {
       "root": "subpackages/anim2",
       "name": "anim2",
-      "pages": [
-        "index"
-      ]
+      "pages": ["index"]
     },
     {
       "root": "subpackages/anim3",
       "name": "anim3",
-      "pages": [
-        "index"
-      ]
+      "pages": ["index"]
     },
     {
       "root": "subpackages/anim4",
       "name": "anim4",
-      "pages": [
-        "index"
-      ]
+      "pages": ["index"]
     },
     {
       "root": "subpackages/anim5",
       "name": "anim5",
-      "pages": [
-        "index"
-      ]
+      "pages": ["index"]
     }
   ],
   "preloadRule": {
     "pages/welcome/index/index": {
       "network": "all",
-      "packages": [
-        "anim1",
-        "anim2",
-        "anim3",
-        "anim4",
-        "anim5"
-      ]
+      "packages": ["anim1", "anim2", "anim3", "anim4", "anim5"]
     }
   },
   "window": {

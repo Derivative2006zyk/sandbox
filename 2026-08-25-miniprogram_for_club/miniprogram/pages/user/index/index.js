@@ -2,7 +2,7 @@ const app = getApp()
 
 Page({
   data: {
-    bgUrl: '',            // 背景图临时链接
+    bgUrl: '',
     userInfo: null
   },
 
@@ -14,12 +14,9 @@ Page({
     this.setData({ userInfo: app.globalData.userInfo });
   },
 
-  // 获取背景图临时链接
   fetchBgUrl() {
     const fileID = app.globalData.assets.background;
-    app.getBgUrl(fileID).then(url => {
-      this.setData({ bgUrl: url });
-    }).catch(err => {
+    app.getBgUrl(fileID).then(url => this.setData({ bgUrl: url })).catch(err => {
       console.error('获取背景图失败', err);
       this.setData({ bgUrl: '/images/background.jpg' });
     });
@@ -40,7 +37,12 @@ Page({
   goEditProfile() {
     wx.navigateTo({ url: '/pages/user/edit-profile/index' });
   },
+
   goFeedback() {
     wx.navigateTo({ url: '/pages/feedback/index' });
+  },
+
+  goProposalSubmit() {
+    wx.navigateTo({ url: '/pages/proposal/submit/index' });
   }
 });

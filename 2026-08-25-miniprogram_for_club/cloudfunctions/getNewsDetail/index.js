@@ -8,7 +8,9 @@ exports.main = async (event, context) => {
 
   try {
     const res = await db.collection('news').doc(newsId).get()
-    if (!res.data) return { code: 404, msg: '新闻不存在' }
+    if (!res.data) {
+      return { code: 404, msg: '新闻不存在' }
+    }
     return { code: 0, data: res.data }
   } catch (e) {
     console.error('getNewsDetail error:', e)

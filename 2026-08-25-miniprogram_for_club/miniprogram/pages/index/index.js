@@ -6,19 +6,23 @@ Page({
     userInfo: null,
     loading: false,
     listLoading: false,
-    activityList: [],        // 原始列表
-    filteredList: [],        // 过滤后的列表
-    keyword: '',             // 搜索关键词
+    currentHomeTab: 'activity',   // 默认选中活动
+    displayList: [],               // 当前显示的列表
+    keyword: '',                   // 搜索关键词（仅活动选项卡使用）
     page: 1,
-    pageSize: 10,
+    pageSize: 20,
     hasMore: true,
-    refreshing: false
+    refreshing: false,
+    // 原始数据，用于搜索和过滤
+    activityList: [],
+    newsList: [],
+    announcementList: []
   },
 
   onLoad() {
     this.fetchBgUrl();
     this.checkLogin();
-    this.loadActivities(true);
+    this.loadCurrentTab(true);
   },
 
   fetchBgUrl() {
@@ -27,13 +31,6 @@ Page({
       console.error('获取背景图失败', err);
       this.setData({ bgUrl: '/images/background.jpg' });
     });
-  },
-
-  goDetail(e) {
-    const id = e.currentTarget.dataset.id;
-    if (id) {
-      wx.navigateTo({ url: `/pages/activity/detail/index?id=${id}` });
-    }
   },
 
   async checkLogin() {
@@ -51,70 +48,161 @@ Page({
     }
   },
 
-  // 搜索输入事件
+  // 切换选项卡
+  switchHomeTab(e) {
+    const tab = e.currentTarget.dataset.tab;
+    if (tab === this.data.currentHomeTab) return;
+    this.setData({ currentHomeTab: tab, page: 1, hasMore: true, keyword: '' });
+    this.loadCurrentTab(true);
+  },
+
+  // 加载当前选项卡数据
+  async loadCurrentTab(reset = false) {
+    if (this.data.listLoading) return;
+    this.setData({ listLoading: true });
+
+    const page = reset ? 1 : this.data.page;
+    try {
+      let res;
+      if (this.data.currentHomeTab === 'activity') {
+        res = await wx.cloud.callFunction({
+          name: 'getActivityList',
+          data: { page, pageSize: this.data.pageSize }
+        });
+        if (res.result && res.result.code === 0) {
+          const activities = res.result.data.list;
+          const mapped = activities.map(item => ({
+            _id: item._id,
+            type: 'activity',
+            title: item.title,
+            time: item.startTime,
+            location: item.location,
+            participantCount: `${item.currentParticipants}/${item.maxParticipants}`,
+            coverThumb: item.coverThumb || item.cover || '',
+            tagText: item.type || '活动',
+            tagClass: 'activity'
+          }));
+          // 更新原始列表
+          const newActivityList = reset ? mapped : this.data.activityList.concat(mapped);
+          this.setData({
+            activityList: newActivityList,
+            displayList: newActivityList,
+            hasMore: res.result.data.hasMore,
+            page: page + 1,
+            listLoading: false,
+            refreshing: false
+          });
+        } else {
+          this.showError(res.result.msg || '加载失败');
+          this.setData({ displayList: [], listLoading: false });
+        }
+      } else {
+        // 新闻或公告
+        res = await wx.cloud.callFunction({
+          name: 'getNewsList',
+          data: { category: this.data.currentHomeTab, page, pageSize: this.data.pageSize }
+        });
+        if (res.result && res.result.code === 0) {
+          const newsItems = res.result.data.list;
+          const mapped = newsItems.map(item => ({
+            _id: item._id,
+            type: 'news',
+            title: item.title,
+            date: item.date || this.formatDate(item.createTime),
+            tagText: item.tag || (item.category === 'announcement' ? '公告' : '新闻'),
+            tagClass: item.category === 'announcement' ? 'announcement' : 'news',
+            coverThumb: item.imageThumb || item.image || '',
+            isDraftProposal: item.isDraftProposal || false
+          }));
+          // 根据选项卡更新对应原始列表
+          if (this.data.currentHomeTab === 'news') {
+            const newNewsList = reset ? mapped : this.data.newsList.concat(mapped);
+            this.setData({
+              newsList: newNewsList,
+              displayList: newNewsList,
+              hasMore: res.result.data.hasMore,
+              page: page + 1,
+              listLoading: false,
+              refreshing: false
+            });
+          } else if (this.data.currentHomeTab === 'announcement') {
+            const newAnnouncementList = reset ? mapped : this.data.announcementList.concat(mapped);
+            this.setData({
+              announcementList: newAnnouncementList,
+              displayList: newAnnouncementList,
+              hasMore: res.result.data.hasMore,
+              page: page + 1,
+              listLoading: false,
+              refreshing: false
+            });
+          }
+        } else {
+          this.showError(res.result.msg || '加载失败');
+          this.setData({ displayList: [], listLoading: false });
+        }
+      }
+    } catch (err) {
+      console.error('加载数据失败', err);
+      this.showError('网络异常，请重试');
+      this.setData({ listLoading: false, refreshing: false });
+    }
+  },
+
+  // 搜索输入（仅活动）
   onSearchInput(e) {
     const keyword = e.detail.value.trim();
     this.setData({ keyword });
     this.filterActivities();
   },
 
-  // 根据关键词过滤活动
   filterActivities() {
+    if (this.data.currentHomeTab !== 'activity') return;
     const keyword = this.data.keyword.toLowerCase();
-    const filteredList = this.data.activityList.filter(item => {
+    const filtered = this.data.activityList.filter(item => {
       const title = (item.title || '').toLowerCase();
       const location = (item.location || '').toLowerCase();
       return title.includes(keyword) || location.includes(keyword);
     });
-    this.setData({ filteredList });
+    this.setData({ displayList: filtered });
   },
 
-  async loadActivities(reset = false) {
-    if (this.data.listLoading) return;
-    this.setData({ listLoading: true });
-
-    const page = reset ? 1 : this.data.page;
-    try {
-      const res = await wx.cloud.callFunction({
-        name: 'getActivityList',
-        data: { page, pageSize: this.data.pageSize }
-      });
-
-      if (res.result && res.result.code === 0) {
-        const { list, hasMore } = res.result.data;
-        const newList = reset ? list : this.data.activityList.concat(list);
-        this.setData({
-          activityList: newList,
-          page: page + 1,
-          hasMore,
-          listLoading: false,
-          refreshing: false
-        });
-        this.filterActivities(); // 应用过滤
-      } else {
-        wx.showToast({ title: res.result.msg || '加载失败', icon: 'none' });
-      }
-    } catch (err) {
-      console.error('获取活动列表失败', err);
-      wx.showToast({ title: '网络异常，请重试', icon: 'none' });
-    } finally {
-      this.setData({ listLoading: false, refreshing: false });
+  // 点击列表项
+  onItemTap(e) {
+    const { id, type } = e.currentTarget.dataset;
+    if (type === 'activity' && id) {
+      wx.navigateTo({ url: `/pages/activity/detail/index?id=${id}` });
+    } else if (type === 'news' && id) {
+      wx.navigateTo({ url: `/pages/news/detail/index?id=${id}` });
     }
   },
 
   onPullDownRefresh() {
     this.setData({ refreshing: true });
-    this.loadActivities(true);
+    this.loadCurrentTab(true);
     wx.stopPullDownRefresh();
   },
 
   onReachBottom() {
     if (this.data.hasMore && !this.data.listLoading) {
-      this.loadActivities(false);
+      this.loadCurrentTab(false);
     }
   },
 
   goBackToMenu() {
     wx.navigateTo({ url: '/pages/menu/index/index' });
+  },
+
+  formatDate(dateObj) {
+    if (!dateObj) return '';
+    const d = new Date(dateObj);
+    if (isNaN(d.getTime())) return String(dateObj);
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${year}.${month}.${day}`;
+  },
+
+  showError(msg) {
+    wx.showToast({ title: msg, icon: 'none' });
   }
 });

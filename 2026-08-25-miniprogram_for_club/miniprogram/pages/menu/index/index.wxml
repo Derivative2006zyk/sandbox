@@ -8,7 +8,7 @@
   <!-- 顶部空心 NEWS 标题 -->
   <view class="news-outline">NEWS</view>
 
-  <!-- 轮播图区域（平行四边形样式，动态活动数据） -->
+  <!-- 轮播图区域（动态数据 + 样式改造） -->
   <view class="banner-area" wx:if="{{banners.length > 0}}">
     <view class="banner-outer">
       <view class="banner-clip">
@@ -47,7 +47,7 @@
     </view>
   </view>
 
-  <!-- 轮播图占位（无数据） -->
+  <!-- 轮播图占位 -->
   <view class="banner-placeholder" wx:if="{{banners.length === 0}}">
     <text>暂无活动</text>
   </view>
@@ -74,12 +74,17 @@
       data-id="{{item.activityId || item._id}}"
       data-type="{{item.activityId ? 'activity' : 'news'}}"
     >
+      <!-- 缩略图（如果有） -->
       <view class="news-cover" wx:if="{{item.imageThumb}}">
         <image class="news-cover-img" src="{{item.imageThumb}}" mode="aspectFill"></image>
       </view>
 
       <view class="news-tag {{item.tagClass}}">{{item.tag}}</view>
       <text class="news-title">{{item.title}}</text>
+
+      <!-- 红色小点标记草案公告 -->
+      <view wx:if="{{item.isDraftProposal}}" class="draft-dot"></view>
+
       <text class="news-date">{{item.date}}</text>
     </view>
 

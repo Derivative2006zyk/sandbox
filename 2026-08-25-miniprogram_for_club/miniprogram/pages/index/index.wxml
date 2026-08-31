@@ -11,8 +11,15 @@
     <text class="back-text">返回</text>
   </view>
 
-  <!-- 搜索框 -->
-  <view class="search-bar">
+  <!-- 三选项卡 -->
+  <view class="home-tabs">
+    <view class="home-tab {{currentHomeTab === 'news' ? 'active' : ''}}" data-tab="news" bindtap="switchHomeTab">新闻</view>
+    <view class="home-tab {{currentHomeTab === 'announcement' ? 'active' : ''}}" data-tab="announcement" bindtap="switchHomeTab">公告</view>
+    <view class="home-tab {{currentHomeTab === 'activity' ? 'active' : ''}}" data-tab="activity" bindtap="switchHomeTab">活动</view>
+  </view>
+
+  <!-- 活动搜索框（仅活动选项卡显示） -->
+  <view class="search-bar" wx:if="{{currentHomeTab === 'activity'}}">
     <input 
       class="search-input" 
       placeholder="搜索活动标题或地点" 
@@ -22,42 +29,52 @@
     />
   </view>
 
-  <!-- 活动列表区域 -->
-  <block wx:if="{{filteredList.length > 0}}">
+  <!-- 列表区域 -->
+  <block wx:if="{{displayList.length > 0}}">
     <view 
-      class="activity-card glass-card" 
-      wx:for="{{filteredList}}" 
+      class="list-item glass-card" 
+      wx:for="{{displayList}}" 
       wx:key="_id"
-      bindtap="goDetail"
-      data-id="{{item._id}}">
+      bindtap="onItemTap"
+      data-id="{{item._id}}"
+      data-type="{{item.type}}">
       
-      <view class="activity-cover" wx:if="{{item.coverThumb || item.cover}}">
-        <image class="cover-img" src="{{item.coverThumb || item.cover}}" mode="aspectFill"></image>
+      <!-- 缩略图（如有） -->
+      <view class="list-cover" wx:if="{{item.coverThumb}}">
+        <image class="cover-img" src="{{item.coverThumb}}" mode="aspectFill"></image>
       </view>
 
-      <view class="skew-tag">{{item.type || '活动'}}</view>
-      <view class="activity-title">{{item.title}}</view>
-      <view class="activity-info">
-        <text class="info-item">时间：{{item.startTime}}</text>
-        <text class="info-item">地点：{{item.location}}</text>
+      <!-- 标签 -->
+      <view class="skew-tag {{item.tagClass}}">{{item.tagText}}</view>
+
+      <!-- 标题 -->
+      <view class="item-title">{{item.title}}</view>
+
+      <!-- 信息区：活动 vs 新闻/公告 -->
+      <view wx:if="{{item.type === 'activity'}}" class="item-info">
+        <text class="info-line">时间：{{item.time}}</text>
+        <text class="info-line">地点：{{item.location}}</text>
+        <text class="info-line">报名：<text class="data-highlight">{{item.participantCount}}</text></text>
       </view>
-      <view class="data-block">
-        <text class="data-highlight">{{item.currentParticipants}}/{{item.maxParticipants}}</text>
-        <text class="data-label">已报名</text>
+      <view wx:else class="item-info">
+        <text class="info-line">日期：{{item.date}}</text>
+        <text wx:if="{{item.isDraftProposal}}" class="draft-flag">草案待表决</text>
       </view>
     </view>
 
+    <!-- 加载动画 -->
     <view class="loading-dots" wx:if="{{listLoading}}">
       <view class="dot"></view>
       <view class="dot"></view>
       <view class="dot"></view>
     </view>
 
-    <view class="no-more" wx:if="{{!hasMore && filteredList.length > 0}}">没有更多活动了</view>
+    <!-- 没有更多 -->
+    <view class="no-more" wx:if="{{!hasMore && displayList.length > 0}}">没有更多了</view>
   </block>
 
   <!-- 空状态 -->
-  <view class="empty" wx:if="{{filteredList.length === 0 && !listLoading}}">
-    <text>{{keyword ? '没有找到匹配的活动' : '暂无活动，敬请期待'}}</text>
+  <view class="empty" wx:if="{{displayList.length === 0 && !listLoading}}">
+    <text>{{keyword ? '没有找到匹配的活动' : '暂无内容'}}</text>
   </view>
 </view>
