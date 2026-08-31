@@ -1,4 +1,8 @@
-<view class="menu-page">
+<view 
+  class="menu-page" 
+  bindtouchstart="onTouchStart" 
+  bindtouchend="onTouchEnd"
+>
   <!-- 全局背景图 -->
   <image class="page-bg" src="{{bgUrl}}" mode="aspectFill"></image>
 
@@ -74,17 +78,15 @@
       data-id="{{item.activityId || item._id}}"
       data-type="{{item.activityId ? 'activity' : 'news'}}"
     >
-      <!-- 缩略图（如果有） -->
+      <!-- 缩略图 -->
       <view class="news-cover" wx:if="{{item.imageThumb}}">
         <image class="news-cover-img" src="{{item.imageThumb}}" mode="aspectFill"></image>
       </view>
 
       <view class="news-tag {{item.tagClass}}">{{item.tag}}</view>
       <text class="news-title">{{item.title}}</text>
-
-      <!-- 红色小点标记草案公告 -->
+      <!-- 草案红点 -->
       <view wx:if="{{item.isDraftProposal}}" class="draft-dot"></view>
-
       <text class="news-date">{{item.date}}</text>
     </view>
 
@@ -96,7 +98,7 @@
   <!-- 底部操作区 -->
   <view class="footer-area">
     <view class="scroll-hint">
-      <text class="scroll-text">SCROLL</text>
+      <text class="scroll-text">上滑进入吉祥物页</text>
       <view class="arrow-down"></view>
     </view>
     <view class="more-btn" bindtap="goHome">

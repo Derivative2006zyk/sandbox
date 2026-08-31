@@ -5,7 +5,8 @@ Page({
     bgUrl: '',
     drafts: [],
     loading: false,
-    selectedDraft: null   // 当前查看的草案详情
+    selectedDraft: null,
+    errorMsg: ''
   },
 
   onLoad() {
@@ -26,23 +27,24 @@ Page({
   },
 
   async loadDrafts() {
-    this.setData({ loading: true });
+    this.setData({ loading: true, errorMsg: '' });
     try {
       const res = await wx.cloud.callFunction({ name: 'getPendingDrafts' });
+      console.log('getPendingDrafts res:', res);
+
       if (res.result && res.result.code === 0) {
-        this.setData({ drafts: res.result.data, loading: false });
+        // 确保 data 是数组
+        const drafts = Array.isArray(res.result.data) ? res.result.data : [];
+        this.setData({ drafts, loading: false, errorMsg: drafts.length === 0 ? '暂无待审核草案' : '' });
       } else {
-        wx.showToast({ title: res.result.msg || '加载失败', icon: 'none' });
-        this.setData({ loading: false });
+        this.setData({ loading: false, errorMsg: res.result.msg || '加载失败' });
       }
     } catch (err) {
-      console.error('加载待审核草案失败', err);
-      wx.showToast({ title: '网络异常', icon: 'none' });
-      this.setData({ loading: false });
+      console.error('加载待审核草案异常', err);
+      this.setData({ loading: false, errorMsg: '网络异常，请重试' });
     }
   },
 
-  // 点击草案查看详情
   viewDraftDetail(e) {
     const id = e.currentTarget.dataset.id;
     const draft = this.data.drafts.find(d => d._id === id);
@@ -51,29 +53,24 @@ Page({
     }
   },
 
-  // 关闭详情弹窗
   closeDetail() {
     this.setData({ selectedDraft: null });
   },
 
-  // 阻止冒泡
   noop() {},
 
-  // 批准当前查看的草案
   approveDraft() {
     if (this.data.selectedDraft) {
       this.reviewDraft(this.data.selectedDraft._id, 'approve');
     }
   },
 
-  // 拒绝当前查看的草案
   rejectDraft() {
     if (this.data.selectedDraft) {
       this.reviewDraft(this.data.selectedDraft._id, 'reject');
     }
   },
 
-  // 审核操作
   async reviewDraft(draftId, action) {
     const confirmText = action === 'approve' ? '确定批准该草案？' : '确定拒绝该草案？';
     wx.showModal({
@@ -88,8 +85,8 @@ Page({
             });
             if (result.result && result.result.code === 0) {
               wx.showToast({ title: result.result.msg, icon: 'success' });
-              this.setData({ selectedDraft: null }); // 关闭弹窗
-              this.loadDrafts(); // 刷新列表
+              this.setData({ selectedDraft: null });
+              this.loadDrafts();
             } else {
               wx.showToast({ title: result.result.msg || '操作失败', icon: 'none' });
             }

@@ -6,14 +6,14 @@ Page({
     userInfo: null,
     loading: false,
     listLoading: false,
-    currentHomeTab: 'activity',   // 默认选中活动
+    currentHomeTab: 'activity',   // 当前选项卡：activity/news/announcement
     displayList: [],               // 当前显示的列表
     keyword: '',                   // 搜索关键词（仅活动选项卡使用）
     page: 1,
     pageSize: 20,
     hasMore: true,
     refreshing: false,
-    // 原始数据，用于搜索和过滤
+    // 原始数据
     activityList: [],
     newsList: [],
     announcementList: []
@@ -52,7 +52,14 @@ Page({
   switchHomeTab(e) {
     const tab = e.currentTarget.dataset.tab;
     if (tab === this.data.currentHomeTab) return;
-    this.setData({ currentHomeTab: tab, page: 1, hasMore: true, keyword: '' });
+    this.setData({
+      currentHomeTab: tab,
+      page: 1,
+      hasMore: true,
+      keyword: '',
+      displayList: [],
+      listLoading: false
+    });
     this.loadCurrentTab(true);
   },
 
@@ -82,7 +89,6 @@ Page({
             tagText: item.type || '活动',
             tagClass: 'activity'
           }));
-          // 更新原始列表
           const newActivityList = reset ? mapped : this.data.activityList.concat(mapped);
           this.setData({
             activityList: newActivityList,
@@ -114,7 +120,6 @@ Page({
             coverThumb: item.imageThumb || item.image || '',
             isDraftProposal: item.isDraftProposal || false
           }));
-          // 根据选项卡更新对应原始列表
           if (this.data.currentHomeTab === 'news') {
             const newNewsList = reset ? mapped : this.data.newsList.concat(mapped);
             this.setData({

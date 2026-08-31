@@ -39,7 +39,7 @@ Page({
   },
 
   goFeedback() {
-    wx.navigateTo({ url: '/pages/feedback/index' });
+    wx.navigateTo({ url: '/pages/feedback/index/index' });
   },
 
   goProposalSubmit() {

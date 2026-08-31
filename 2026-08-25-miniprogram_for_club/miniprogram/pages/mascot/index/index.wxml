@@ -1,0 +1,27 @@
+<view class="container" bindtouchstart="onTouchStart" bindtouchend="onTouchEnd">
+  <!-- 全局背景图 -->
+  <image class="page-bg" src="{{bgUrl}}" mode="aspectFill"></image>
+
+  <!-- 主内容 -->
+  <view class="content">
+    <view class="title">社团吉祥物展示</view>
+    <view class="subtitle">开发中...</view>
+  </view>
+
+  <!-- 可拓展区域（版权与成员信息） -->
+  <view class="expandable" style="height: {{expanded ? '50vh' : '0'}}">
+    <view class="info-section glass-card">
+      <view class="info-title">版权信息</view>
+      <text class="info-text">© 2026 樱花日语社</text>
+      <view class="info-title">社团成员信息</view>
+      <text class="info-text">社长：张跃锟</text>
+      <text class="info-text">副社长：待定</text>
+      <text class="info-text">成员：社团全体成员</text>
+    </view>
+  </view>
+
+  <!-- 操作提示 -->
+  <view class="hint">
+    <text>{{expanded ? '下拉刷新折叠' : '上滑查看版权与成员信息\n下拉刷新返回菜单页'}}</text>
+  </view>
+</view>

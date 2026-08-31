@@ -14,9 +14,11 @@ Page({
     ],
     filteredNews: [],
     newsLoading: false,
-    hasMore: false,      // 菜单页不提供加载更多
+    hasMore: false,
     page: 1,
-    pageSize: 10         // 每个分类最多10条
+    pageSize: 10,
+    touchStartX: 0,
+    touchStartY: 0
   },
 
   onLoad() {
@@ -63,7 +65,6 @@ Page({
           name: 'getActivityList',
           data: { page, pageSize: this.data.pageSize }
         });
-
         if (res.result && res.result.code === 0) {
           const activities = res.result.data.list;
           const processedList = activities.map(item => ({
@@ -75,12 +76,7 @@ Page({
             activityId: item._id,
             imageThumb: item.coverThumb || item.cover || ''
           }));
-          this.setData({
-            filteredNews: processedList,
-            hasMore: false,   // 菜单页不提供加载更多
-            newsLoading: false,
-            page: page + 1
-          });
+          this.setData({ filteredNews: processedList, hasMore: false, newsLoading: false });
         } else {
           this.showError(res.result.msg || '加载失败');
           this.setData({ filteredNews: [] });
@@ -90,7 +86,6 @@ Page({
           name: 'getNewsList',
           data: { category, page, pageSize: this.data.pageSize }
         });
-
         if (res.result && res.result.code === 0) {
           const newsList = res.result.data.list;
           const processedList = newsList.map(item => ({
@@ -102,12 +97,7 @@ Page({
             imageThumb: item.imageThumb || item.image || '',
             isDraftProposal: item.isDraftProposal || false
           }));
-          this.setData({
-            filteredNews: processedList,
-            hasMore: false,
-            newsLoading: false,
-            page: page + 1
-          });
+          this.setData({ filteredNews: processedList, hasMore: false, newsLoading: false });
         } else {
           this.showError(res.result.msg || '加载失败');
           this.setData({ filteredNews: [] });
@@ -122,9 +112,7 @@ Page({
     }
   },
 
-  showError(msg) {
-    wx.showToast({ title: msg, icon: 'none' });
-  },
+  showError(msg) { wx.showToast({ title: msg, icon: 'none' }); },
 
   formatDate(dateObj) {
     if (!dateObj) return '';
@@ -142,25 +130,46 @@ Page({
       wx.navigateTo({ url: `/pages/activity/detail/index?id=${id}` });
     } else if (type === 'news' && id) {
       wx.navigateTo({ url: `/pages/news/detail/index?id=${id}` });
-    } else {
-      wx.showToast({ title: '详情页开发中', icon: 'none' });
     }
   },
 
-  onSwiperChange(e) {
-    this.setData({ current: e.detail.current });
-  },
-
+  onSwiperChange(e) { this.setData({ current: e.detail.current }); },
   prevBanner() {
     let index = this.data.current - 1;
     if (index < 0) index = this.data.banners.length - 1;
     this.setData({ current: index });
   },
-
   nextBanner() {
     let index = this.data.current + 1;
     if (index >= this.data.banners.length) index = 0;
     this.setData({ current: index });
+  },
+
+  // 触摸事件，优化防误触
+  onTouchStart(e) {
+    this.setData({
+      touchStartX: e.touches[0].clientX,
+      touchStartY: e.touches[0].clientY
+    });
+  },
+
+  onTouchEnd(e) {
+    const deltaX = Math.abs(e.changedTouches[0].clientX - this.data.touchStartX);
+    const deltaY = e.changedTouches[0].clientY - this.data.touchStartY;
+    // 垂直位移大于水平位移，且上滑超过80rpx，避免左右滑动误触
+    if (Math.abs(deltaY) > Math.abs(deltaX) && deltaY < -80) {
+      this.goMascot();
+    }
+  },
+
+  goMascot() {
+    wx.navigateTo({
+      url: '/pages/mascot/index/index',
+      fail: (err) => {
+        console.error('跳转吉祥物页失败', err);
+        wx.showToast({ title: '跳转失败', icon: 'none' });
+      }
+    });
   },
 
   goHome() {
@@ -173,6 +182,7 @@ Page({
     });
   },
 
+  // 下拉刷新：返回欢迎页
   onPullDownRefresh() {
     wx.stopPullDownRefresh();
     wx.reLaunch({

@@ -47,11 +47,11 @@
   -webkit-text-stroke: 2rpx #D1E9F9;
   letter-spacing: 8rpx;
   margin-top: 40rpx;
-  margin-bottom: -90rpx;
+  margin-bottom: -60rpx;
   text-align: left;
 }
 
-/* ========== 轮播图区域（平行四边形样式，对角圆角白色边框，填满无白边） ========== */
+/* ========== 轮播图区域 ========== */
 .banner-area {
   position: relative;
   z-index: 1;
@@ -59,14 +59,12 @@
   margin: 20rpx auto 0;
 }
 
-/* 外层倾斜容器 */
 .banner-outer {
   position: relative;
   transform: skewX(-5deg);
-  filter: drop-shadow(10rpx 12rpx 16rpx rgba(0, 0, 0, 0.6));
+  filter: drop-shadow(0 8rpx 24rpx rgba(0,0,0,0.1));
 }
 
-/* 切角与描边容器 */
 .banner-clip {
   border-radius: 16rpx 0 16rpx 0;
   border: 3rpx solid #ffffff;
@@ -75,16 +73,15 @@
   box-shadow: 0 0 0 2rpx rgba(255,255,255,0.5);
 }
 
-/* swiper 覆盖容器，直接填满，不放大不偏移 */
 .banner-swiper {
   width: 100%;
   height: 380rpx;
 }
 
 .banner-item {
+  position: relative;
   width: 100%;
   height: 100%;
-  position: relative;
 }
 
 .banner-img {
@@ -125,12 +122,11 @@
   color: #FFFFFF;
 }
 
-/* 左右箭头（反向倾斜，保持直立） */
 .arrow {
   position: absolute;
-  top: 45%;
+  top: 50%;
   transform: translateY(-50%) skewX(5deg);
-  font-size: 200rpx;            /* 加大箭头尺寸 */
+  font-size: 80rpx;
   color: #ffffff7a;
   z-index: 10;
   line-height: 1;
@@ -139,7 +135,6 @@
 .arrow.left { left: -10rpx; }
 .arrow.right { right: -10rpx; }
 
-/* 自定义指示器圆点 */
 .custom-dots {
   display: flex;
   justify-content: center;
@@ -162,7 +157,6 @@
   background: #17498C;
 }
 
-/* 轮播图占位（无数据） */
 .banner-placeholder {
   width: 630rpx;
   height: 380rpx;
@@ -176,7 +170,7 @@
   font-size: 28rpx;
 }
 
-/* ========== 分类标签导航（居中） ========== */
+/* ========== 分类标签导航 ========== */
 .tabs {
   position: relative;
   z-index: 1;
@@ -204,7 +198,6 @@
   font-size: 28rpx;
 }
 
-/* 斑马纹分割线 */
 .tabs-divider {
   position: relative;
   z-index: 1;
@@ -233,6 +226,7 @@
   height: 120rpx;
   border-bottom: 1rpx solid #EEEEEE;
   padding: 0 32rpx;
+  position: relative;
 }
 
 .news-cover {
@@ -263,6 +257,7 @@
 
 .news-tag.news { background: #2F8DFF; }
 .news-tag.activity { background: #FF9F1C; }
+.news-tag.announcement { background: #FF9F1C; }
 
 .news-title {
   flex: 1;
@@ -273,6 +268,16 @@
   text-overflow: ellipsis;
 }
 
+/* 草案红点 */
+.draft-dot {
+  width: 16rpx;
+  height: 16rpx;
+  border-radius: 50%;
+  background: #ff0000;
+  margin-left: 8rpx;
+  flex-shrink: 0;
+}
+
 .news-date {
   flex-shrink: 0;
   font-size: 24rpx;
@@ -280,7 +285,6 @@
   margin-left: 16rpx;
 }
 
-/* 空状态、加载状态 */
 .empty-tip,
 .loading-tip,
 .no-more {
@@ -301,7 +305,6 @@
   padding-bottom: 40rpx;
 }
 
-/* SCROLL 提示 */
 .scroll-hint {
   display: flex;
   flex-direction: column;
@@ -329,7 +332,6 @@
   50% { transform: rotate(45deg) translateY(8rpx); }
 }
 
-/* 更多按钮 */
 .more-btn {
   display: flex;
   align-items: center;
@@ -347,14 +349,4 @@
   height: 6rpx;
   border-radius: 50%;
   background: #2F8DFF;
-}
-
-/* 草案公告红点 */
-.draft-dot {
-  width: 16rpx;
-  height: 16rpx;
-  border-radius: 50%;
-  background: #ff0000;
-  margin-left: 8rpx;
-  flex-shrink: 0;
 }

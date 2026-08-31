@@ -1,0 +1,91 @@
+.container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background: transparent;
+}
+
+.page-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 70vh;
+}
+
+.title {
+  font-size: 48rpx;
+  font-weight: bold;
+  color: #17498C;
+  margin-bottom: 20rpx;
+}
+
+.subtitle {
+  font-size: 32rpx;
+  color: #666;
+}
+
+.expandable {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  transition: height 0.3s ease;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(10px);
+  border-radius: 24rpx 24rpx 0 0;
+  margin: 0 20rpx;
+}
+
+.expandable::before {
+  content: '';
+  display: block;
+  height: 4rpx;
+  background: #2F8DFF;
+  width: 100%;
+}
+
+.info-section {
+  padding: 30rpx;
+  text-align: center;
+}
+
+.info-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+  margin-top: 15rpx;
+  margin-bottom: 5rpx;
+  text-align: center;
+}
+
+.info-text {
+  font-size: 26rpx;
+  color: #555;
+  display: block;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.hint {
+  position: absolute;
+  bottom: 30rpx;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  color: #999;
+  font-size: 24rpx;
+  z-index: 1;
+  white-space: pre-line;
+}

@@ -39,12 +39,34 @@
   line-height: 1;
 }
 
+.review-title,
+.error-tip,
+.loading,
+.empty,
+.glass-card {
+  position: relative;
+  z-index: 1;
+}
+
 .review-title {
   font-size: 36rpx;
   font-weight: bold;
   color: #17498C;
   margin-bottom: 30rpx;
   text-align: center;
+}
+
+.error-tip {
+  text-align: center;
+  color: #ff4d4f;
+  font-size: 28rpx;
+  padding: 30rpx 0;
+}
+
+.loading {
+  text-align: center;
+  color: #999;
+  padding: 40rpx 0;
 }
 
 .empty {
@@ -54,8 +76,6 @@
 }
 
 .glass-card {
-  position: relative;
-  z-index: 1;
   background: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
@@ -89,7 +109,6 @@
   margin-top: 10rpx;
 }
 
-/* 弹窗样式 */
 .modal-mask {
   position: fixed;
   top: 0;
