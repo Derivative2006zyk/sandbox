@@ -1,14 +1,78 @@
 <view class="container" bindtouchstart="onTouchStart" bindtouchend="onTouchEnd">
+  <!-- 背景装饰层 -->
+  <view class="bg-decor">
+    <view class="triangle triangle-1"></view>
+    <view class="triangle triangle-2"></view>
+    <view class="triangle triangle-3"></view>
+    <view class="line line-1"></view>
+    <view class="line line-2"></view>
+  </view>
+
   <!-- 全局背景图 -->
   <image class="page-bg" src="{{bgUrl}}" mode="aspectFill"></image>
 
-  <!-- 主内容 -->
-  <view class="content">
-    <view class="title">社团吉祥物展示</view>
+  <!-- 返回按钮 -->
+  <view class="back-btn" bindtap="goBack">
+    <text class="back-icon">‹</text>
+    <text class="back-text">返回</text>
+  </view>
+
+  <!-- 左上信息区 -->
+  <view class="top-info">
+    <view class="en-title">MASCOT</view>
+    <view class="cn-title">社团吉祥物</view>
     <view class="subtitle">开发中...</view>
   </view>
 
-  <!-- 可拓展区域（版权与成员信息） -->
+  <!-- 左侧垂直菜单 -->
+  <view class="side-menu">
+    <view 
+      class="menu-circle {{currentMenu === 'shenren' ? 'active' : ''}}" 
+      bindtap="handleMenuClick" 
+      data-menu="shenren"
+    >神人</view>
+    <view 
+      class="menu-circle {{currentMenu === 'guga' ? 'active' : ''}} guga" 
+      bindtap="handleMenuClick" 
+      data-menu="guga"
+    >咕嘎</view>
+  </view>
+
+  <!-- 中央主视觉占位 -->
+  <view class="main-visual">
+    <view class="visual-placeholder">
+      <text class="placeholder-text">社团吉祥物展示</text>
+      <text class="placeholder-sub">开发中</text>
+    </view>
+  </view>
+
+  <!-- 底部导航区（优化后） -->
+  <view class="bottom-nav {{navFade ? 'fade-in' : ''}}">
+    <view wx:if="{{roleList.length > 0}}" class="role-list">
+      <view class="role-items">
+        <view 
+          wx:for="{{roleList}}" 
+          wx:key="index" 
+          class="role-item {{selectedRoleIndex === index ? 'selected' : ''}}"
+          bindtap="selectRole"
+          data-index="{{index}}"
+        >
+          <!-- 每个角色头像内部装饰：一个浅色圆点代表角色头像占位 -->
+          <view class="role-avatar"></view>
+        </view>
+      </view>
+      <view class="scroll-indicator">
+        <text class="scroll-text">SCROLL</text>
+        <view class="arrow-down"></view>
+      </view>
+    </view>
+    <view wx:else class="empty-state">
+      <view class="empty-icon"></view>
+      <text class="empty-text">暂无角色</text>
+    </view>
+  </view>
+
+  <!-- 可拓展版权信息区域 -->
   <view class="expandable" style="height: {{expanded ? '50vh' : '0'}}">
     <view class="info-section glass-card">
       <view class="info-title">版权信息</view>
@@ -21,7 +85,7 @@
   </view>
 
   <!-- 操作提示 -->
-  <view class="hint">
-    <text>{{expanded ? '下拉刷新折叠' : '上滑查看版权与成员信息\n下拉刷新返回菜单页'}}</text>
+  <view class="hint" wx:if="{{!expanded}}">
+    <text>上滑查看版权与成员信息\n下滑返回菜单页</text>
   </view>
 </view>
