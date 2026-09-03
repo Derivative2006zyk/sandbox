@@ -1,14 +1,24 @@
-<view 
-  class="splash-container"
-  bindtouchstart="onTouchStart" 
-  bindtouchend="onTouchEnd"
->
-  <!-- 背景图片 -->
-  <image class="bg-image" src="/images/bg.jpg" mode="aspectFill"></image>
+<view class="splash-container" bindtouchstart="onTouchStart" bindtouchend="onTouchEnd">
+  <!-- 背景图片（最底层） -->
+  <image class="bg-image" src="{{bgUrl}}" mode="aspectFill"></image>
 
-  <!-- 角色动画 -->
-  <view class="hero">
-    <view class="character-sprite" style="{{spriteBg}}"></view>
+  <!-- 加载占位图覆盖层 -->
+  <view class="loading-overlay" wx:if="{{loading}}">
+    <view class="loading-card">
+      <text class="loading-title">社团活动</text>
+      <progress percent="{{loadProgress}}" stroke-width="4" activeColor="#2F8DFF" backgroundColor="#e0e0e0" border-radius="8" />
+      <text class="loading-text">{{loadProgress}}%</text>
+      <button wx:if="{{loadError}}" class="retry-btn" bindtap="retryLoad">重新加载</button>
+    </view>
+  </view>
+
+  <!-- 主视觉角色动画区（Canvas） -->
+  <view class="hero" wx:if="{{!loading}}">
+    <canvas 
+      type="2d" 
+      id="welcomeCanvas" 
+      class="character-canvas"
+    ></canvas>
   </view>
 
   <!-- 文案区 -->
@@ -33,8 +43,8 @@
     <text>为了维护未成年人的健康上网环境，本平台暂不支持18岁以下的用户使用</text>
   </view>
 
-  <!-- 上滑进入提示（带动画） -->
-  <view class="scroll-hint {{isLeaving ? 'hint-leaving' : ''}}">
+  <!-- SCROLL 滚动提示 -->
+  <view class="scroll-hint">
     <text class="scroll-text">上滑进入</text>
   </view>
 
@@ -43,7 +53,7 @@
     <text>© 2026 樱花日语社</text>
   </view>
 
-  <!-- 梯形导航盒子 -->
+  <!-- 右下角梯形导航盒子 -->
   <view class="trapezoid-nav">
     <view class="nav-logo">
       <text class="logo-main">樱花日语社</text>

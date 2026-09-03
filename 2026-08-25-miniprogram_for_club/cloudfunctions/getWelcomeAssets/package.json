@@ -1,0 +1,9 @@
+{
+  "name": "getWelcomeAssets",
+  "version": "1.0.0",
+  "description": "获取欢迎页背景图和动画帧临时链接",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

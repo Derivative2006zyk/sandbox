@@ -12,7 +12,7 @@ page {
   font-family: 'HarmonyOS Sans', 'PingFang SC', sans-serif;
 }
 
-/* 背景图片（最底层） */
+/* 背景图片（最底层，完全不透明） */
 .bg-image {
   position: absolute;
   top: 0;
@@ -20,6 +20,7 @@ page {
   width: 100%;
   height: 100%;
   z-index: 0;
+  opacity: 1;
 }
 
 /* 顶部安全区占位 */
@@ -29,10 +30,10 @@ page {
   height: 44rpx;
 }
 
-/* 主视觉角色区 */
+/* 主视觉角色区（Canvas 容器） */
 .hero {
   position: absolute;
-  top: 60rpx;                  /* 角色垂直位置，可调整 */
+  top: 0;
   left: 0;
   right: 0;
   margin: 0 auto;
@@ -42,19 +43,17 @@ page {
   z-index: 2;
 }
 
-/* 角色精灵图容器（放大1.2倍） */
-.character-sprite {
-  width: 672rpx;               /* 560 * 1.2 = 672 */
-  height: 1193rpx;             /* 994 * 1.2 ≈ 1193 */
-  background-repeat: no-repeat;
-  background-size: 500% 400%;  /* 保持精灵图行列比例 */
+/* Canvas 角色画布（尺寸不变） */
+.character-canvas {
+  width: 640rpx;
+  height: 1150rpx;
   z-index: 1;
 }
 
-/* 文案区（恢复原位置） */
+/* 文案区 */
 .typography {
   position: relative;
-  margin-top: 1180rpx;         /* 恢复为原值 */
+  margin-top: 1100rpx;
   margin-right: 40rpx;
   margin-left: auto;
   z-index: 20;
@@ -115,25 +114,11 @@ page {
   margin: 0 6rpx;
 }
 
-.btn:first-child {
-  margin-left: 0;
-}
-.btn:last-child {
-  margin-right: 0;
-}
-
-.btn.primary {
-  background-color: #2F8DFF;
-}
-
-.btn.primary .plus {
-  margin-left: 4rpx;
-  font-size: 16rpx;
-}
-
-.btn.secondary {
-  background-color: #000000;
-}
+.btn:first-child { margin-left: 0; }
+.btn:last-child { margin-right: 0; }
+.btn.primary { background-color: #2F8DFF; }
+.btn.primary .plus { margin-left: 4rpx; font-size: 16rpx; }
+.btn.secondary { background-color: #000000; }
 
 /* 合规提示 */
 .compliance {
@@ -174,14 +159,14 @@ page {
   z-index: 20;
 }
 
-/* 右下角梯形导航盒子 */
+/* 右下角梯形导航盒子：降低不透明度，减少对背景的遮挡 */
 .trapezoid-nav {
   position: absolute;
   right: 0;
   bottom: 0;
   width: 844rpx;
   height: 844rpx;
-  background: rgba(255, 255, 255, 0.65);
+  background: rgba(255, 255, 255, 0.45);   /* 由0.65降低到0.45 */
   clip-path: polygon(0% 64%, 100% 42%, 100% 100%, 0% 100%);
   display: flex;
   flex-direction: column;
@@ -211,3 +196,32 @@ page {
   letter-spacing: 1rpx;
   margin-top: 4rpx;
 }
+
+/* 加载占位图覆盖层 */
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.95);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20rpx;
+  padding: 40rpx;
+  background: #ffffff;
+  border-radius: 24rpx;
+  box-shadow: 0 8rpx 24rpx rgba(0, 0, 0, 0.1);
+}
+
+.loading-title { font-size: 36rpx; font-weight: bold; color: #17498C; }
+.loading-text { font-size: 28rpx; color: #666; }
+.retry-btn { margin-top: 20rpx; width: 200rpx; font-size: 28rpx; }
