@@ -21,55 +21,6 @@
     "pages/proposal/submit/index",
     "pages/mascot/index/index"
   ],
-  "subpackages": [
-    {
-      "root": "subpackages/anim1",
-      "name": "anim1",
-      "pages": [
-        "index"
-      ]
-    },
-    {
-      "root": "subpackages/anim2",
-      "name": "anim2",
-      "pages": [
-        "index"
-      ]
-    },
-    {
-      "root": "subpackages/anim3",
-      "name": "anim3",
-      "pages": [
-        "index"
-      ]
-    },
-    {
-      "root": "subpackages/anim4",
-      "name": "anim4",
-      "pages": [
-        "index"
-      ]
-    },
-    {
-      "root": "subpackages/anim5",
-      "name": "anim5",
-      "pages": [
-        "index"
-      ]
-    }
-  ],
-  "preloadRule": {
-    "pages/welcome/index/index": {
-      "network": "all",
-      "packages": [
-        "anim1",
-        "anim2",
-        "anim3",
-        "anim4",
-        "anim5"
-      ]
-    }
-  },
   "window": {
     "backgroundColor": "#F6F6F6",
     "backgroundTextStyle": "light",

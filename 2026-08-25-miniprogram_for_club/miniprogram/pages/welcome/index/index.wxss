@@ -50,10 +50,10 @@ page {
   z-index: 1;
 }
 
-/* 文案区 */
+/* 文案区（下移50px = 100rpx） */
 .typography {
   position: relative;
-  margin-top: 1100rpx;
+  margin-top: 1180rpx;         /* 原1100rpx + 100rpx */
   margin-right: 40rpx;
   margin-left: auto;
   z-index: 20;
@@ -159,14 +159,14 @@ page {
   z-index: 20;
 }
 
-/* 右下角梯形导航盒子：降低不透明度，减少对背景的遮挡 */
+/* 右下角梯形导航盒子：不透明度提高至 0.75 */
 .trapezoid-nav {
   position: absolute;
   right: 0;
   bottom: 0;
   width: 844rpx;
   height: 844rpx;
-  background: rgba(255, 255, 255, 0.45);   /* 由0.65降低到0.45 */
+  background: rgba(255, 255, 255, 0.65);
   clip-path: polygon(0% 64%, 100% 42%, 100% 100%, 0% 100%);
   display: flex;
   flex-direction: column;
