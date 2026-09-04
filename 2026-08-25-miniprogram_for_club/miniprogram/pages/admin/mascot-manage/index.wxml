@@ -1,0 +1,53 @@
+<view class="container">
+  <!-- 全局背景图 -->
+  <image class="page-bg" src="{{bgUrl}}" mode="aspectFill"></image>
+
+  <!-- 自定义返回按钮 -->
+  <view class="custom-back" bindtap="goBack">
+    <text class="back-icon">‹</text>
+    <text class="back-text">返回</text>
+  </view>
+
+  <!-- 内容区域，置于背景图之上 -->
+  <view class="content">
+    <view class="admin-title">吉祥物管理</view>
+
+    <!-- 添加按钮 -->
+    <button class="add-btn" bindtap="showAddForm">添加吉祥物</button>
+
+    <!-- 吉祥物列表 -->
+    <view class="mascot-list">
+      <view class="mascot-item" wx:for="{{mascots}}" wx:key="_id">
+        <view class="mascot-info">
+          <text class="mascot-name">{{item.name || '未命名'}}</text>
+          <text class="mascot-category">{{item.category === 'shenren' ? '神人' : '咕嘎'}}</text>
+        </view>
+        <view class="mascot-actions">
+          <button size="mini" bindtap="editMascot" data-id="{{item._id}}" data-name="{{item.name}}" data-category="{{item.category}}" data-image="{{item.imageFileID}}">编辑</button>
+          <button size="mini" type="warn" bindtap="deleteMascot" data-id="{{item._id}}">删除</button>
+        </view>
+      </view>
+      <view wx:if="{{mascots.length === 0 && !loading}}" class="empty">暂无吉祥物</view>
+    </view>
+
+    <!-- 添加/编辑弹窗 -->
+    <view class="modal-mask" wx:if="{{showModal}}" catchtap="closeModal">
+      <view class="modal-content" catchtap="noop">
+        <view class="modal-title">{{editingId ? '编辑吉祥物' : '添加吉祥物'}}</view>
+        <input class="modal-input" placeholder="名称（可选）" value="{{name}}" bindinput="onNameInput" />
+        <radio-group class="modal-radio" bindchange="onCategoryChange">
+          <label><radio value="shenren" checked="{{category === 'shenren'}}" />神人</label>
+          <label><radio value="guga" checked="{{category === 'guga'}}" />咕嘎</label>
+        </radio-group>
+        <view class="upload-area" bindtap="uploadImage">
+          <image wx:if="{{imagePreview}}" class="preview-img" src="{{imagePreview}}" mode="aspectFill"></image>
+          <text wx:else>点击上传图片</text>
+        </view>
+        <view class="modal-actions">
+          <button type="primary" size="mini" bindtap="saveMascot">保存</button>
+          <button size="mini" bindtap="closeModal">取消</button>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

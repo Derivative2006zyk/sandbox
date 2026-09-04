@@ -2,10 +2,16 @@
   <!-- 背景图片（最底层） -->
   <image class="bg-image" src="{{bgUrl}}" mode="aspectFill"></image>
 
+  <!-- 社团 Logo（左上角） -->
+  <image class="logo" src="{{logoUrl}}" mode="aspectFit"></image>
+
   <!-- 加载占位图覆盖层 -->
   <view class="loading-overlay" wx:if="{{loading}}">
     <view class="loading-card">
-      <text class="loading-title">社团活动</text>
+      <image class="loading-image" src="/images/hello.jpg" mode="aspectFit"></image>
+      <text class="loading-title">请稍等</text>
+      <text class="loading-emoticon">(＾▽＾)</text>
+      <text class="loading-note">出于小程序性能限制，部分页面加载可能较慢，能力有限，恳请谅解</text>
       <progress percent="{{loadProgress}}" stroke-width="4" activeColor="#2F8DFF" backgroundColor="#e0e0e0" border-radius="8" />
       <text class="loading-text">{{loadProgress}}%</text>
       <button wx:if="{{loadError}}" class="retry-btn" bindtap="retryLoad">重新加载</button>
@@ -32,7 +38,7 @@
         <text>进入社团</text>
         <text class="plus">+</text>
       </button>
-      <button class="btn secondary" bindtap="enterApp">
+      <button class="btn secondary" bindtap="goToAbout">
         <text>了解更多</text>
       </button>
     </view>
@@ -40,12 +46,13 @@
 
   <!-- 合规提示 -->
   <view class="compliance">
-    <text>为了维护未成年人的健康上网环境，本平台暂不支持18岁以下的用户使用</text>
+    <text>为了维护良好的社团环境，本平台暂不支持校外用户使用</text>
   </view>
 
   <!-- SCROLL 滚动提示 -->
   <view class="scroll-hint">
     <text class="scroll-text">上滑进入</text>
+    <view class="triangle-down"></view>
   </view>
 
   <!-- 底部版权 -->

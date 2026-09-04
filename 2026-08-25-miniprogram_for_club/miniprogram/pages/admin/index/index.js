@@ -35,5 +35,8 @@ Page({
 
   goAudit() {
     wx.navigateTo({ url: '/pages/admin/audit/index' });
+  },
+  goMascotManage() {
+    wx.navigateTo({ url: '/pages/admin/mascot-manage/index' });
   }
 });

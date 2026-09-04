@@ -1,0 +1,35 @@
+<view class="container">
+  <!-- 背景装饰 -->
+  <view class="bg-decor">
+    <view class="line line-1"></view>
+    <view class="line line-2"></view>
+  </view>
+
+  <!-- 返回按钮 -->
+  <view class="back-btn" bindtap="goBack">
+    <text class="back-icon">‹</text>
+    <text class="back-text">返回</text>
+  </view>
+
+  <!-- 内容区 -->
+  <view class="content">
+    <view class="title">社团简介</view>
+    <view class="divider"></view>
+    <text class="intro-text">
+      樱花日语社是一个以日本文化、语言学习为主的兴趣社团。
+      常驻活动有：
+      1、下半年的寿司大赛
+      2、上半年的赏樱大会
+      3、上半年的日语技能大赛
+      4、日语配音大赛目前待定时间
+      其次，我们定期举办日语教学、文化体验等活动；
+      目前社团处于发展建设阶段，同学们有好的建议可以在本小程序中提交草案，若活动非常新颖且举办成功，由我个人出资免费给予奖励（可以是周边等，金额别太大（可能负担不起））；
+      另外社团之外我们会不定期举办校外团建，感兴趣的同学也可以积极参加。
+
+      本小程序目前处于试运营阶段，有许多不足尽情谅解。
+      附带本社团官网链接，里面有活动照片等信息，大家可以参考，“https://vocal-clafoutis-8c9579.netlify.app/” 制作人：耶克，辛苦喵辛苦喵。
+
+      欢迎所有对日本文化、语言学习、多元文化生活感兴趣的同学加入！
+    </text>
+  </view>
+</view>

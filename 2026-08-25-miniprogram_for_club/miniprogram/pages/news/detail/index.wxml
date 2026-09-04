@@ -1,19 +1,14 @@
 <view class="container">
-  <!-- 全局背景图 -->
   <image class="page-bg" src="{{bgUrl}}" mode="aspectFill"></image>
 
-  <!-- 自定义返回按钮 -->
   <view class="custom-back" bindtap="goBack">
     <text class="back-icon">‹</text>
     <text class="back-text">返回</text>
   </view>
 
-  <!-- 加载中 -->
   <view wx:if="{{loading}}" class="loading">加载中...</view>
 
-  <!-- 新闻详情 -->
   <view wx:if="{{news}}" class="news-detail glass-card">
-    <!-- 草案公告大字提示 -->
     <view wx:if="{{news.isDraftProposal}}" class="draft-notice">
       非官方文件，为草案信息，社团成员可进行投票表决对此草案的态度，票数达到一定数量，我们（管理员）会考虑申请作为正式文件或活动
     </view>
@@ -24,11 +19,26 @@
     </view>
     <view class="title">{{news.title}}</view>
 
-    <!-- 新闻配图 -->
     <view class="news-image" wx:if="{{news.imageThumb || news.image}}">
       <image class="news-image-img" src="{{news.imageThumb || news.image}}" mode="aspectFill"></image>
     </view>
 
     <view class="content">{{news.content}}</view>
+
+    <!-- 表决区域，仅草案公告显示 -->
+    <view wx:if="{{news.isDraftProposal}}" class="vote-section">
+      <view class="vote-title">草案表决</view>
+      <view class="vote-stats">
+        <text> 同意 {{news.voteInfo.agreeCount}} 票</text>
+        <text> 不同意 {{news.voteInfo.disagreeCount}} 票</text>
+        <text> 弃权 {{news.voteInfo.abstainCount}} 票</text>
+      </view>
+      <view class="vote-buttons">
+        <button class="vote-btn agree {{news.voteInfo.myVote === 'agree' ? 'active' : ''}}" bindtap="submitVote" data-vote="agree">同意</button>
+        <button class="vote-btn disagree {{news.voteInfo.myVote === 'disagree' ? 'active' : ''}}" bindtap="submitVote" data-vote="disagree">不同意</button>
+        <button class="vote-btn abstain {{news.voteInfo.myVote === 'abstain' ? 'active' : ''}}" bindtap="submitVote" data-vote="abstain">弃权</button>
+      </view>
+      <text class="vote-tip">您已投：{{news.voteInfo.myVote || '未投票'}}</text>
+    </view>
   </view>
 </view>

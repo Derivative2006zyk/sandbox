@@ -69,3 +69,18 @@
   display: flex;
   gap: 10rpx;
 }
+
+/* 草案公告投票统计 */
+.vote-stats {
+  display: flex;
+  gap: 16rpx;
+  margin-top: 8rpx;
+}
+
+.stat {
+  font-size: 24rpx;
+  color: #555;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 4rpx 12rpx;
+  border-radius: 12rpx;
+}

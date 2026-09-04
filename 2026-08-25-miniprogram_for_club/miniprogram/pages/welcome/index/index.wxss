@@ -23,6 +23,16 @@ page {
   opacity: 1;
 }
 
+/* 社团 Logo（左上角） */
+.logo {
+  position: absolute;
+  top: 50rpx;
+  left: 30rpx;
+  width: 210rpx;
+  height: 210rpx;
+  z-index: 10;
+}
+
 /* 顶部安全区占位 */
 .splash-container::before {
   content: '';
@@ -33,7 +43,7 @@ page {
 /* 主视觉角色区（Canvas 容器） */
 .hero {
   position: absolute;
-  top: 0;
+  top: 30rpx;
   left: 0;
   right: 0;
   margin: 0 auto;
@@ -43,17 +53,17 @@ page {
   z-index: 2;
 }
 
-/* Canvas 角色画布（尺寸不变） */
+/* Canvas 角色画布 */
 .character-canvas {
   width: 640rpx;
   height: 1150rpx;
   z-index: 1;
 }
 
-/* 文案区（下移50px = 100rpx） */
+/* 文案区 */
 .typography {
   position: relative;
-  margin-top: 1180rpx;         /* 原1100rpx + 100rpx */
+  margin-top: 1180rpx;
   margin-right: 40rpx;
   margin-left: auto;
   z-index: 20;
@@ -145,21 +155,34 @@ page {
   font-size: 24rpx;
   font-weight: bold;
   z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8rpx;
+}
+
+/* 下指三角形 */
+.triangle-down {
+  width: 0;
+  height: 0;
+  border-left: 12rpx solid transparent;
+  border-right: 12rpx solid transparent;
+  border-top: 16rpx solid #17498C;
 }
 
 /* 底部版权 */
 .footer {
   position: absolute;
-  bottom: 20rpx;
-  left: 0;
-  width: 100%;
-  text-align: center;
-  font-size: 16rpx;
+  bottom: 80rpx;
+  left: 40rpx;
+  width: auto;
+  text-align: left;
+  font-size: 18rpx;
   color: #666666;
   z-index: 20;
 }
 
-/* 右下角梯形导航盒子：不透明度提高至 0.75 */
+/* 右下角梯形导航盒子 */
 .trapezoid-nav {
   position: absolute;
   right: 0;
@@ -197,7 +220,7 @@ page {
   margin-top: 4rpx;
 }
 
-/* 加载占位图覆盖层 */
+/* ========== 加载占位图覆盖层 ========== */
 .loading-overlay {
   position: absolute;
   top: 0;
@@ -215,13 +238,51 @@ page {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 20rpx;
   padding: 40rpx;
   background: #ffffff;
   border-radius: 24rpx;
   box-shadow: 0 8rpx 24rpx rgba(0, 0, 0, 0.1);
+  min-width: 400rpx;
+  max-width: 80%;
 }
 
-.loading-title { font-size: 36rpx; font-weight: bold; color: #17498C; }
-.loading-text { font-size: 28rpx; color: #666; }
-.retry-btn { margin-top: 20rpx; width: 200rpx; font-size: 28rpx; }
+.loading-image {
+  width: 200rpx;
+  height: 200rpx;
+  border-radius: 20rpx;
+  margin-bottom: 10rpx;
+}
+
+.loading-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #17498C;
+}
+
+.loading-emoticon {
+  font-size: 32rpx;
+  color: #FF8C00;
+  letter-spacing: 2rpx;
+}
+
+.loading-note {
+  font-size: 24rpx;
+  color: #999999;
+  line-height: 1.6;
+  text-align: center;
+  max-width: 500rpx;
+  margin-top: 10rpx;
+}
+
+.loading-text {
+  font-size: 28rpx;
+  color: #666;
+}
+
+.retry-btn {
+  margin-top: 20rpx;
+  width: 200rpx;
+  font-size: 28rpx;
+}

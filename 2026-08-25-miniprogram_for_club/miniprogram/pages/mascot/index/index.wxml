@@ -20,8 +20,7 @@
   <!-- 左上信息区 -->
   <view class="top-info">
     <view class="en-title">MASCOT</view>
-    <view class="cn-title">社团吉祥物</view>
-    <view class="subtitle">开发中...</view>
+    <view class="cn-title">{{currentMascotName}}</view>
   </view>
 
   <!-- 左侧垂直菜单 -->
@@ -40,25 +39,24 @@
 
   <!-- 中央主视觉占位 -->
   <view class="main-visual">
-    <view class="visual-placeholder">
-      <text class="placeholder-text">社团吉祥物展示</text>
-      <text class="placeholder-sub">开发中</text>
+    <view class="visual-placeholder" wx:if="{{!selectedMascot}}">
+      <text class="placeholder-text">暂无吉祥物</text>
     </view>
+    <image wx:else class="main-mascot-img" src="{{selectedMascot.imageUrl}}" mode="aspectFit"></image>
   </view>
 
-  <!-- 底部导航区（优化后） -->
+  <!-- 底部导航区 -->
   <view class="bottom-nav {{navFade ? 'fade-in' : ''}}">
     <view wx:if="{{roleList.length > 0}}" class="role-list">
       <view class="role-items">
         <view 
           wx:for="{{roleList}}" 
-          wx:key="index" 
+          wx:key="_id" 
           class="role-item {{selectedRoleIndex === index ? 'selected' : ''}}"
           bindtap="selectRole"
           data-index="{{index}}"
         >
-          <!-- 每个角色头像内部装饰：一个浅色圆点代表角色头像占位 -->
-          <view class="role-avatar"></view>
+          <image class="role-image" src="{{item.imageUrl}}" mode="aspectFill"></image>
         </view>
       </view>
       <view class="scroll-indicator">
@@ -78,9 +76,15 @@
       <view class="info-title">版权信息</view>
       <text class="info-text">© 2026 樱花日语社</text>
       <view class="info-title">社团成员信息</view>
-      <text class="info-text">社长：张跃锟</text>
-      <text class="info-text">副社长：待定</text>
-      <text class="info-text">成员：社团全体成员</text>
+      <text class="info-text">社长：杨梓豪（2026）魏叶坤宇（2025）</text>
+      <text class="info-text">副社长：张跃锟（2026），邵成齐（2025）</text>
+      <text class="info-text">学习部长：万筱萌</text>
+      <text class="info-text">动漫部长：张宇晗</text>
+      <text class="info-text">宣传部长：张旭晟</text>
+      <text class="info-text">文艺部长：梅逸翔</text>
+      <text class="info-text">其他社员：2025级及2026级所有社员</text>
+      <text class="info-text">\n\n</text>
+      <text class="info-text">鸣谢：所有老社员</text>
     </view>
   </view>
 
