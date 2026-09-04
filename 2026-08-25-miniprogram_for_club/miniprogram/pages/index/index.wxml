@@ -41,7 +41,7 @@
       
       <!-- 缩略图（如有） -->
       <view class="list-cover" wx:if="{{item.coverThumb}}">
-        <image class="cover-img" src="{{item.coverThumb}}" mode="aspectFill"></image>
+        <image class="cover-img" src="{{item.coverThumb}}" mode="aspectFill" lazy-load></image>
       </view>
 
       <!-- 标签 -->

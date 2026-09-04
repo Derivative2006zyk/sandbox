@@ -56,7 +56,7 @@
           bindtap="selectRole"
           data-index="{{index}}"
         >
-          <image class="role-image" src="{{item.imageUrl}}" mode="aspectFill"></image>
+          <image class="role-image" src="{{item.imageUrl}}" mode="aspectFill" lazy-load></image>
         </view>
       </view>
       <view class="scroll-indicator">

@@ -80,7 +80,7 @@
     >
       <!-- 缩略图 -->
       <view class="news-cover" wx:if="{{item.imageThumb}}">
-        <image class="news-cover-img" src="{{item.imageThumb}}" mode="aspectFill"></image>
+        <image class="news-cover-img" src="{{item.imageThumb}}" mode="aspectFill" lazy-load></image>
       </view>
 
       <view class="news-tag {{item.tagClass}}">{{item.tag}}</view>

@@ -1,23 +1,31 @@
-/* ========== 全局样式（亮色青春 + 暗色档案） ========== */
+/**
+ * 全局样式定义
+ *
+ * 说明：
+ * 1. 通过 CSS 自定义属性统一管理主题变量，供各页面以 var(--xxx) 引用，
+ *    保证全应用配色与字体风格一致。
+ * 2. 页面背景采用纯色而非背景图，背景图由各页面通过 <image> 单独加载，
+ *    避免重复请求并支持统一的加载失败兜底。
+ */
+
 page {
-  /* 亮色主题变量 */
-  --bg-start: #F7FBFF;
-  --bg-end: #E8F4FF;
-  --primary: #00A3FF;
-  --accent: #FF5D9E;
-  --text-main: #1A1E24;
-  --text-sub: #666666;
-  --card-bg: rgba(255, 255, 255, 0.7);
-  --border-line: rgba(0, 0, 0, 0.05);
-  --orange: #FF6100;
-  --cyan: #00FFF2;
+  /* 主题色板 */
+  --bg-start: #F7FBFF;   /* 背景渐变起点 */
+  --bg-end: #E8F4FF;     /* 背景渐变终点 */
+  --primary: #00A3FF;    /* 主色（蓝） */
+  --accent: #FF5D9E;     /* 强调色（粉） */
+  --text-main: #1A1E24;  /* 主文字 */
+  --text-sub: #666666;   /* 次要文字 */
+  --card-bg: rgba(255, 255, 255, 0.7);        /* 毛玻璃卡片底色 */
+  --border-line: rgba(0, 0, 0, 0.05);         /* 分隔线 */
+  --orange: #FF6100;     /* 橙色点缀 */
+  --cyan: #00FFF2;       /* 青色点缀 */
+
+  /* 字体栈 */
   --font-title: 'Oswald', 'Roboto Mono', 'PingFang SC', sans-serif;
   --font-body: 'HarmonyOS Sans', 'PingFang SC', sans-serif;
 
-  /* 背景色改为纯色或渐变，不使用背景图 */
   background: #F7FBFF;
   font-family: var(--font-body);
   color: var(--text-main);
 }
-
-/* 毛玻璃卡片、切角按钮等其他样式保持不变 */

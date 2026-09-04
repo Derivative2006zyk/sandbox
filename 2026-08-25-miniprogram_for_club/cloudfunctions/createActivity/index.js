@@ -1,3 +1,21 @@
+/**
+ * 创建活动（管理员）
+ *
+ * 入参说明：
+ * @param title 标题
+ * @param description 介绍
+ * @param location 地点
+ * @param startTime 开始时间
+ * @param endTime 结束时间
+ * @param signupDeadline 报名截止
+ * @param maxParticipants 人数上限
+ * @param type 类型
+ * @param status 状态
+ * @param cover 封面
+ * @param coverThumb 封面缩略图
+ * @returns {Object} 统一返回 { code, msg, data }，code 为 0 表示成功
+ */
+
 const cloud = require('wx-server-sdk')
 cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV })
 const db = cloud.database()

@@ -1,3 +1,16 @@
+/**
+ * 创建新闻/公告（管理员）
+ *
+ * 入参说明：
+ * @param title 标题
+ * @param category 分类
+ * @param content 内容
+ * @param date 日期
+ * @param image 图片
+ * @param imageThumb 缩略图
+ * @returns {Object} 统一返回 { code, msg, data }，code 为 0 表示成功
+ */
+
 const cloud = require('wx-server-sdk')
 cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV })
 const db = cloud.database()

@@ -7,42 +7,42 @@ Page({
   },
 
   onLoad() {
-    this.fetchBgUrl();
+    this.fetchBgUrl()
   },
 
   onShow() {
-    this.setData({ userInfo: app.globalData.userInfo });
+    this.setData({ userInfo: app.globalData.userInfo })
   },
 
   fetchBgUrl() {
-    const fileID = app.globalData.assets.background;
+    const fileID = app.globalData.assets.background
     app.getBgUrl(fileID).then(url => this.setData({ bgUrl: url })).catch(err => {
-      console.error('获取背景图失败', err);
-      this.setData({ bgUrl: '/images/background.jpg' });
-    });
+      console.error('获取背景图失败', err)
+      this.setData({ bgUrl: '/images/background.jpg' })
+    })
   },
 
   goMySignups() {
-    wx.navigateTo({ url: '/pages/user/signups/index' });
+    app.navigateTo({ url: '/pages/user/signups/index' })
   },
 
   goFund() {
-    wx.navigateTo({ url: '/pages/fund/index/index' });
+    app.navigateTo({ url: '/pages/fund/index/index' })
   },
 
   goAdmin() {
-    wx.navigateTo({ url: '/pages/admin/index/index' });
+    app.navigateTo({ url: '/pages/admin/index/index' })
   },
 
   goEditProfile() {
-    wx.navigateTo({ url: '/pages/user/edit-profile/index' });
+    app.navigateTo({ url: '/pages/user/edit-profile/index' })
   },
 
   goFeedback() {
-    wx.navigateTo({ url: '/pages/feedback/index/index' });
+    app.navigateTo({ url: '/pages/feedback/index/index' })
   },
 
   goProposalSubmit() {
-    wx.navigateTo({ url: '/pages/proposal/submit/index' });
+    app.navigateTo({ url: '/pages/proposal/submit/index' })
   }
-});
+})

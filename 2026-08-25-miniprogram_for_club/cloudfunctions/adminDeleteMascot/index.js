@@ -1,4 +1,11 @@
-// cloudfunctions/adminDeleteMascot/index.js
+/**
+ * 删除吉祥物（管理员）
+ *
+ * 入参说明：
+ * @param mascotId 吉祥物 ID
+ * @returns {Object} 统一返回 { code, msg, data }，code 为 0 表示成功
+ */
+
 const cloud = require('wx-server-sdk')
 cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV })
 const db = cloud.database()

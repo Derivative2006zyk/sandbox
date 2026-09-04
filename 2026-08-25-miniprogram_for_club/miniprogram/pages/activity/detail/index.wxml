@@ -56,7 +56,7 @@
 
           <!-- 图片附件：使用 widthFix 完整显示 -->
           <view class="comment-media" wx:if="{{item.imageUrl}}">
-            <image class="comment-image" src="{{item.imageUrl}}" mode="widthFix" bindtap="previewCommentImage" data-url="{{item.imageUrl}}"></image>
+            <image class="comment-image" src="{{item.imageUrl}}" mode="widthFix" lazy-load bindtap="previewCommentImage" data-url="{{item.imageUrl}}"></image>
           </view>
 
           <view class="comment-meta">
@@ -94,7 +94,7 @@
         <view wx:if="{{emojiList.length === 0}}" class="emoji-empty">暂无默认表情包</view>
         <view class="emoji-grid" wx:else>
           <view class="emoji-item" wx:for="{{emojiList}}" wx:key="_id" bindtap="selectEmoji" data-fileid="{{item.fileID}}" data-url="{{item.imageUrl}}">
-            <image class="emoji-img" src="{{item.imageUrl}}" mode="aspectFit"></image>
+            <image class="emoji-img" src="{{item.imageUrl}}" mode="aspectFit" lazy-load></image>
           </view>
         </view>
       </view>

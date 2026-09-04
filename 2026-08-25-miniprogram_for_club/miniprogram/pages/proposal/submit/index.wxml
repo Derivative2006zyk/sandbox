@@ -96,7 +96,7 @@
       <view class="history-detail">
         <text wx:if="{{item.title}}">标题：{{item.title}}</text>
         <text wx:if="{{item.content}}">内容摘要：{{item.content.slice(0, 20)}}...</text>
-        <image wx:if="{{item.imageUrl}}" class="history-thumb" src="{{item.imageUrl}}" mode="aspectFit"></image>
+        <image wx:if="{{item.imageUrl}}" class="history-thumb" src="{{item.imageUrl}}" mode="aspectFit" lazy-load></image>
       </view>
       <view class="history-meta">
         <text class="history-time">提交时间：{{item.createTime}}</text>

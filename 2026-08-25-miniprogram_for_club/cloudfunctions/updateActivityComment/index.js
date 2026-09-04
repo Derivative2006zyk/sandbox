@@ -1,3 +1,14 @@
+/**
+ * 修改自己的评论
+ *
+ * 入参说明：
+ * @param commentId 评论 ID
+ * @param content 文本
+ * @param imageFileID 图片
+ * @param videoFileID 视频
+ * @returns {Object} 统一返回 { code, msg, data }，code 为 0 表示成功
+ */
+
 const cloud = require('wx-server-sdk')
 cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV })
 const db = cloud.database()

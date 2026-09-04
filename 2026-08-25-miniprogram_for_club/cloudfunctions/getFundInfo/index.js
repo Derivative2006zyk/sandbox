@@ -1,3 +1,12 @@
+/**
+ * 获取社费余额与流水
+ *
+ * 入参说明：
+ * @param page 页码
+ * @param pageSize 每页数量
+ * @returns {Object} 统一返回 { code, msg, data }，code 为 0 表示成功
+ */
+
 const cloud = require('wx-server-sdk')
 cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV })
 const db = cloud.database()

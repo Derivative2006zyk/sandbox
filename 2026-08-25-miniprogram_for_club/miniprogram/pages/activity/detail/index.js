@@ -143,7 +143,7 @@ Page({
   },
 
   goBack() {
-    wx.navigateBack({ fail: () => wx.reLaunch({ url: '/pages/index/index' }) })
+    app.navigateBack({ fail: () => app.reLaunch({ url: '/pages/index/index' }) })
   },
 
   goSignup() {
@@ -153,11 +153,11 @@ Page({
         title: '提示',
         content: '请先完善个人资料',
         confirmText: '去完善',
-        success: (res) => { if (res.confirm) wx.navigateTo({ url: '/pages/user/edit-profile/index' }) }
+        success: (res) => { if (res.confirm) app.navigateTo({ url: '/pages/user/edit-profile/index' }) }
       })
       return
     }
-    wx.navigateTo({ url: `/pages/activity/signup/index?activityId=${this.data.activityId}` })
+    app.navigateTo({ url: `/pages/activity/signup/index?activityId=${this.data.activityId}` })
   },
 
   cancelSignup() {
@@ -258,19 +258,19 @@ Page({
       mediaType: ['image'],
       sourceType: ['album', 'camera'],
       success: (res) => {
-        const tempFilePath = res.tempFiles[0].tempFilePath;
-        const size = res.tempFiles[0].size || 0;
+        const tempFilePath = res.tempFiles[0].tempFilePath
+        const size = res.tempFiles[0].size || 0
         if (size > 10 * 1024 * 1024) {
-          wx.showToast({ title: '图片不能超过10MB', icon: 'none' });
-          return;
+          wx.showToast({ title: '图片不能超过10MB', icon: 'none' })
+          return
         }
-        this.setData({ commentImage: tempFilePath, commentImagePreview: tempFilePath });
+        this.setData({ commentImage: tempFilePath, commentImagePreview: tempFilePath })
       },
       fail: (err) => {
-        console.error('选择图片失败', err);
-        wx.showToast({ title: '选择图片失败', icon: 'none' });
+        console.error('选择图片失败', err)
+        wx.showToast({ title: '选择图片失败', icon: 'none' })
       }
-    });
+    })
   },
 
   removeCommentImage() {
@@ -286,86 +286,86 @@ Page({
         compressedWidth: maxWidth,
         success: (res) => resolve(res.tempFilePath),
         fail: (err) => {
-          console.warn('wx.compressImage 失败，使用原图', err);
-          resolve(src);
+          console.warn('wx.compressImage 失败，使用原图', err)
+          resolve(src)
         }
-      });
-    });
+      })
+    })
   },
 
   // 上传文件
   async uploadFileWithProgress(cloudPath, filePath) {
-    this.setData({ uploadVisible: true, uploadProgress: 0 });
+    this.setData({ uploadVisible: true, uploadProgress: 0 })
     try {
-      const res = await wx.cloud.uploadFile({ cloudPath, filePath });
-      this.setData({ uploadVisible: false });
-      return res.fileID;
+      const res = await wx.cloud.uploadFile({ cloudPath, filePath })
+      this.setData({ uploadVisible: false })
+      return res.fileID
     } catch (err) {
-      this.setData({ uploadVisible: false });
-      throw err;
+      this.setData({ uploadVisible: false })
+      throw err
     }
   },
 
   async submitComment() {
-    const { commentText, commentImage, uploadOrigin } = this.data;
+    const { commentText, commentImage, uploadOrigin } = this.data
     if (!commentText.trim() && !commentImage) {
-      wx.showToast({ title: '内容不能为空', icon: 'none' });
-      return;
+      wx.showToast({ title: '内容不能为空', icon: 'none' })
+      return
     }
 
-    wx.showLoading({ title: '处理中...' });
+    wx.showLoading({ title: '处理中...' })
 
     try {
-      let imageFileID = '';
+      let imageFileID = ''
 
       if (commentImage) {
         if (commentImage.startsWith('cloud://')) {
-          imageFileID = commentImage;
+          imageFileID = commentImage
         } else {
           // 本地路径，需要上传
-          let uploadPath = commentImage;
+          let uploadPath = commentImage
           if (!uploadOrigin) {
-            uploadPath = await this.compressImage(commentImage, 1280, 80);
+            uploadPath = await this.compressImage(commentImage, 1280, 80)
           }
-          const cloudPath = `activity-comments/${this.data.activityId}/${Date.now()}-${Math.floor(Math.random() * 1000)}.jpg`;
-          imageFileID = await this.uploadFileWithProgress(cloudPath, uploadPath);
+          const cloudPath = `activity-comments/${this.data.activityId}/${Date.now()}-${Math.floor(Math.random() * 1000)}.jpg`
+          imageFileID = await this.uploadFileWithProgress(cloudPath, uploadPath)
         }
       } else if (this.data.editingCommentId) {
-        imageFileID = '';
+        imageFileID = ''
       }
 
-      let res;
+      let res
       if (this.data.editingCommentId) {
         res = await wx.cloud.callFunction({
           name: 'updateActivityComment',
           data: { commentId: this.data.editingCommentId, content: commentText.trim(), imageFileID }
-        });
+        })
       } else {
         res = await wx.cloud.callFunction({
           name: 'submitActivityComment',
           data: { activityId: this.data.activityId, content: commentText.trim(), imageFileID }
-        });
+        })
       }
 
-      wx.hideLoading();
+      wx.hideLoading()
       if (res.result && res.result.code === 0) {
-        wx.showToast({ title: this.data.editingCommentId ? '修改成功' : '发布成功', icon: 'success' });
-        this.setData({ commentText: '', commentImage: '', commentImagePreview: '', uploadOrigin: false, editingCommentId: '', showEmojiPanel: false });
-        await this.loadComments();
+        wx.showToast({ title: this.data.editingCommentId ? '修改成功' : '发布成功', icon: 'success' })
+        this.setData({ commentText: '', commentImage: '', commentImagePreview: '', uploadOrigin: false, editingCommentId: '', showEmojiPanel: false })
+        await this.loadComments()
       } else {
-        wx.showToast({ title: res.result.msg || '操作失败', icon: 'none' });
+        wx.showToast({ title: res.result.msg || '操作失败', icon: 'none' })
       }
     } catch (err) {
-      wx.hideLoading();
-      console.error('操作失败', err);
-      wx.showToast({ title: err.errMsg || '操作失败，请重试', icon: 'none' });
+      wx.hideLoading()
+      console.error('操作失败', err)
+      wx.showToast({ title: err.errMsg || '操作失败，请重试', icon: 'none' })
     }
   },
 
   editComment(e) {
-    const commentId = e.currentTarget.dataset.id;
-    const comment = this.data.comments.find(c => c._id === commentId);
-    if (!comment) return;
+    const commentId = e.currentTarget.dataset.id
+    const comment = this.data.comments.find(c => c._id === commentId)
+    if (!comment) return
     this.setData({
       editingCommentId: commentId,
       commentText: comment.content || '',
@@ -373,42 +373,42 @@ Page({
       commentImagePreview: comment.imageUrl || comment.imageFileID || '',
       uploadOrigin: false,
       showEmojiPanel: false
-    });
-    wx.pageScrollTo({ selector: '.comment-form', duration: 300 });
+    })
+    wx.pageScrollTo({ selector: '.comment-form', duration: 300 })
   },
 
   cancelEdit() {
-    this.setData({ editingCommentId: '', commentText: '', commentImage: '', commentImagePreview: '', uploadOrigin: false, showEmojiPanel: false });
+    this.setData({ editingCommentId: '', commentText: '', commentImage: '', commentImagePreview: '', uploadOrigin: false, showEmojiPanel: false })
   },
 
   deleteComment(e) {
-    const commentId = e.currentTarget.dataset.id;
+    const commentId = e.currentTarget.dataset.id
     wx.showModal({
       title: '确认删除',
       content: '删除后不可恢复，确定？',
       success: async (res) => {
         if (res.confirm) {
           try {
-            const result = await wx.cloud.callFunction({ name: 'deleteActivityComment', data: { commentId } });
+            const result = await wx.cloud.callFunction({ name: 'deleteActivityComment', data: { commentId } })
             if (result.result && result.result.code === 0) {
-              wx.showToast({ title: '删除成功', icon: 'success' });
-              this.loadComments();
+              wx.showToast({ title: '删除成功', icon: 'success' })
+              this.loadComments()
             } else {
-              wx.showToast({ title: result.result.msg || '删除失败', icon: 'none' });
+              wx.showToast({ title: result.result.msg || '删除失败', icon: 'none' })
             }
           } catch (err) {
-            console.error('删除评论失败', err);
-            wx.showToast({ title: '网络异常', icon: 'none' });
+            console.error('删除评论失败', err)
+            wx.showToast({ title: '网络异常', icon: 'none' })
           }
         }
       }
-    });
+    })
   },
 
   previewCommentImage(e) {
-    const url = e.currentTarget.dataset.url;
+    const url = e.currentTarget.dataset.url
     if (url) {
-      wx.previewImage({ urls: [url] });
+      wx.previewImage({ urls: [url] })
     }
   }
-});
+})

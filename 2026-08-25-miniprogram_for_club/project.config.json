@@ -45,9 +45,8 @@
     "disableSWC": true
   },
   "appid": "wx2a723ec1d92af1b7",
-  "projectname": "quickstart-wx-cloud",
+  "projectname": "miniprogram_for_club",
   "libVersion": "2.20.1",
-  "cloudfunctionTemplateRoot": "cloudfunctionTemplate/",
   "condition": {
     "search": {
       "list": []
@@ -62,13 +61,7 @@
       "list": []
     },
     "miniprogram": {
-      "list": [
-        {
-          "id": -1,
-          "name": "db guide",
-          "pathName": "pages/databaseGuide/databaseGuide"
-        }
-      ]
+      "list": []
     }
   },
   "compileType": "miniprogram",

@@ -25,7 +25,7 @@
     <view class="draft-brief">
       <text wx:if="{{item.title}}">标题：{{item.title}}</text>
       <text wx:if="{{item.content}}">内容摘要：{{item.content.slice(0, 20)}}...</text>
-      <image wx:if="{{item.imageUrl}}" class="draft-thumb" src="{{item.imageUrl}}" mode="aspectFit"></image>
+      <image wx:if="{{item.imageUrl}}" class="draft-thumb" src="{{item.imageUrl}}" mode="aspectFit" lazy-load></image>
     </view>
   </view>
 
