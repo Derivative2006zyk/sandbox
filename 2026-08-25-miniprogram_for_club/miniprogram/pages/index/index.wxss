@@ -34,7 +34,7 @@
 
 .back-btn {
   position: fixed;
-  top: 20rpx;
+  top: 140rpx;
   left: 20rpx;
   z-index: 100;
   display: flex;
@@ -170,11 +170,6 @@
   display: block;
 }
 
-.draft-flag {
-  color: #ff4d4f;
-  font-size: 24rpx;
-  font-weight: bold;
-}
 
 .data-highlight {
   color: #FF6100;
@@ -225,4 +220,30 @@
   text-align: center;
   padding: 100rpx 0;
   color: #999;
+}
+
+/* 已结束活动灰色毛玻璃遮罩 */
+.ended-mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(150, 150, 150, 0.45);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border-radius: 24rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+}
+
+.ended-text {
+  color: #fff;
+  font-size: 26rpx;
+  font-weight: bold;
+  background: rgba(0, 0, 0, 0.35);
+  padding: 6rpx 24rpx;
+  border-radius: 24rpx;
 }

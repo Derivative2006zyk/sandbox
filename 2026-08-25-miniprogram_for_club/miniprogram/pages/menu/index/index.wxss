@@ -268,21 +268,38 @@
   text-overflow: ellipsis;
 }
 
-/* 草案红点 */
-.draft-dot {
-  width: 16rpx;
-  height: 16rpx;
-  border-radius: 50%;
-  background: #ff0000;
-  margin-left: 8rpx;
-  flex-shrink: 0;
-}
 
 .news-date {
   flex-shrink: 0;
   font-size: 24rpx;
   color: #8899AA;
   margin-left: 16rpx;
+}
+
+/* 已结束活动灰色毛玻璃遮罩 */
+.ended-mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(150, 150, 150, 0.45);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border-radius: 12rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+}
+
+.ended-text {
+  color: #fff;
+  font-size: 24rpx;
+  font-weight: bold;
+  background: rgba(0, 0, 0, 0.35);
+  padding: 4rpx 20rpx;
+  border-radius: 20rpx;
 }
 
 .empty-tip,

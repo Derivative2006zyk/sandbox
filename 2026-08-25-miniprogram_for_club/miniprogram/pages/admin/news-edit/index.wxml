@@ -8,14 +8,16 @@
     <text class="back-text">返回</text>
   </view>
 
+  <view class="page-title">{{newsId ? '编辑新闻' : '新建新闻'}}</view>
+
   <view class="form-card glass-card">
     <view class="form-item">
-      <text>标题</text>
+      <text class="label">标题<text class="req">*</text></text>
       <input value="{{title}}" data-field="title" bindinput="onInput" placeholder="请输入新闻标题" />
     </view>
 
     <view class="form-item">
-      <text>分类</text>
+      <text class="label">分类<text class="req">*</text></text>
       <radio-group bindchange="onCategoryChange">
         <label><radio value="news" checked="{{category === 'news'}}" />新闻</label>
         <label><radio value="announcement" checked="{{category === 'announcement'}}" />公告</label>
@@ -23,18 +25,20 @@
     </view>
 
     <view class="form-item">
-      <text>日期（可选）</text>
-      <input value="{{date}}" data-field="date" bindinput="onInput" placeholder="格式：2026-08-26" />
+      <text class="label">日期<text class="opt">（可选）</text></text>
+      <picker mode="date" value="{{date}}" bindchange="onDateChange">
+        <view class="picker-input">{{date || '选择日期'}}</view>
+      </picker>
     </view>
 
     <view class="form-item">
-      <text>内容</text>
+      <text class="label">内容<text class="req">*</text></text>
       <textarea value="{{content}}" data-field="content" bindinput="onInput" placeholder="请输入新闻正文" auto-height />
     </view>
 
     <!-- 新闻配图上传 -->
     <view class="form-item">
-      <text>新闻配图</text>
+      <text class="label">新闻配图<text class="opt">（可选）</text></text>
       <view class="upload-area" bindtap="uploadImage">
         <image wx:if="{{imageThumb || image}}" class="cover-preview" src="{{imageThumb || image}}" mode="aspectFill"></image>
         <view wx:else class="upload-placeholder">

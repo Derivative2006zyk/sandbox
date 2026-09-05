@@ -1,7 +1,7 @@
 .container {
   position: relative;
   min-height: 100vh;
-  padding: 120rpx 20rpx 20rpx;
+  padding: 220rpx 20rpx 20rpx;
   background: transparent;
   box-sizing: border-box;
 }
@@ -17,7 +17,7 @@
 
 .custom-back {
   position: fixed;
-  top: 20rpx;
+  top: 140rpx;
   left: 20rpx;
   z-index: 100;
   display: flex;
@@ -128,6 +128,61 @@
   line-height: 1.8;
 }
 
+.photo-section {
+  margin-bottom: 24rpx;
+}
+
+.photo-section:last-child {
+  margin-bottom: 0;
+}
+
+.photo-section-title {
+  display: block;
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #17498C;
+  margin-bottom: 14rpx;
+}
+
+.photo-wall {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+}
+
+.photo-wall-item {
+  width: calc((100% - 32rpx) / 3);
+}
+
+.photo-wall-img {
+  width: 100%;
+  height: 200rpx;
+  border-radius: 12rpx;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.photo-caption {
+  display: block;
+  font-size: 22rpx;
+  color: #666;
+  line-height: 1.5;
+  margin-top: 8rpx;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.manage-photo-btn {
+  position: relative;
+  z-index: 1;
+  margin: 10rpx 0 40rpx;
+  background: #2F8DFF;
+  color: #fff;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+}
+
 .action-area {
   position: relative;
   z-index: 1;
@@ -142,270 +197,4 @@
   transform: translate(-50%, -50%);
   z-index: 100;
   color: #999;
-}
-
-/* ========== 评论区样式 ========== */
-.comment-area {
-  margin-top: 20rpx;
-  padding: 30rpx;
-}
-
-.comment-header {
-  display: flex;
-  align-items: center;
-  margin-bottom: 20rpx;
-}
-
-.comment-title {
-  font-size: 32rpx;
-  font-weight: bold;
-  color: #17498C;
-}
-
-.editing-hint {
-  font-size: 24rpx;
-  color: #FF9F1C;
-  margin-left: 20rpx;
-}
-
-.comment-list {
-  margin-bottom: 30rpx;
-}
-
-.comment-item {
-  background: rgba(255, 255, 255, 0.6);
-  border-radius: 16rpx;
-  padding: 20rpx;
-  margin-bottom: 16rpx;
-}
-
-.comment-content {
-  font-size: 28rpx;
-  color: #333;
-  white-space: pre-wrap;
-}
-
-.comment-media {
-  margin-top: 10rpx;
-}
-
-/* 评论图片完整显示 */
-.comment-image {
-  width: 100%;
-  height: auto;
-  border-radius: 12rpx;
-}
-
-.comment-meta {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 10rpx;
-}
-
-.comment-time {
-  font-size: 24rpx;
-  color: #999;
-}
-
-.comment-actions {
-  display: flex;
-  gap: 20rpx;
-}
-
-.comment-edit {
-  font-size: 24rpx;
-  color: #2F8DFF;
-}
-
-.comment-delete {
-  font-size: 24rpx;
-  color: #ff4d4f;
-}
-
-.comment-empty {
-  text-align: center;
-  color: #999;
-  padding: 20rpx 0;
-}
-
-.comment-form {
-  margin-top: 20rpx;
-}
-
-.comment-input {
-  width: 100%;
-  min-height: 100rpx;
-  border-radius: 12rpx;
-  padding: 20rpx;
-  background: rgba(255, 255, 255, 0.7);
-  font-size: 28rpx;
-  box-sizing: border-box;
-  margin-bottom: 20rpx;
-}
-
-/* 按钮行：图片按钮:表情按钮 = 3:1 */
-.comment-uploads {
-  display: flex;
-  align-items: center;
-  gap: 20rpx;
-  margin-bottom: 20rpx;
-}
-
-.upload-btn {
-  flex: none;
-  padding: 16rpx 0;
-  text-align: center;
-}
-
-.image-btn {
-  flex: 3;
-}
-
-.emoji-btn {
-  flex: 1;
-}
-
-.origin-toggle {
-  flex: none;
-  display: flex;
-  align-items: center;
-  gap: 8rpx;
-  font-size: 24rpx;
-  color: #333;
-}
-
-/* 表情面板 */
-.emoji-panel {
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: 12rpx;
-  padding: 20rpx;
-  margin-bottom: 20rpx;
-}
-
-.emoji-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 15rpx;
-}
-
-.emoji-title {
-  font-size: 26rpx;
-  font-weight: bold;
-  color: #333;
-}
-
-.emoji-upload {
-  font-size: 24rpx;
-  color: #2F8DFF;
-}
-
-.emoji-empty {
-  text-align: center;
-  color: #999;
-  font-size: 26rpx;
-  padding: 30rpx 0;
-}
-
-.emoji-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20rpx;
-}
-
-.emoji-item {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 120rpx;
-  background: #f5f5f5;
-  border-radius: 12rpx;
-  overflow: hidden;
-}
-
-.emoji-img {
-  width: 100%;
-  height: 100%;
-}
-
-.comment-attachments {
-  display: flex;
-  gap: 16rpx;
-  margin-bottom: 20rpx;
-}
-
-.attach-item {
-  position: relative;
-  margin-right: 16rpx;
-}
-
-.attach-preview {
-  width: 120rpx;
-  height: 120rpx;
-  border-radius: 8rpx;
-}
-
-.remove-attach {
-  position: absolute;
-  top: -10rpx;
-  right: -10rpx;
-  width: 36rpx;
-  height: 36rpx;
-  background: rgba(0, 0, 0, 0.6);
-  color: #fff;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 28rpx;
-}
-
-.submit-comment {
-  width: 100%;
-}
-
-.cancel-edit-btn {
-  margin-top: 16rpx;
-  width: 100%;
-  background: #fff;
-  color: #333;
-  border: 1rpx solid #ccc;
-  border-radius: 8rpx;
-  font-size: 28rpx;
-}
-
-/* 上传进度遮罩 */
-.upload-progress-mask {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.4);
-  z-index: 999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.progress-box {
-  width: 400rpx;
-  background: #fff;
-  border-radius: 16rpx;
-  padding: 40rpx;
-  text-align: center;
-}
-
-.progress-title {
-  font-size: 28rpx;
-  color: #333;
-  display: block;
-  margin-bottom: 20rpx;
-}
-
-.progress-text {
-  font-size: 24rpx;
-  color: #666;
-  margin-top: 10rpx;
 }

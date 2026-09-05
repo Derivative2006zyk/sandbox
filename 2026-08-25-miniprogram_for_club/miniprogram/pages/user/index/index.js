@@ -40,9 +40,5 @@ Page({
 
   goFeedback() {
     app.navigateTo({ url: '/pages/feedback/index/index' })
-  },
-
-  goProposalSubmit() {
-    app.navigateTo({ url: '/pages/proposal/submit/index' })
   }
 })

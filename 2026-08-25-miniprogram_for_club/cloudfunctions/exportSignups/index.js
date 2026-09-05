@@ -34,14 +34,12 @@ exports.main = async (event, context) => {
       return { code: 404, msg: '暂无报名数据' }
     }
 
-    // 构建 CSV
-    const header = '姓名,学号,手机号,报名时间\n'
+    // 构建 CSV（仅导出昵称与报名时间，不涉及身份信息）
+    const header = '昵称,报名时间\n'
     const rows = list.map(item => {
-      const name = item.formData.name || ''
-      const studentId = item.formData.studentId || ''
-      const phone = item.formData.phone || ''
+      const nickname = (item.formData && (item.formData.nickname || item.formData.name)) || '微信用户'
       const time = item.createTime || ''
-      return [name, studentId, phone, time].map(field => `"${String(field).replace(/"/g, '""')}"`).join(',')
+      return [nickname, time].map(field => `"${String(field).replace(/"/g, '""')}"`).join(',')
     })
     const csvContent = header + rows.join('\n')
 

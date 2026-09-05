@@ -1,10 +1,6 @@
 /**
- * 活动报名
- *
- * 入参说明：
- * @param activityId 活动 ID
- * @param formData 报名信息 {name, studentId, phone}
- * @returns {Object} 统一返回 { code, msg, data }，code 为 0 表示成功
+ * 活动报名（不收集敏感信息，自动使用用户昵称）
+ * 报名记录中保存昵称，便于管理员查看
  */
 
 const cloud = require('wx-server-sdk')
@@ -13,20 +9,18 @@ const db = cloud.database()
 const _ = db.command
 
 exports.main = async (event, context) => {
-  const { activityId, formData } = event
-  if (!activityId || !formData) return { code: 400, msg: '参数不完整' }
+  const { activityId } = event
+  if (!activityId) return { code: 400, msg: '参数不完整' }
 
   const { OPENID } = cloud.getWXContext()
   if (!OPENID) return { code: 401, msg: '无法获取用户身份' }
 
   try {
-    // 1. 校验用户已完善资料
+    // 1. 获取用户信息（昵称）
     const userRes = await db.collection('users').where({ _openid: OPENID }).get()
     if (userRes.data.length === 0) return { code: 403, msg: '用户不存在' }
     const user = userRes.data[0]
-    if (!user.name || !user.studentId || !user.phone) {
-      return { code: 403, msg: '请先完善个人资料' }
-    }
+    const nickname = user.nickname || '微信用户'
 
     // 2. 获取活动信息
     const activityRes = await db.collection('activities').doc(activityId).get()
@@ -58,9 +52,7 @@ exports.main = async (event, context) => {
           _openid: OPENID,
           activityId,
           formData: {
-            name: formData.name,
-            studentId: formData.studentId,
-            phone: formData.phone
+            nickname: nickname
           },
           status: 1,
           createTime: db.serverDate(),

@@ -8,6 +8,8 @@
     <text class="back-text">返回</text>
   </view>
 
+  <view class="page-title">新闻管理</view>
+
   <button class="create-btn" bindtap="createNews">新建新闻</button>
 
   <view wx:if="{{newsList.length === 0 && !loading}}" class="empty">暂无新闻</view>
@@ -16,12 +18,6 @@
     <view class="info">
       <text class="title">{{item.title}}</text>
       <text class="meta">{{item.category}} | {{item.date}}</text>
-      <!-- 草案公告显示投票统计 -->
-      <view wx:if="{{item.isDraftProposal}}" class="vote-stats">
-        <text class="stat">T {{item.voteStats.agreeCount || 0}}</text>
-        <text class="stat">F {{item.voteStats.disagreeCount || 0}}</text>
-        <text class="stat">O {{item.voteStats.abstainCount || 0}}</text>
-      </view>
     </view>
     <view class="actions">
       <button size="mini" bindtap="editNews" data-id="{{item._id}}">编辑</button>

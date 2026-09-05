@@ -33,10 +33,11 @@ Page({
     app.navigateTo({ url: '/pages/admin/news-list/index' })
   },
 
-  goAudit() {
-    app.navigateTo({ url: '/pages/admin/audit/index' })
-  },
   goMascotManage() {
     app.navigateTo({ url: '/pages/admin/mascot-manage/index' })
+  },
+
+  goPhotoManage() {
+    app.navigateTo({ url: '/pages/admin/photo-manage/index' })
   }
 })

@@ -8,39 +8,56 @@
     <text class="back-text">返回</text>
   </view>
 
+  <view class="page-title">{{activityId ? '编辑活动' : '新建活动'}}</view>
+
   <view class="form-card glass-card">
     <view class="form-item">
-      <text>标题</text>
+      <text class="label">标题<text class="req">*</text></text>
       <input value="{{title}}" data-field="title" bindinput="onInput" placeholder="请输入活动标题" />
     </view>
     <view class="form-item">
-      <text>地点</text>
+      <text class="label">地点<text class="req">*</text></text>
       <input value="{{location}}" data-field="location" bindinput="onInput" placeholder="请输入活动地点" />
     </view>
     <view class="form-item">
-      <text>开始时间</text>
-      <input value="{{startTime}}" data-field="startTime" bindinput="onInput" placeholder="例如：2026-09-01 19:00" />
+      <text class="label">开始时间<text class="req">*</text></text>
+      <picker mode="date" value="{{startDate}}" bindchange="onStartDateChange">
+        <view class="picker-input">{{startDate || '选择日期'}}</view>
+      </picker>
+      <picker mode="time" value="{{startTimeOnly}}" bindchange="onStartTimeChange">
+        <view class="picker-input">{{startTimeOnly || '选择时间'}}</view>
+      </picker>
     </view>
     <view class="form-item">
-      <text>结束时间</text>
-      <input value="{{endTime}}" data-field="endTime" bindinput="onInput" placeholder="例如：2026-09-01 21:00" />
+      <text class="label">结束时间<text class="req">*</text></text>
+      <picker mode="date" value="{{endDate}}" bindchange="onEndDateChange">
+        <view class="picker-input">{{endDate || '选择日期'}}</view>
+      </picker>
+      <picker mode="time" value="{{endTimeOnly}}" bindchange="onEndTimeChange">
+        <view class="picker-input">{{endTimeOnly || '选择时间'}}</view>
+      </picker>
     </view>
     <view class="form-item">
-      <text>报名截止</text>
-      <input value="{{signupDeadline}}" data-field="signupDeadline" bindinput="onInput" placeholder="例如：2026-08-31 23:59" />
+      <text class="label">报名截止<text class="req">*</text></text>
+      <picker mode="date" value="{{deadlineDate}}" bindchange="onDeadlineDateChange">
+        <view class="picker-input">{{deadlineDate || '选择日期'}}</view>
+      </picker>
+      <picker mode="time" value="{{deadlineTimeOnly}}" bindchange="onDeadlineTimeChange">
+        <view class="picker-input">{{deadlineTimeOnly || '选择时间'}}</view>
+      </picker>
     </view>
     <view class="form-item">
-      <text>人数上限</text>
+      <text class="label">人数上限<text class="req">*</text></text>
       <input type="number" value="{{maxParticipants}}" data-field="maxParticipants" bindinput="onInput" placeholder="请输入最大报名人数" />
     </view>
     <view class="form-item">
-      <text>类型</text>
+      <text class="label">类型<text class="opt">（选填）</text></text>
       <input value="{{type}}" data-field="type" bindinput="onInput" placeholder="如：讲座、聚会、比赛" />
     </view>
 
     <!-- 封面图片上传 -->
     <view class="form-item">
-      <text>活动封面</text>
+      <text class="label">活动封面<text class="opt">（选填）</text></text>
       <view class="upload-area" bindtap="uploadCover">
         <image wx:if="{{coverThumb || cover}}" class="cover-preview" src="{{coverThumb || cover}}" mode="aspectFill"></image>
         <view wx:else class="upload-placeholder">
@@ -51,7 +68,7 @@
     </view>
 
     <view class="form-item">
-      <text>活动介绍</text>
+      <text class="label">活动介绍<text class="opt">（选填）</text></text>
       <textarea value="{{description}}" data-field="description" bindinput="onInput" placeholder="请输入活动详细介绍" auto-height />
     </view>
     <view class="form-item">

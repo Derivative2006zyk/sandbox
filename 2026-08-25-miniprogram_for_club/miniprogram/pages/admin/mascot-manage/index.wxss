@@ -17,12 +17,12 @@
 .content {
   position: relative;
   z-index: 1;           /* 内容层，确保在背景图之上 */
-  padding: 120rpx 20rpx 20rpx;
+  padding: 220rpx 20rpx 20rpx;
 }
 
 .custom-back {
   position: fixed;
-  top: 20rpx;
+  top: 140rpx;
   left: 20rpx;
   z-index: 100;
   display: flex;
@@ -136,12 +136,31 @@
   color: #17498C;
 }
 
+.field-label {
+  display: block;
+  font-size: 26rpx;
+  color: #333;
+  margin-bottom: 8rpx;
+}
+
+.field-label .req {
+  color: #FF4D4F;
+  margin-left: 4rpx;
+}
+
+.field-label .opt {
+  color: #999;
+  font-size: 24rpx;
+  margin-left: 4rpx;
+}
+
 .modal-input {
   border: 1rpx solid #ddd;
   border-radius: 8rpx;
   padding: 15rpx;
   margin-bottom: 20rpx;
   font-size: 28rpx;
+  line-height: 1.5;
 }
 
 .modal-radio {

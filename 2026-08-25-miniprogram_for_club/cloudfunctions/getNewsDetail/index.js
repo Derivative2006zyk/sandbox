@@ -10,6 +10,31 @@ const cloud = require('wx-server-sdk')
 cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV })
 const db = cloud.database()
 
+/**
+ * 将单条新闻的 image/imageThumb 由 cloud:// fileID 转换为临时下载链接。
+ */
+async function fillTempUrls(news) {
+  if (!news) return news
+  const keys = ['image', 'imageThumb']
+  const fileIDs = keys
+    .map(k => news[k])
+    .filter(v => typeof v === 'string' && v.startsWith('cloud://'))
+
+  if (fileIDs.length === 0) return news
+
+  const res = await cloud.getTempFileURL({ fileList: fileIDs })
+  const map = {}
+  ;(res.fileList || []).forEach(f => {
+    if (f.fileID && f.tempFileURL) map[f.fileID] = f.tempFileURL
+  })
+
+  return {
+    ...news,
+    image: map[news.image] || news.image,
+    imageThumb: map[news.imageThumb] || news.imageThumb
+  }
+}
+
 exports.main = async (event, context) => {
   const { OPENID } = cloud.getWXContext()
   const { newsId } = event
@@ -21,34 +46,7 @@ exports.main = async (event, context) => {
       return { code: 404, msg: '新闻不存在' }
     }
 
-    const news = res.data
-
-    // 如果是草案公告，附带表决统计和当前用户投票
-    if (news.isDraftProposal) {
-      const votesRes = await db.collection('proposal_votes')
-        .where({ newsId })
-        .get()
-
-      let agreeCount = 0, disagreeCount = 0, abstainCount = 0
-      votesRes.data.forEach(item => {
-        if (item.vote === 'agree') agreeCount++
-        else if (item.vote === 'disagree') disagreeCount++
-        else if (item.vote === 'abstain') abstainCount++
-      })
-
-      const myVoteRes = await db.collection('proposal_votes')
-        .where({ newsId, openid: OPENID })
-        .get()
-      const myVote = myVoteRes.data.length > 0 ? myVoteRes.data[0].vote : null
-
-      news.voteInfo = {
-        agreeCount,
-        disagreeCount,
-        abstainCount,
-        totalCount: votesRes.data.length,
-        myVote
-      }
-    }
+    const news = await fillTempUrls(res.data)
 
     return { code: 0, data: news }
   } catch (e) {

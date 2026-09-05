@@ -73,6 +73,10 @@ Page({
     this.setData({ category: e.detail.value })
   },
 
+  onDateChange(e) {
+    this.setData({ date: e.detail.value })
+  },
+
   uploadImage() {
     wx.chooseMedia({
       count: 1,

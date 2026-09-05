@@ -1,7 +1,7 @@
 .container {
   position: relative;
   min-height: 100vh;
-  padding: 120rpx 20rpx 20rpx;
+  padding: 220rpx 20rpx 20rpx;
   background: transparent;
   box-sizing: border-box;
 }
@@ -17,7 +17,7 @@
 
 .custom-back {
   position: fixed;
-  top: 20rpx;
+  top: 140rpx;
   left: 20rpx;
   z-index: 100;
   display: flex;

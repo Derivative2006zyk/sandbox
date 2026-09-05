@@ -55,19 +55,8 @@ Page({
       const res = await Promise.race([callPromise, timeoutPromise])
 
       if (res.result && res.result.code === 0) {
-        const news = res.result.data
-        // 确保 voteInfo 存在，避免 undefined
-        if (news.isDraftProposal && !news.voteInfo) {
-          news.voteInfo = {
-            agreeCount: 0,
-            disagreeCount: 0,
-            abstainCount: 0,
-            totalCount: 0,
-            myVote: null
-          }
-        }
         this.setData({
-          news,
+          news: res.result.data,
           loading: false
         })
       } else {
@@ -78,38 +67,6 @@ Page({
       console.error('获取新闻详情失败', err)
       wx.showToast({ title: '网络异常，请重试', icon: 'none' })
       this.setData({ loading: false })
-    }
-  },
-
-  async submitVote(e) {
-    const vote = e.currentTarget.dataset.vote
-    wx.showLoading({ title: '投票中...' })
-    try {
-      const res = await wx.cloud.callFunction({
-        name: 'submitVote',
-        data: {
-          newsId: this.data.newsId,
-          vote
-        }
-      })
-      wx.hideLoading()
-      if (res.result && res.result.code === 0) {
-        const updatedStats = res.result.data
-        this.setData({
-          'news.voteInfo.agreeCount': updatedStats.agreeCount,
-          'news.voteInfo.disagreeCount': updatedStats.disagreeCount,
-          'news.voteInfo.abstainCount': updatedStats.abstainCount,
-          'news.voteInfo.totalCount': updatedStats.totalCount,
-          'news.voteInfo.myVote': vote
-        })
-        wx.showToast({ title: '投票成功', icon: 'success' })
-      } else {
-        wx.showToast({ title: res.result.msg || '投票失败', icon: 'none' })
-      }
-    } catch (err) {
-      wx.hideLoading()
-      console.error('投票失败', err)
-      wx.showToast({ title: '网络异常', icon: 'none' })
     }
   }
 })

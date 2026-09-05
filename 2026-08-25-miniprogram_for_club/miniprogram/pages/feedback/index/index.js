@@ -4,7 +4,6 @@ Page({
   data: {
     bgUrl: '',
     content: '',
-    contact: '',
     submitting: false
   },
 
@@ -32,10 +31,6 @@ Page({
     this.setData({ content: e.detail.value })
   },
 
-  onContactInput(e) {
-    this.setData({ contact: e.detail.value })
-  },
-
   async submitFeedback() {
     const content = this.data.content.trim()
     if (!content) {
@@ -48,13 +43,12 @@ Page({
       const res = await wx.cloud.callFunction({
         name: 'submitFeedback',
         data: {
-          content: content,
-          contact: this.data.contact.trim()
+          content: content
         }
       })
       if (res.result && res.result.code === 0) {
         wx.showToast({ title: '感谢您的反馈', icon: 'success' })
-        this.setData({ content: '', contact: '' })
+        this.setData({ content: '' })
       } else {
         wx.showToast({ title: res.result.msg || '提交失败', icon: 'none' })
       }

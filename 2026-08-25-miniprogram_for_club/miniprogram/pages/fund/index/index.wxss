@@ -1,7 +1,7 @@
 .container {
   position: relative;
   min-height: 100vh;
-  padding: 120rpx 20rpx 20rpx;
+  padding: 220rpx 20rpx 20rpx;
   background: transparent;
   box-sizing: border-box;
 }
@@ -17,7 +17,7 @@
 
 .custom-back {
   position: fixed;
-  top: 20rpx;
+  top: 140rpx;
   left: 20rpx;
   z-index: 100;
   display: flex;
@@ -79,11 +79,24 @@
   margin-bottom: 20rpx;
 }
 
+.field-label {
+  display: block;
+  font-size: 26rpx;
+  color: #333;
+  margin-bottom: 8rpx;
+}
+
+.field-label .req {
+  color: #FF4D4F;
+  margin-left: 4rpx;
+}
+
 .input {
   border-bottom: 1rpx solid #ddd;
   padding: 15rpx 0;
   margin-bottom: 20rpx;
   font-size: 28rpx;
+  line-height: 1.5;
 }
 
 .submit-btn {

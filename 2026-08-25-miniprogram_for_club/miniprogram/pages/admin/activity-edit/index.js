@@ -10,6 +10,12 @@ Page({
     startTime: '',
     endTime: '',
     signupDeadline: '',
+    startDate: '',
+    startTimeOnly: '',
+    endDate: '',
+    endTimeOnly: '',
+    deadlineDate: '',
+    deadlineTimeOnly: '',
     maxParticipants: '',
     type: '',
     status: 1,
@@ -66,6 +72,7 @@ Page({
           cover: act.cover || '',
           coverThumb: act.coverThumb || ''
         })
+        this.splitTimes(act)
       } else {
         wx.showToast({ title: res.result.msg || '加载失败', icon: 'none' })
       }
@@ -82,6 +89,52 @@ Page({
 
   onStatusChange(e) {
     this.setData({ status: Number(e.detail.value) })
+  },
+
+  // 把后端返回的完整时间拆分为日期 + 时间，供 picker 回显
+  splitTimes(act) {
+    const split = (val) => {
+      if (!val) return { date: '', time: '' }
+      const str = String(val)
+      const [date, time] = str.split(' ')
+      return { date: date || '', time: time || '' }
+    }
+    const start = split(act.startTime)
+    const end = split(act.endTime)
+    const deadline = split(act.signupDeadline)
+    this.setData({
+      startDate: start.date,
+      startTimeOnly: start.time,
+      endDate: end.date,
+      endTimeOnly: end.time,
+      deadlineDate: deadline.date,
+      deadlineTimeOnly: deadline.time
+    })
+  },
+
+  onStartDateChange(e) {
+    this.setData({ startDate: e.detail.value, startTime: this.joinDateTime(e.detail.value, this.data.startTimeOnly) })
+  },
+  onStartTimeChange(e) {
+    this.setData({ startTimeOnly: e.detail.value, startTime: this.joinDateTime(this.data.startDate, e.detail.value) })
+  },
+  onEndDateChange(e) {
+    this.setData({ endDate: e.detail.value, endTime: this.joinDateTime(e.detail.value, this.data.endTimeOnly) })
+  },
+  onEndTimeChange(e) {
+    this.setData({ endTimeOnly: e.detail.value, endTime: this.joinDateTime(this.data.endDate, e.detail.value) })
+  },
+  onDeadlineDateChange(e) {
+    this.setData({ deadlineDate: e.detail.value, signupDeadline: this.joinDateTime(e.detail.value, this.data.deadlineTimeOnly) })
+  },
+  onDeadlineTimeChange(e) {
+    this.setData({ deadlineTimeOnly: e.detail.value, signupDeadline: this.joinDateTime(this.data.deadlineDate, e.detail.value) })
+  },
+
+  joinDateTime(date, time) {
+    if (!date) return ''
+    if (!time) return date
+    return `${date} ${time}`
   },
 
   async uploadCover() {

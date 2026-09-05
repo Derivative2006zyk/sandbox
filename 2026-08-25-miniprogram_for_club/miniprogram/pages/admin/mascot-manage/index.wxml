@@ -34,11 +34,14 @@
     <view class="modal-mask" wx:if="{{showModal}}" catchtap="closeModal">
       <view class="modal-content" catchtap="noop">
         <view class="modal-title">{{editingId ? '编辑吉祥物' : '添加吉祥物'}}</view>
-        <input class="modal-input" placeholder="名称（可选）" value="{{name}}" bindinput="onNameInput" />
+        <text class="field-label">名称<text class="opt">（选填）</text></text>
+        <input class="modal-input" placeholder="请输入吉祥物名称" value="{{name}}" bindinput="onNameInput" />
+        <text class="field-label">分类<text class="req">*</text></text>
         <radio-group class="modal-radio" bindchange="onCategoryChange">
           <label><radio value="shenren" checked="{{category === 'shenren'}}" />神人</label>
           <label><radio value="guga" checked="{{category === 'guga'}}" />咕嘎</label>
         </radio-group>
+        <text class="field-label">图片<text class="req">*</text></text>
         <view class="upload-area" bindtap="uploadImage">
           <image wx:if="{{imagePreview}}" class="preview-img" src="{{imagePreview}}" mode="aspectFill"></image>
           <text wx:else>点击上传图片</text>

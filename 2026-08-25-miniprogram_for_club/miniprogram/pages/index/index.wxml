@@ -58,7 +58,11 @@
       </view>
       <view wx:else class="item-info">
         <text class="info-line">日期：{{item.date}}</text>
-        <text wx:if="{{item.isDraftProposal}}" class="draft-flag">草案待表决</text>
+      </view>
+
+      <!-- 已结束活动灰色毛玻璃遮罩 -->
+      <view class="ended-mask" wx:if="{{item.isEnded}}">
+        <text class="ended-text">已结束</text>
       </view>
     </view>
 

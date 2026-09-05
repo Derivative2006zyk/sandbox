@@ -338,10 +338,12 @@ Page({
   },
 
   onTouchEnd(e) {
+    // 加载中禁止任何手势跳转，确保加载过程不被中断
+    if (this.data.loading || this.data.isNavigating) return
     const startY = this.data.touchStartY
     const endY = e.changedTouches[0].clientY
     const distance = startY - endY
-    if (distance > 80 && !this.data.isNavigating) {
+    if (distance > 80) {
       this.goToMenu()
     }
   },

@@ -1,7 +1,7 @@
 .container {
   position: relative;
   min-height: 100vh;
-  padding: 120rpx 20rpx 20rpx;
+  padding: 220rpx 20rpx 20rpx;
   background: transparent;
   box-sizing: border-box;
 }
@@ -17,7 +17,7 @@
 
 .custom-back {
   position: fixed;
-  top: 20rpx;
+  top: 140rpx;
   left: 20rpx;
   z-index: 100;
   display: flex;
@@ -58,6 +58,18 @@
   margin-bottom: 20rpx;
 }
 
+.field-label {
+  display: block;
+  font-size: 26rpx;
+  color: #333;
+  margin-bottom: 8rpx;
+}
+
+.field-label .req {
+  color: #FF4D4F;
+  margin-left: 4rpx;
+}
+
 .feedback-input {
   width: 100%;
   min-height: 200rpx;
@@ -65,20 +77,17 @@
   border-radius: 12rpx;
   padding: 20rpx;
   font-size: 28rpx;
+  line-height: 1.5;
   background: rgba(255, 255, 255, 0.5);
   box-sizing: border-box;
   margin-bottom: 20rpx;
 }
 
-.contact-input {
-  width: 100%;
-  height: 70rpx;
-  border: 1rpx solid #ddd;
-  border-radius: 35rpx;
-  padding: 0 30rpx;
-  font-size: 28rpx;
-  background: rgba(255, 255, 255, 0.5);
-  box-sizing: border-box;
+.privacy-tip {
+  display: block;
+  font-size: 24rpx;
+  color: #999;
+  line-height: 1.6;
   margin-bottom: 30rpx;
 }
 

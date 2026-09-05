@@ -26,7 +26,7 @@
           bindchange="onSwiperChange"
         >
           <swiper-item wx:for="{{banners}}" wx:key="id">
-            <view class="banner-item">
+            <view class="banner-item" bindtap="onBannerTap" data-id="{{item.id}}" data-type="{{item.type}}">
               <image wx:if="{{item.src}}" class="banner-img" src="{{item.src}}" mode="aspectFill"></image>
               <view wx:else class="banner-no-img">
                 <text>暂无图片</text>
@@ -85,14 +85,24 @@
 
       <view class="news-tag {{item.tagClass}}">{{item.tag}}</view>
       <text class="news-title">{{item.title}}</text>
-      <!-- 草案红点 -->
-      <view wx:if="{{item.isDraftProposal}}" class="draft-dot"></view>
       <text class="news-date">{{item.date}}</text>
+
+      <!-- 已结束活动灰色毛玻璃遮罩 -->
+      <view class="ended-mask" wx:if="{{item.isEnded}}">
+        <text class="ended-text">已结束</text>
+      </view>
     </view>
 
     <view wx:if="{{!newsLoading && filteredNews.length === 0}}" class="empty-tip">暂无相关新闻</view>
-    <view wx:if="{{newsLoading}}" class="loading-tip">加载中...</view>
-    <view wx:if="{{!hasMore && filteredNews.length > 0}}" class="no-more">没有更多了</view>
+    <view wx:if="{{newsLoading}}" class="g-loading">
+      <view class="g-loading-card">
+        <image class="g-loading-img" src="/images/hello.jpg" mode="aspectFit"></image>
+        <text class="g-loading-title">请稍等</text>
+        <text class="g-loading-emoji">(＾▽＾)</text>
+        <text class="g-loading-note">内容加载中，请稍候...</text>
+      </view>
+    </view>
+    <view wx:if="{{!newsLoading && filteredNews.length > 0 && filteredNews.length < pageSize}}" class="no-more">没有更多活动</view>
   </view>
 
   <!-- 底部操作区 -->

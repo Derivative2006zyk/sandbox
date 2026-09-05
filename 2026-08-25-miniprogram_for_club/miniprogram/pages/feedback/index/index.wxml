@@ -10,19 +10,15 @@
 
   <view class="feedback-card glass-card">
     <view class="feedback-title">意见反馈</view>
-    <textarea 
-      class="feedback-input" 
-      placeholder="请输入您的意见或建议..." 
-      value="{{content}}" 
+    <text class="field-label">反馈内容<text class="req">*</text></text>
+    <textarea
+      class="feedback-input"
+      placeholder="请输入您的意见或建议..."
+      value="{{content}}"
       bindinput="onContentInput"
       maxlength="500"
     ></textarea>
-    <input 
-      class="contact-input" 
-      placeholder="联系方式（可选）" 
-      value="{{contact}}" 
-      bindinput="onContactInput"
-    />
+    <text class="privacy-tip">为保护隐私，反馈仅收集您填写的内容，不收集联系方式等身份信息。</text>
     <button class="submit-btn" bindtap="submitFeedback" disabled="{{submitting}}">
       {{submitting ? '提交中...' : '提交反馈'}}
     </button>

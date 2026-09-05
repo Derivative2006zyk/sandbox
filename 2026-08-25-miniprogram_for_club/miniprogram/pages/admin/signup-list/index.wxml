@@ -8,12 +8,14 @@
     <text class="back-text">返回</text>
   </view>
 
+  <view class="page-title">报名名单</view>
+
   <button class="export-btn" bindtap="exportCSV">导出名单</button>
 
   <view wx:if="{{list.length === 0 && !loading}}" class="empty">暂无报名</view>
 
   <view class="signup-item glass-card" wx:for="{{list}}" wx:key="_id">
-    <text class="signup-name">{{item.formData.name}}（{{item.formData.studentId}}）</text>
-    <text class="signup-phone">{{item.formData.phone}}</text>
+    <text class="signup-name">{{item.formData.nickname || item.formData.name || '微信用户'}}</text>
+    <text class="signup-time">{{item.createTime}}</text>
   </view>
 </view>

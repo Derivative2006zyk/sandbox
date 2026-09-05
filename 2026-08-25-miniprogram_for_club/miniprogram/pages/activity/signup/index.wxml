@@ -1,20 +1,9 @@
 <view class="container">
-  <!-- 全局背景图 -->
   <image class="page-bg" src="{{bgUrl}}" mode="aspectFill"></image>
 
-  <view class="form-card glass-card">
-    <view class="form-item">
-      <text>姓名</text>
-      <input value="{{name}}" data-field="name" bindinput="onInput" placeholder="请输入姓名" />
-    </view>
-    <view class="form-item">
-      <text>学号</text>
-      <input value="{{studentId}}" data-field="studentId" bindinput="onInput" placeholder="请输入学号" />
-    </view>
-    <view class="form-item">
-      <text>手机号</text>
-      <input type="number" maxlength="11" value="{{phone}}" data-field="phone" bindinput="onInput" placeholder="请输入手机号" />
-    </view>
-    <button class="submit-btn" bindtap="submit" disabled="{{submitting}}">{{submitting ? '提交中...' : '确认报名'}}</button>
+  <view class="signup-card glass-card">
+    <view class="signup-title">活动报名</view>
+    <view class="signup-desc">点击下方按钮即可完成报名，将使用您的昵称作为报名标识。</view>
+    <button class="submit-btn" bindtap="submit" disabled="{{submitting}}">{{submitting ? '报名中...' : '确认报名'}}</button>
   </view>
 </view>

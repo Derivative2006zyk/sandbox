@@ -6,7 +6,7 @@ page {
 .container {
   position: relative;
   min-height: 100vh;
-  padding: 120rpx 40rpx 40rpx;
+  padding: 220rpx 40rpx 40rpx;
   box-sizing: border-box;
   overflow: hidden;
 }
@@ -33,7 +33,7 @@ page {
 
 .back-btn {
   position: fixed;
-  top: 20rpx;
+  top: 140rpx;
   left: 20rpx;
   z-index: 100;
   display: flex;

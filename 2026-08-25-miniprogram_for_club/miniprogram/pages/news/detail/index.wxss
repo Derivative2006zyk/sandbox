@@ -1,7 +1,7 @@
 .container {
   position: relative;
   min-height: 100vh;
-  padding: 120rpx 20rpx 20rpx;
+  padding: 220rpx 20rpx 20rpx;
   background: transparent;
   box-sizing: border-box;
 }
@@ -17,7 +17,7 @@
 
 .custom-back {
   position: fixed;
-  top: 20rpx;
+  top: 140rpx;
   left: 20rpx;
   z-index: 100;
   display: flex;
@@ -105,80 +105,4 @@
   color: #333;
   line-height: 1.8;
   white-space: pre-wrap;
-}
-
-/* 草案公告提示 */
-.draft-notice {
-  background: #fffbe6;
-  color: #d4380d;
-  font-size: 32rpx;
-  font-weight: bold;
-  padding: 20rpx;
-  border-radius: 12rpx;
-  border-left: 8rpx solid #ff4d4f;
-  margin-bottom: 20rpx;
-}
-
-/* 表决区域 */
-.vote-section {
-  margin-top: 40rpx;
-  padding: 20rpx;
-  background: #fafafa;
-  border-radius: 16rpx;
-  border: 1rpx solid #e0e0e0;
-}
-
-.vote-title {
-  font-size: 32rpx;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 20rpx;
-}
-
-.vote-stats {
-  display: flex;
-  justify-content: space-between;
-  font-size: 28rpx;
-  color: #555;
-  margin-bottom: 20rpx;
-}
-
-.vote-buttons {
-  display: flex;
-  gap: 20rpx;
-  margin-bottom: 20rpx;
-}
-
-.vote-btn {
-  flex: 1;
-  height: 70rpx;
-  line-height: 70rpx;
-  border-radius: 35rpx;
-  font-size: 28rpx;
-  font-weight: bold;
-  border: none;
-  background: #e0e0e0;
-  color: #333;
-}
-
-.vote-btn.agree.active {
-  background: #52c41a;
-  color: #fff;
-}
-
-.vote-btn.disagree.active {
-  background: #ff4d4f;
-  color: #fff;
-}
-
-.vote-btn.abstain.active {
-  background: #bfbfbf;
-  color: #fff;
-}
-
-.vote-tip {
-  font-size: 24rpx;
-  color: #888;
-  display: block;
-  text-align: center;
 }

@@ -21,8 +21,10 @@
 
   <!-- 修改表单 -->
   <view wx:if="{{showForm}}" class="update-form glass-card">
-    <input class="input" type="digit" placeholder="变动金额（正数收入，负数支出）" value="{{amount}}" bindinput="onAmountInput" />
-    <input class="input" placeholder="备注（如收取社费、活动支出）" value="{{note}}" bindinput="onNoteInput" />
+    <text class="field-label">变动金额<text class="req">*</text></text>
+    <input class="input" type="digit" placeholder="正数收入，负数支出，例如 50 或 -20" value="{{amount}}" bindinput="onAmountInput" />
+    <text class="field-label">备注<text class="req">*</text></text>
+    <input class="input" placeholder="例如：收取社费、活动支出" value="{{note}}" bindinput="onNoteInput" />
     <button class="submit-btn" bindtap="submitUpdate" disabled="{{submitting}}">
       {{submitting ? '提交中...' : '确认修改'}}
     </button>

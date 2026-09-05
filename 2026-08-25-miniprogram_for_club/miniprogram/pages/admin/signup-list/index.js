@@ -73,8 +73,14 @@ Page({
               wx.saveFile({
                 tempFilePath: downloadRes.tempFilePath,
                 success: (saveRes) => {
-                  wx.showToast({ title: '文件已保存', icon: 'success' })
-                  console.log('文件保存路径:', saveRes.savedFilePath)
+                  const savedPath = saveRes.savedFilePath
+                  console.log('文件保存路径:', savedPath)
+                  wx.showModal({
+                    title: '名单已导出',
+                    content: `文件已保存到本地：\n${savedPath}`,
+                    showCancel: false,
+                    confirmText: '知道了'
+                  })
                 },
                 fail: (err) => {
                   console.error('保存文件失败', err)

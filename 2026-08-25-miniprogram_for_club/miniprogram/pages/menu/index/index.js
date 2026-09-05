@@ -16,7 +16,7 @@ Page({
     newsLoading: false,
     hasMore: false,
     page: 1,
-    pageSize: 10,
+    pageSize: 6,
     touchStartX: 0,
     touchStartY: 0
   },
@@ -74,13 +74,56 @@ Page({
             tag: '活动',
             tagClass: 'activity',
             activityId: item._id,
-            imageThumb: item.coverThumb || item.cover || ''
+            imageThumb: item.coverThumb || item.cover || '',
+            isEnded: item.isEnded
           }))
           this.setData({ filteredNews: processedList, hasMore: false, newsLoading: false })
         } else {
           this.showError(res.result.msg || '加载失败')
           this.setData({ filteredNews: [] })
         }
+      } else if (category === 'latest') {
+        // 「最新」：同时涵盖新闻/公告与活动，按时间倒序混合展示
+        const [actRes, newsRes] = await Promise.all([
+          wx.cloud.callFunction({ name: 'getActivityList', data: { page: 1, pageSize: this.data.pageSize } }),
+          wx.cloud.callFunction({ name: 'getNewsList', data: { category: 'latest', page: 1, pageSize: this.data.pageSize } })
+        ])
+
+        const merged = []
+
+        if (actRes.result && actRes.result.code === 0) {
+          actRes.result.data.list.forEach(item => {
+            merged.push({
+              _id: item._id,
+              title: item.title,
+              date: this.formatDate(item.startTime),
+              tag: '活动',
+              tagClass: 'activity',
+              activityId: item._id,
+              imageThumb: item.coverThumb || item.cover || '',
+              isEnded: item.isEnded,
+              _ts: new Date(item.startTime || item.createTime).getTime() || 0
+            })
+          })
+        }
+
+        if (newsRes.result && newsRes.result.code === 0) {
+          newsRes.result.data.list.forEach(item => {
+            merged.push({
+              _id: item._id,
+              title: item.title,
+              date: item.date || this.formatDate(item.createTime),
+              tag: item.tag || (item.category === 'announcement' ? '公告' : '新闻'),
+              tagClass: item.category === 'announcement' ? 'announcement' : 'news',
+              imageThumb: item.imageThumb || item.image || '',
+              _ts: new Date(item.createTime || item.date).getTime() || 0
+            })
+          })
+        }
+
+        merged.sort((a, b) => b._ts - a._ts)
+        const limited = merged.slice(0, this.data.pageSize)
+        this.setData({ filteredNews: limited, hasMore: false, newsLoading: false })
       } else {
         const res = await wx.cloud.callFunction({
           name: 'getNewsList',
@@ -94,8 +137,7 @@ Page({
             date: item.date || this.formatDate(item.createTime),
             tag: item.tag || item.category,
             tagClass: item.category === 'announcement' ? 'announcement' : 'news',
-            imageThumb: item.imageThumb || item.image || '',
-            isDraftProposal: item.isDraftProposal || false
+            imageThumb: item.imageThumb || item.image || ''
           }))
           this.setData({ filteredNews: processedList, hasMore: false, newsLoading: false })
         } else {
@@ -133,6 +175,15 @@ Page({
     }
   },
 
+  onBannerTap(e) {
+    const { id, type } = e.currentTarget.dataset
+    if (type === 'activity' && id) {
+      app.navigateTo({ url: `/pages/activity/detail/index?id=${id}` })
+    } else if (type === 'news' && id) {
+      app.navigateTo({ url: `/pages/news/detail/index?id=${id}` })
+    }
+  },
+
   onSwiperChange(e) { this.setData({ current: e.detail.current }); },
   prevBanner() {
     let index = this.data.current - 1
@@ -156,8 +207,8 @@ Page({
   onTouchEnd(e) {
     const deltaX = Math.abs(e.changedTouches[0].clientX - this.data.touchStartX)
     const deltaY = e.changedTouches[0].clientY - this.data.touchStartY
-    // 垂直位移大于水平位移，且上滑超过80rpx，避免左右滑动误触
-    if (Math.abs(deltaY) > Math.abs(deltaX) && deltaY < -80) {
+    // 降低灵敏度：需明显上滑且以纵向为主，避免滚动页面时误触进入吉祥物页
+    if (Math.abs(deltaY) > Math.abs(deltaX) * 1.5 && deltaY < -120) {
       this.goMascot()
     }
   },

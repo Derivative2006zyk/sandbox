@@ -8,6 +8,8 @@
     <text class="back-text">返回</text>
   </view>
 
+  <view class="page-title">活动管理</view>
+
   <button class="create-btn" bindtap="createActivity">新建活动</button>
 
   <view wx:if="{{list.length === 0 && !loading}}" class="empty">暂无活动</view>

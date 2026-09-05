@@ -2,11 +2,8 @@ const app = getApp()
 
 Page({
   data: {
-    bgUrl: '',            // 背景图临时链接
+    bgUrl: '',
     activityId: '',
-    name: '',
-    studentId: '',
-    phone: '',
     submitting: false
   },
 
@@ -18,15 +15,6 @@ Page({
       return
     }
     this.setData({ activityId })
-
-    const userInfo = app.globalData.userInfo
-    if (userInfo) {
-      this.setData({
-        name: userInfo.name || '',
-        studentId: userInfo.studentId || '',
-        phone: userInfo.phone || ''
-      })
-    }
   },
 
   fetchBgUrl() {
@@ -39,24 +27,15 @@ Page({
     })
   },
 
-  onInput(e) {
-    const field = e.currentTarget.dataset.field
-    this.setData({ [field]: e.detail.value })
-  },
-
   async submit() {
-    const { name, studentId, phone, activityId } = this.data
-    if (!name.trim()) { wx.showToast({ title: '请输入姓名', icon: 'none' }); return; }
-    if (!studentId.trim()) { wx.showToast({ title: '请输入学号', icon: 'none' }); return; }
-    if (!/^1\d{10}$/.test(phone.trim())) { wx.showToast({ title: '请输入正确的手机号', icon: 'none' }); return; }
-
+    if (this.data.submitting) return
     this.setData({ submitting: true })
     try {
       const res = await wx.cloud.callFunction({
         name: 'signup',
         data: {
-          activityId,
-          formData: { name: name.trim(), studentId: studentId.trim(), phone: phone.trim() }
+          activityId: this.data.activityId
+          // 不再传递表单数据，云函数会自动读取用户昵称
         }
       })
       if (res.result && res.result.code === 0) {
@@ -64,7 +43,7 @@ Page({
         setTimeout(() => {
           const pages = getCurrentPages()
           const prevPage = pages[pages.length - 2]
-          if (prevPage) prevPage.loadDetail()
+          if (prevPage && prevPage.loadDetail) prevPage.loadDetail()
           app.navigateBack()
         }, 1000)
       } else {

@@ -17,10 +17,9 @@
     "pages/menu/index/index",
     "pages/news/detail/index",
     "pages/feedback/index/index",
-    "pages/admin/audit/index",
-    "pages/proposal/submit/index",
     "pages/mascot/index/index",
     "pages/admin/mascot-manage/index",
+    "pages/admin/photo-manage/index",
     "pages/about/index/index"
   ],
   "window": {

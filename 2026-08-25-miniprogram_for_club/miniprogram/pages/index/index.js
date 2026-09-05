@@ -87,7 +87,8 @@ Page({
             participantCount: `${item.currentParticipants}/${item.maxParticipants}`,
             coverThumb: item.coverThumb || item.cover || '',
             tagText: item.type || '活动',
-            tagClass: 'activity'
+            tagClass: 'activity',
+            isEnded: item.isEnded
           }))
           const newActivityList = reset ? mapped : this.data.activityList.concat(mapped)
           this.setData({
@@ -117,8 +118,7 @@ Page({
             date: item.date || this.formatDate(item.createTime),
             tagText: item.tag || (item.category === 'announcement' ? '公告' : '新闻'),
             tagClass: item.category === 'announcement' ? 'announcement' : 'news',
-            coverThumb: item.imageThumb || item.image || '',
-            isDraftProposal: item.isDraftProposal || false
+            coverThumb: item.imageThumb || item.image || ''
           }))
           if (this.data.currentHomeTab === 'news') {
             const newNewsList = reset ? mapped : this.data.newsList.concat(mapped)

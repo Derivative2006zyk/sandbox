@@ -20,15 +20,14 @@ exports.main = async (event, context) => {
       const addRes = await users.add({
         data: {
           _openid: OPENID,
-          name: '',
-          studentId: '',
-          phone: '',
+          nickname: '',
+          bio: '',
           role: 0,
           createTime: db.serverDate(),
           updateTime: db.serverDate()
         }
       })
-      return { code: 0, data: { _id: addRes._id, isNew: true, user: { name: '', studentId: '', phone: '', role: 0 } } }
+      return { code: 0, data: { _id: addRes._id, isNew: true, user: { nickname: '', bio: '', role: 0 } } }
     } else {
       return { code: 0, data: { _id: res.data[0]._id, isNew: false, user: res.data[0] } }
     }

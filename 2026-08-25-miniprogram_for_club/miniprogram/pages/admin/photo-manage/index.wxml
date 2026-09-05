@@ -1,0 +1,89 @@
+<view class="container">
+  <!-- 全局背景图 -->
+  <image class="page-bg" src="{{bgUrl}}" mode="aspectFill"></image>
+
+  <!-- 自定义返回按钮 -->
+  <view class="custom-back" bindtap="goBack">
+    <text class="back-icon">‹</text>
+    <text class="back-text">返回</text>
+  </view>
+
+  <view class="page-title">活动照片管理</view>
+
+  <!-- 活动列表 -->
+  <view class="activity-list">
+    <view
+      wx:for="{{activities}}"
+      wx:key="_id"
+      class="activity-item {{activityId === item._id ? 'active' : ''}}"
+      bindtap="selectActivity"
+      data-id="{{item._id}}"
+    >
+      <text class="activity-title">{{item.title}}</text>
+      <text class="activity-arrow">{{activityId === item._id ? '✓' : '›'}}</text>
+    </view>
+
+    <view wx:if="{{listLoading}}" class="list-tip">加载中...</view>
+    <view wx:elif="{{hasMore}}" class="list-tip load-more" bindtap="loadMore">加载更多</view>
+    <view wx:elif="{{activities.length === 0}}" class="list-tip">暂无活动</view>
+  </view>
+
+  <!-- 照片分组管理区 -->
+  <view class="photo-section" wx:if="{{activityId}}">
+    <view class="section-title">照片分组管理</view>
+
+    <!-- 新增分组 -->
+    <view class="add-section">
+      <input class="section-input" placeholder="输入分组名称，如：选手图片 / 大合照" value="{{newSection}}" bindinput="onNewSectionInput" />
+      <button class="add-section-btn" bindtap="addSection">新增分组</button>
+    </view>
+
+    <view wx:if="{{loading}}" class="g-loading">
+      <view class="g-loading-card">
+        <image class="g-loading-img" src="/images/hello.jpg" mode="aspectFit"></image>
+        <text class="g-loading-title">请稍等</text>
+        <text class="g-loading-emoji">(＾▽＾)</text>
+        <text class="g-loading-note">照片加载中，请稍候...</text>
+      </view>
+    </view>
+    <view wx:if="{{!loading && sections.length === 0}}" class="empty">暂无分组，请先新增分组</view>
+
+    <!-- 分组列表 -->
+    <view class="section-group" wx:for="{{sections}}" wx:key="section" wx:for-item="group">
+      <view class="group-header">
+        <text class="group-title">{{group.section}}（{{group.photos.length}}）</text>
+        <view class="group-actions">
+          <button class="group-upload" size="mini" bindtap="uploadPhoto" data-section="{{group.section}}" disabled="{{uploading}}">上传图片</button>
+          <button class="group-delete" size="mini" bindtap="deleteSection" data-section="{{group.section}}">删除分组</button>
+        </view>
+      </view>
+
+      <view class="photo-grid" wx:if="{{group.photos.length > 0}}">
+        <view class="photo-item" wx:for="{{group.photos}}" wx:key="_id" wx:for-item="photo">
+          <image class="photo-img" src="{{photo.url}}" mode="aspectFill"></image>
+          <view class="photo-delete" catchtap="deletePhoto" data-id="{{photo._id}}">×</view>
+          <view class="photo-caption-bar" catchtap="editCaption" data-id="{{photo._id}}" data-caption="{{photo.caption}}">
+            {{photo.caption ? '✎ ' + photo.caption : '✎ 添加说明'}}
+          </view>
+        </view>
+      </view>
+      <view wx:else class="group-empty">该分组暂无图片</view>
+    </view>
+  </view>
+
+  <view class="photo-section hint" wx:else>
+    <text>请在上方选择要管理的活动</text>
+  </view>
+
+  <!-- 编辑文字说明弹窗 -->
+  <view class="modal-mask" wx:if="{{showCaptionModal}}" catchtap="closeCaptionModal">
+    <view class="modal-content" catchtap="noop">
+      <view class="modal-title">编辑图片说明</view>
+      <textarea class="caption-textarea" placeholder="输入图片文字说明" value="{{editingCaption}}" bindinput="onCaptionInput" maxlength="100"></textarea>
+      <view class="modal-actions">
+        <button class="modal-btn primary" bindtap="saveCaption">保存</button>
+        <button class="modal-btn" bindtap="closeCaptionModal">取消</button>
+      </view>
+    </view>
+  </view>
+</view>

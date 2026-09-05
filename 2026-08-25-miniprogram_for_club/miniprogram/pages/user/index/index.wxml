@@ -5,11 +5,11 @@
   <!-- 用户信息卡片 -->
   <view class="user-card glass-card" wx:if="{{userInfo}}">
     <view class="user-avatar">
-      <text class="avatar-text">{{userInfo.name ? userInfo.name[0] : '?'}}</text>
+      <text class="avatar-text">{{userInfo.nickname ? userInfo.nickname[0] : '?'}}</text>
     </view>
     <view class="user-info">
-      <text class="name">{{userInfo.name || '未填写姓名'}}</text>
-      <text class="student-id">{{userInfo.studentId || '未填写学号'}}</text>
+      <text class="name">{{userInfo.nickname || '未设置昵称'}}</text>
+      <text class="bio">{{userInfo.bio || '这个人很懒，还没写简介'}}</text>
     </view>
   </view>
 
@@ -28,10 +28,6 @@
   </view>
   <view class="menu-item glass-card" bindtap="goFeedback">
     <text class="menu-text">意见反馈</text>
-    <text class="menu-arrow">›</text>
-  </view>
-  <view class="menu-item glass-card" bindtap="goProposalSubmit">
-    <text class="menu-text">提交草案</text>
     <text class="menu-arrow">›</text>
   </view>
 

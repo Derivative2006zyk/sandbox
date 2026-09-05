@@ -50,7 +50,7 @@ exports.main = async (event, context) => {
         afterBalance,
         note: note.trim(),
         operatorOpenid: OPENID,
-        operatorName: userRes.data[0].name || '管理员',
+        operatorName: userRes.data[0].nickname || '管理员',
         createTime: db.serverDate()
       }
     })

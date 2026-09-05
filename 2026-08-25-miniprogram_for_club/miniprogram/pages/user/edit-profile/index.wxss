@@ -38,10 +38,22 @@
   font-size: 28rpx;
 }
 
+.label .req {
+  color: #FF4D4F;
+  margin-left: 4rpx;
+}
+
+.label .opt {
+  color: #999;
+  font-size: 24rpx;
+  margin-left: 4rpx;
+}
+
 .input {
   border-bottom: 1rpx solid #ddd;
   padding: 15rpx 0;
   font-size: 30rpx;
+  line-height: 1.5;
   background: transparent;
 }
 

@@ -2,10 +2,9 @@ const app = getApp()
 
 Page({
   data: {
-    bgUrl: '',            // 背景图临时链接
-    name: '',
-    studentId: '',
-    phone: '',
+    bgUrl: '',
+    nickname: '',
+    bio: '',
     submitting: false
   },
 
@@ -14,14 +13,12 @@ Page({
     const userInfo = app.globalData.userInfo
     if (userInfo) {
       this.setData({
-        name: userInfo.name || '',
-        studentId: userInfo.studentId || '',
-        phone: userInfo.phone || ''
+        nickname: userInfo.nickname || '',
+        bio: userInfo.bio || ''
       })
     }
   },
 
-  // 获取背景图临时链接
   fetchBgUrl() {
     const fileID = app.globalData.assets.background
     app.getBgUrl(fileID).then(url => {
@@ -38,10 +35,11 @@ Page({
   },
 
   async submit() {
-    const { name, studentId, phone } = this.data
-    if (!name.trim()) { wx.showToast({ title: '请输入姓名', icon: 'none' }); return; }
-    if (!studentId.trim()) { wx.showToast({ title: '请输入学号', icon: 'none' }); return; }
-    if (!/^1\d{10}$/.test(phone.trim())) { wx.showToast({ title: '请输入正确的手机号', icon: 'none' }); return; }
+    const { nickname, bio } = this.data
+    if (!nickname.trim()) {
+      wx.showToast({ title: '请输入昵称', icon: 'none' })
+      return
+    }
 
     this.setData({ submitting: true })
 
@@ -49,9 +47,8 @@ Page({
       const res = await wx.cloud.callFunction({
         name: 'updateUser',
         data: {
-          name: name.trim(),
-          studentId: studentId.trim(),
-          phone: phone.trim()
+          nickname: nickname.trim(),
+          bio: bio.trim()
         }
       })
 
